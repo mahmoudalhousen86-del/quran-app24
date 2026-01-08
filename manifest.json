@@ -1,7 +1,7 @@
 {
-    "name": "مصحف التدبر - القرآن الكامل",
-    "short_name": "مصحف التدبر",
-    "description": "القرآن الكريم مع التفسير آية آية، التذكيرات اليومية، وحفظ التقدم",
+    "name": "مصحف القرآن الكريم - الكامل",
+    "short_name": "المصحف الكامل",
+    "description": "القرآن الكريم كاملاً (604 صفحة) مع التفسير والتذكيرات - يعمل بدون إنترنت",
     "start_url": "./",
     "display": "standalone",
     "orientation": "portrait",
@@ -32,32 +32,24 @@
     "categories": ["books", "education", "lifestyle", "religion"],
     "dir": "rtl",
     "lang": "ar",
-    "screenshots": [
-        {
-            "src": "https://via.placeholder.com/1080x1920/1a472a/ffffff?text=مصحف+التدبر",
-            "sizes": "1080x1920",
-            "type": "image/png",
-            "form_factor": "wide"
-        }
-    ],
     "shortcuts": [
         {
-            "name": "الورد اليومي",
+            "name": "اليوم",
             "short_name": "اليوم",
-            "description": "آية اليوم مع التفسير والتطبيق",
+            "description": "آية اليوم مع التفسير",
             "url": "./#daily"
         },
         {
-            "name": "فتح المصحف",
-            "short_name": "المصحف",
+            "name": "المصحف",
+            "short_name": "مصحف",
             "description": "تصفح المصحف كاملاً",
             "url": "./#mushaf"
         },
         {
-            "name": "التذكيرات",
-            "short_name": "تذكير",
-            "description": "اضبط تذكيرك اليومي",
-            "url": "./#reminders"
+            "name": "الصفحات",
+            "short_name": "صفحات",
+            "description": "تصفح 604 صفحة",
+            "url": "./#pages"
         }
     ]
 }
