@@ -1,20 +1,15 @@
 {
-    "name": "مصحف القرآن الكريم",
+    "name": "مصحف القرآن الكريم - المصحف الكامل",
     "short_name": "المصحف",
-    "description": "القرآن مع التفسير",
+    "description": "القرآن الكريم مع التفسير والتذكيرات - يعمل بدون إنترنت",
     "start_url": "/quran-app24/",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "theme_color": "#007AFF",
+    "background_color": "#1e40af",
+    "theme_color": "#1e40af",
     "icons": [
         {
             "src": "https://img.icons8.com/color/96/000000/quran.png",
             "sizes": "96x96",
-            "type": "image/png"
-        },
-        {
-            "src": "https://img.icons8.com/color/144/000000/quran.png",
-            "sizes": "144x144",
             "type": "image/png"
         },
         {
@@ -27,5 +22,8 @@
             "sizes": "512x512",
             "type": "image/png"
         }
-    ]
+    ],
+    "categories": ["books", "education", "religion"],
+    "dir": "rtl",
+    "lang": "ar"
 }
