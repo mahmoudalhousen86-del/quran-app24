@@ -1,15 +1,21 @@
 {
-    "name": "مصحف القرآن الكريم - المصحف الكامل",
-    "short_name": "المصحف",
-    "description": "القرآن الكريم مع التفسير والتذكيرات - يعمل بدون إنترنت",
-    "start_url": "/quran-app24/",
+    "name": "مصحف التدبر - القرآن الكامل",
+    "short_name": "مصحف التدبر",
+    "description": "القرآن الكريم مع التفسير آية آية، التذكيرات اليومية، وحفظ التقدم",
+    "start_url": "./",
     "display": "standalone",
-    "background_color": "#1e40af",
-    "theme_color": "#1e40af",
+    "orientation": "portrait",
+    "background_color": "#1a472a",
+    "theme_color": "#1a472a",
     "icons": [
         {
             "src": "https://img.icons8.com/color/96/000000/quran.png",
             "sizes": "96x96",
+            "type": "image/png"
+        },
+        {
+            "src": "https://img.icons8.com/color/144/000000/quran.png",
+            "sizes": "144x144",
             "type": "image/png"
         },
         {
@@ -23,7 +29,35 @@
             "type": "image/png"
         }
     ],
-    "categories": ["books", "education", "religion"],
+    "categories": ["books", "education", "lifestyle", "religion"],
     "dir": "rtl",
-    "lang": "ar"
+    "lang": "ar",
+    "screenshots": [
+        {
+            "src": "https://via.placeholder.com/1080x1920/1a472a/ffffff?text=مصحف+التدبر",
+            "sizes": "1080x1920",
+            "type": "image/png",
+            "form_factor": "wide"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "الورد اليومي",
+            "short_name": "اليوم",
+            "description": "آية اليوم مع التفسير والتطبيق",
+            "url": "./#daily"
+        },
+        {
+            "name": "فتح المصحف",
+            "short_name": "المصحف",
+            "description": "تصفح المصحف كاملاً",
+            "url": "./#mushaf"
+        },
+        {
+            "name": "التذكيرات",
+            "short_name": "تذكير",
+            "description": "اضبط تذكيرك اليومي",
+            "url": "./#reminders"
+        }
+    ]
 }
