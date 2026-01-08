@@ -1,0 +1,7 @@
+{
+    "name": "مصحف القرآن",
+    "short_name": "المصحف",
+    "start_url": "/",
+    "display": "standalone",
+    "theme_color": "#007AFF"
+}
