@@ -3,29 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصحف القرآن الكريم - المصحف الكامل مع التفسير</title>
+    <title>مصحف التدبر - القرآن كاملاً مع التفسير</title>
     
     <!-- PWA Meta -->
-    <meta name="theme-color" content="#1e40af">
+    <meta name="theme-color" content="#1a472a">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="apple-mobile-web-app-title" content="مصحف القرآن">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="مصحف التدبر">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/quran.png">
     
     <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --primary: #1e40af;
-            --secondary: #3b82f6;
-            --bg: #f8fafc;
-            --text: #1f2937;
+            --primary: #1a472a;
+            --secondary: #2e8b57;
+            --accent: #3cb371;
+            --light: #f8f9fa;
+            --dark: #1a1a1a;
+            --card: #ffffff;
+            --shadow: rgba(0, 0, 0, 0.08);
         }
         
         [data-theme="dark"] {
-            --primary: #60a5fa;
-            --bg: #0f172a;
-            --text: #f1f5f9;
+            --primary: #3cb371;
+            --secondary: #2e8b57;
+            --light: #1a1a1a;
+            --dark: #ffffff;
+            --card: #2d2d2d;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
         
         * {
@@ -35,63 +42,100 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont;
-            background: var(--bg);
-            color: var(--text);
-            padding: 20px;
-            transition: background 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            transition: all 0.3s ease;
+            padding-bottom: 80px;
         }
         
-        .container {
+        .app-container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 15px;
         }
         
-        header {
-            background: linear-gradient(135deg, var(--primary), #1e3a8a);
+        /* Header */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary), #2e8b57);
             color: white;
-            padding: 25px;
+            padding: 25px 20px;
             border-radius: 20px;
-            text-align: center;
             margin-bottom: 25px;
-            box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(26, 71, 42, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        h1 {
+        .app-header::before {
+            content: '﴾﴿';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.1;
+            right: 20px;
+            top: 10px;
+        }
+        
+        .app-title {
             font-size: 28px;
             margin-bottom: 10px;
-        }
-        
-        .nav-tabs {
             display: flex;
-            background: white;
-            border-radius: 15px;
-            margin: 20px 0;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
         
-        .tab-btn {
-            flex: 1;
-            padding: 18px;
-            border: none;
-            background: none;
+        .app-subtitle {
+            opacity: 0.9;
             font-size: 16px;
-            cursor: pointer;
-            transition: all 0.3s;
         }
         
-        .tab-btn.active {
+        /* Navigation */
+        .app-nav {
+            display: flex;
+            gap: 10px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 18px 15px;
+            background: var(--card);
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 4px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn.active {
             background: var(--primary);
             color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(26, 71, 42, 0.4);
         }
         
-        .tab-content {
+        .nav-btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        /* Content Cards */
+        .content-section {
             display: none;
-            animation: fadeIn 0.5s;
+            animation: fadeIn 0.5s ease;
         }
         
-        .tab-content.active {
+        .content-section.active {
             display: block;
         }
         
@@ -101,224 +145,532 @@
         }
         
         .card {
-            background: white;
+            background: var(--card);
+            border-radius: 20px;
             padding: 25px;
-            border-radius: 18px;
-            margin: 20px 0;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px var(--shadow);
             border-right: 5px solid var(--primary);
         }
         
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(60, 179, 113, 0.1);
+        }
+        
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            color: var(--primary);
+        }
+        
+        /* Quran Text */
         .quran-text {
-            font-size: 26px;
+            font-size: 28px;
             line-height: 2;
-            text-align: justify;
-            margin: 20px 0;
-            color: #1a472a;
+            text-align: center;
+            margin: 25px 0;
+            color: var(--primary);
             font-weight: 600;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
+        .ayah-number {
+            display: inline-block;
+            background: rgba(60, 179, 113, 0.1);
+            color: var(--primary);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+        
+        /* Tafsir Box */
         .tafsir-box {
-            background: #f0f9ff;
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(240, 248, 255, 0.9));
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 12px;
             margin: 20px 0;
-            border-right: 4px solid #3b82f6;
+            border-right: 4px solid var(--accent);
         }
         
+        [data-theme="dark"] .tafsir-box {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(60, 60, 60, 0.9));
+        }
+        
+        .tafsir-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            color: var(--accent);
+        }
+        
+        /* Info Grid */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
-            margin: 20px 0;
+            margin: 25px 0;
         }
         
         .info-item {
-            background: #f8fafc;
+            background: rgba(60, 179, 113, 0.05);
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             text-align: center;
+            transition: transform 0.3s ease;
         }
         
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
+        .info-item:hover {
+            transform: translateY(-5px);
+            background: rgba(60, 179, 113, 0.1);
+        }
+        
+        .info-icon {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        /* Reminder Section */
+        .reminder-section {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        [data-theme="dark"] .reminder-section {
+            background: linear-gradient(135deg, #4a3c00, #6b5b00);
+        }
+        
+        .reminder-controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            align-items: center;
+        }
+        
+        .reminder-time {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+        }
+        
+        /* Buttons */
+        .btn {
             padding: 16px 25px;
+            border: none;
             border-radius: 12px;
             font-size: 17px;
+            font-weight: 600;
             cursor: pointer;
-            margin: 10px 5px;
-            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
             width: 100%;
+            margin: 10px 0;
         }
         
-        button:hover {
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 8px 25px rgba(26, 71, 42, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(26, 71, 42, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(60, 179, 113, 0.1);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        /* Progress */
+        .progress-container {
+            margin: 25px 0;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: rgba(60, 179, 113, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 1s ease;
+            border-radius: 5px;
+        }
+        
+        /* Page Navigation */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .page-btn {
+            flex: 1;
+            padding: 18px;
+            background: var(--card);
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            font-size: 17px;
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .page-btn:hover {
+            background: var(--primary);
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+        
+        /* Surah Selector */
+        .surah-selector {
+            position: relative;
+            margin: 25px 0;
         }
         
         .surah-select {
             width: 100%;
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-            font-size: 16px;
-            margin: 15px 0;
+            padding: 18px 50px 18px 20px;
+            border: 2px solid var(--primary);
+            border-radius: 15px;
+            font-size: 17px;
+            background: var(--card);
+            color: var(--dark);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a472a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 20px;
         }
         
-        .reminder-box {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            padding: 20px;
+        /* Ayah List */
+        .ayah-list {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 15px;
+            background: var(--card);
             border-radius: 15px;
             margin: 20px 0;
         }
         
-        .ayah-list {
-            max-height: 500px;
-            overflow-y: auto;
-            padding: 15px;
-        }
-        
         .ayah-item {
-            padding: 15px;
-            border-bottom: 1px solid #e2e8f0;
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(60, 179, 113, 0.05);
+            border-radius: 15px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: all 0.3s ease;
+            border-right: 3px solid transparent;
         }
         
         .ayah-item:hover {
-            background: #f0f9ff;
+            background: rgba(60, 179, 113, 0.1);
+            border-right-color: var(--primary);
+            transform: translateX(-5px);
         }
         
-        @media (max-width: 768px) {
-            .quran-text { font-size: 22px; }
-            .nav-tabs { flex-direction: column; }
+        .ayah-item.active {
+            background: rgba(60, 179, 113, 0.15);
+            border-right-color: var(--primary);
         }
+        
+        /* Notification Permission */
+        .notification-permission {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin: 25px 0;
+            display: none;
+        }
+        
+        [data-theme="dark"] .notification-permission {
+            background: linear-gradient(135deg, #1c3b1c, #2d4d2d);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .app-nav { flex-direction: column; }
+            .nav-btn { min-width: 100%; }
+            .quran-text { font-size: 24px; }
+            .info-grid { grid-template-columns: 1fr 1fr; }
+            .page-nav { flex-direction: column; }
+        }
+        
+        /* Utilities */
+        .hidden { display: none !important; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
+        .text-center { text-align: center; }
+        .text-muted { opacity: 0.7; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>📖 مصحف القرآن الكريم</h1>
-            <p>المصحف الكامل مع التفسير والتذكيرات - يعمل بدون إنترنت</p>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <h1 class="app-title"><i class="fas fa-quran"></i> مصحف التدبر</h1>
+            <p class="app-subtitle">القرآن الكريم كاملاً مع التفسير والتذكيرات</p>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+                    <span id="current-progress">0%</span>
+                    <span id="reading-stats">📖 0 آية | ⏱️ 0 دقيقة</span>
+                </div>
+            </div>
         </header>
         
-        <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showTab('daily')">اليوم</button>
-            <button class="tab-btn" onclick="showTab('mushaf')">المصحف</button>
-            <button class="tab-btn" onclick="showTab('tafsir')">التفسير</button>
-            <button class="tab-btn" onclick="showTab('reminders')">التذكيرات</button>
-        </div>
+        <!-- Navigation -->
+        <nav class="app-nav">
+            <button class="nav-btn active" onclick="showSection('daily')">
+                <i class="fas fa-calendar-day"></i> اليوم
+            </button>
+            <button class="nav-btn" onclick="showSection('mushaf')">
+                <i class="fas fa-book-quran"></i> المصحف
+            </button>
+            <button class="nav-btn" onclick="showSection('tafsir')">
+                <i class="fas fa-book-open"></i> التفسير
+            </button>
+            <button class="nav-btn" onclick="showSection('reminders')">
+                <i class="fas fa-bell"></i> التذكيرات
+            </button>
+            <button class="nav-btn" onclick="showSection('progress')">
+                <i class="fas fa-chart-line"></i> التقدم
+            </button>
+        </nav>
         
-        <!-- اليومية -->
-        <div id="daily-tab" class="tab-content active">
+        <!-- Daily Section -->
+        <section id="daily-section" class="content-section active">
             <div class="card">
-                <h2>🌅 آية اليوم</h2>
-                <div class="quran-text" id="today-ayah">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-sun"></i> الورد اليومي</h2>
+                    <span class="ayah-number" id="today-date">اليوم</span>
+                </div>
+                
+                <div class="quran-text" id="daily-ayah">
                     ﴿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ﴾
                 </div>
+                
                 <div class="tafsir-box">
-                    <h3>📖 التفسير:</h3>
-                    <p id="today-tafsir">أبدأ كل عمل مستعينًا بالله الرحمن الرحيم، متذكرًا رحمته الواسعة.</p>
+                    <div class="tafsir-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>التفسير الميسر</h3>
+                    </div>
+                    <p id="daily-tafsir">أبدأ كل عمل مستعينًا بالله الرحمن الرحيم، متذكرًا رحمته الواسعة.</p>
                 </div>
+                
                 <div class="info-grid">
                     <div class="info-item">
-                        <h4>📍 النوع</h4>
-                        <p id="today-type">مكية</p>
+                        <div class="info-icon"><i class="fas fa-mosque"></i></div>
+                        <h4>النوع</h4>
+                        <p id="info-type">مكية</p>
                     </div>
                     <div class="info-item">
-                        <h4>⏳ زمن النزول</h4>
-                        <p id="today-time">قبل الهجرة</p>
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <h4>زمن النزول</h4>
+                        <p id="info-time">قبل الهجرة</p>
                     </div>
                     <div class="info-item">
-                        <h4>📜 المكان</h4>
-                        <p id="today-place">مكة المكرمة</p>
+                        <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <h4>مكان النزول</h4>
+                        <p id="info-place">مكة المكرمة</p>
                     </div>
                     <div class="info-item">
-                        <h4>📅 ترتيب النزول</h4>
-                        <p id="today-order">1</p>
+                        <div class="info-icon"><i class="fas fa-list-ol"></i></div>
+                        <h4>ترتيب النزول</h4>
+                        <p id="info-order">1</p>
                     </div>
                 </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> وقفة إيمانية</h3>
+                    <p id="reflection-text">ابدأ يومك بالله… تتغير نيتك قبل عملك، ويبارك الله في وقتك وأعمالك.</p>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-check-circle"></i> تطبيق اليوم</h3>
+                    <p id="application-text">سمِّ الله قبل أي عمل تقوم به اليوم: قبل الأكل، قبل الخروج، قبل العمل.</p>
+                    <button class="btn btn-secondary" onclick="markAsDone()">
+                        <i class="fas fa-check"></i> تم الإكمال
+                    </button>
+                </div>
+                
+                <div class="page-nav">
+                    <button class="page-btn" onclick="previousAyah()">
+                        <i class="fas fa-chevron-right"></i> السابقة
+                    </button>
+                    <button class="page-btn" onclick="nextAyah()">
+                        التالية <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
         
-        <!-- المصحف -->
-        <div id="mushaf-tab" class="tab-content">
+        <!-- Mushaf Section -->
+        <section id="mushaf-section" class="content-section">
             <div class="card">
-                <h2>📚 المصحف الشريف</h2>
-                <select class="surah-select" id="surah-select" onchange="loadSurah()">
-                    <option value="1">سورة الفاتحة</option>
-                    <option value="2">سورة البقرة</option>
-                    <option value="3">سورة آل عمران</option>
-                    <option value="4">سورة النساء</option>
-                    <option value="5">سورة المائدة</option>
-                </select>
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-book-quran"></i> المصحف الشريف</h2>
+                    <span class="ayah-number" id="surah-info">سورة الفاتحة</span>
+                </div>
+                
+                <div class="surah-selector">
+                    <select class="surah-select" id="surah-select" onchange="loadSurah()">
+                        <!-- سيتم ملؤه بالجافاسكريبت -->
+                    </select>
+                </div>
+                
                 <div class="ayah-list" id="ayah-list">
-                    <!-- سيتم تحميل الآيات هنا -->
+                    <!-- سيتم ملؤه بالجافاسكريبت -->
                 </div>
-                <button onclick="prevSurah()">⬅️ السورة السابقة</button>
-                <button onclick="nextSurah()">السورة التالية ➡️</button>
+                
+                <div class="page-nav">
+                    <button class="page-btn" onclick="prevSurah()">
+                        <i class="fas fa-chevron-right"></i> سورة سابقة
+                    </button>
+                    <button class="page-btn" onclick="nextSurah()">
+                        سورة تالية <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+        </section>
         
-        <!-- التفسير -->
-        <div id="tafsir-tab" class="tab-content">
+        <!-- Tafsir Section -->
+        <section id="tafsir-section" class="content-section">
             <div class="card">
-                <h2>📖 تفسير الآية</h2>
-                <div id="tafsir-details">
-                    <div class="quran-text">اختر آية لرؤية تفسيرها</div>
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-book-open"></i> تفسير الآية</h2>
+                    <span class="ayah-number" id="selected-ayah-info">اختر آية</span>
                 </div>
-                <div class="tafsir-box" id="selected-tafsir">
-                    <p>لم يتم اختيار آية بعد</p>
+                
+                <div class="quran-text" id="selected-ayah-text">
+                    اختر آية من المصحف لرؤية تفسيرها
+                </div>
+                
+                <div class="tafsir-box" id="selected-tafsir-box">
+                    <div class="tafsir-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>التفسير الميسر</h3>
+                    </div>
+                    <p id="selected-tafsir-text">سيظهر تفسير الآية هنا عند اختيارها</p>
+                </div>
+                
+                <div class="info-grid" id="selected-ayah-info-grid">
+                    <!-- سيتم ملؤه بالجافاسكريبت -->
                 </div>
             </div>
-        </div>
+        </section>
         
-        <!-- التذكيرات -->
-        <div id="reminders-tab" class="tab-content">
-            <div class="reminder-box">
-                <h2>🔔 التذكيرات اليومية</h2>
-                <p>اضبط التذكير لقراءة القرآن يومياً:</p>
-                <input type="time" id="reminder-time" value="05:00" style="width:100%; padding:15px; margin:15px 0; border-radius:10px;">
-                <button onclick="setReminder()">💾 حفظ التذكير</button>
-                <button onclick="testReminder()">🔔 تجربة التذكير الآن</button>
+        <!-- Reminders Section -->
+        <section id="reminders-section" class="content-section">
+            <div class="reminder-section">
+                <h2 class="card-title"><i class="fas fa-bell"></i> التذكيرات اليومية</h2>
+                <p class="mb-20">اضبط وقت التذكير لقراءة القرآن يومياً:</p>
+                
+                <div class="reminder-controls">
+                    <input type="time" class="reminder-time" id="reminder-time" value="05:00">
+                    <button class="btn btn-primary" onclick="saveReminder()">
+                        <i class="fas fa-save"></i> حفظ
+                    </button>
+                </div>
+                
+                <div class="notification-permission" id="notification-permission">
+                    <h3><i class="fas fa-bell-slash"></i> صلاحية الإشعارات</h3>
+                    <p class="mb-20">لتلقي التذكيرات، يرجى تفعيل الإشعارات في إعدادات التطبيق</p>
+                    <button class="btn btn-primary" onclick="requestNotificationPermission()">
+                        تفعيل الإشعارات الآن
+                    </button>
+                </div>
+                
+                <button class="btn btn-secondary mt-20" onclick="testNotification()">
+                    <i class="fas fa-bell"></i> تجربة التذكير الآن
+                </button>
             </div>
-            
+        </section>
+        
+        <!-- Progress Section -->
+        <section id="progress-section" class="content-section">
             <div class="card">
-                <h3>📊 إحصائياتك</h3>
+                <h2 class="card-title"><i class="fas fa-chart-line"></i> تقدمك في القراءة</h2>
+                
                 <div class="info-grid">
                     <div class="info-item">
-                        <h4>📅 الأيام المتتالية</h4>
+                        <div class="info-icon"><i class="fas fa-fire"></i></div>
+                        <h4>الأيام المتتالية</h4>
                         <p id="streak-days">7 أيام</p>
                     </div>
                     <div class="info-item">
-                        <h4>📖 الآيات المقروءة</h4>
-                        <p id="read-ayahs">150 آية</p>
+                        <div class="info-icon"><i class="fas fa-book"></i></div>
+                        <h4>الآيات المقروءة</h4>
+                        <p id="total-ayahs">150 آية</p>
                     </div>
                     <div class="info-item">
-                        <h4>⏰ وقت القراءة</h4>
-                        <p id="reading-time">15 ساعة</p>
+                        <div class="info-icon"><i class="fas fa-clock"></i></div>
+                        <h4>وقت القراءة</h4>
+                        <p id="total-time">15 ساعة</p>
                     </div>
                     <div class="info-item">
-                        <h4>🏆 الإنجاز</h4>
-                        <p id="achievement">25%</p>
+                        <div class="info-icon"><i class="fas fa-trophy"></i></div>
+                        <h4>الإنجاز</h4>
+                        <p id="completion">25%</p>
                     </div>
                 </div>
+                
+                <div class="card">
+                    <h3 class="card-title"><i class="fas fa-calendar-alt"></i> إحصائيات الشهر</h3>
+                    <div id="month-stats">جاري تحميل الإحصائيات...</div>
+                </div>
             </div>
-        </div>
+        </section>
         
-        <!-- تثبيت التطبيق -->
-        <div class="card">
-            <h3>📱 تثبيت التطبيق</h3>
-            <p>للحصول على أفضل تجربة، قم بتثبيت التطبيق على شاشتك الرئيسية:</p>
-            <button onclick="installApp()">📲 أضف إلى الشاشة الرئيسية</button>
-            <button onclick="toggleTheme()">🌙 تغيير السمة</button>
+        <!-- Install Button -->
+        <div class="card text-center">
+            <h3 class="card-title"><i class="fas fa-mobile-alt"></i> تثبيت التطبيق</h3>
+            <p class="mb-20">لحفظ التقدم واستخدام التطبيق بدون إنترنت</p>
+            <button class="btn btn-primary" onclick="installApp()">
+                <i class="fas fa-download"></i> أضف إلى الشاشة الرئيسية
+            </button>
+            <button class="btn btn-secondary mt-20" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i> تغيير السمة
+            </button>
         </div>
     </div>
     
+    <!-- JavaScript -->
     <script>
-        // بيانات المصحف (مثال)
+        // بيانات القرآن (مثال موسع)
         const quranData = {
             "1": {
                 name: "الفاتحة",
@@ -326,14 +678,15 @@
                 time: "قبل الهجرة",
                 place: "مكة المكرمة",
                 order: 1,
+                reason: "افتتاح القرآن الكريم",
                 ayahs: [
-                    {number: 1, text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "أبدأ كل عمل مستعينًا بالله الرحمن الرحيم"},
-                    {number: 2, text: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ", tafsir: "الثناء على الله بصفاته التي كلها أوصاف كمال"},
-                    {number: 3, text: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "اسمان دالان على أنه تعالى كثير الرحمة"},
-                    {number: 4, text: "مَٰلِكِ يَوْمِ ٱلدِّينِ", tafsir: "المالك ليوم الجزاء والحساب"},
-                    {number: 5, text: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", tafsir: "نخصك بالعبادة ونتوكل عليك في كل الأمور"},
-                    {number: 6, text: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ", tafsir: "أرشدنا إلى الطريق المستقيم وهو الإسلام"},
-                    {number: 7, text: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ", tafsir: "طريق النبيين والصديقين والشهداء والصالحين"}
+                    {number: 1, text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "أبدأ كل عمل مستعينًا بالله الرحمن الرحيم، متذكرًا رحمته الواسعة التي وسعت كل شيء.", reflection: "البسملة تذكرك أن تبدأ أعمالك بالله، فتتنزل البركة.", application: "سم الله قبل كل عمل اليوم."},
+                    {number: 2, text: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ", tafsir: "الثناء على الله بصفات الكمال والربوبية لجميع الخلق.", reflection: "الحمد يملأ القلب امتنانًا ويوسع الرزق.", application: "احمد الله 10 مرات اليوم."},
+                    {number: 3, text: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "الرحمن: رحمة عامة لجميع الخلق، الرحيم: رحمة خاصة بالمؤمنين.", reflection: "رحمة الله سبقت غضبه، كن أنت أيضًا رحيمًا.", application: "تصدق أو ساعد شخصًا اليوم."},
+                    {number: 4, text: "مَٰلِكِ يَوْمِ ٱلدِّينِ", tafsir: "المالك ليوم الجزاء والحساب، وهو يوم القيامة.", reflection: "تذكر يوم القيامة يردع عن المعاصي.", application: "تصدق صدقة تذكرك بيوم القيامة."},
+                    {number: 5, text: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", tafsir: "نخصك بالعبادة ونتوكل عليك في كل الأمور.", reflection: "الإخلاص في العبادة شرط القبول.", application: "أخلص النية في صلاتك اليوم."},
+                    {number: 6, text: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ", tafsir: "أرشدنا إلى الطريق المستقيم وهو الإسلام.", reflection: "اطلب الهداية دائمًا، فالقلب بين أصبعين من أصابع الرحمن.", application: "ادع بهذا الدعاء في سجودك."},
+                    {number: 7, text: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ", tafsir: "طريق النبيين والصديقين والشهداء والصالحين.", reflection: "كن من المنعم عليهم باتباع السنة.", application: "اقرأ عن صحابي جليل اليوم."}
                 ]
             },
             "2": {
@@ -342,210 +695,499 @@
                 time: "بعد الهجرة",
                 place: "المدينة المنورة",
                 order: 87,
+                reason: "تأسيس المجتمع الإسلامي",
                 ayahs: [
-                    {number: 1, text: "الٓمٓ", tafsir: "الله أعلم بمراده بهذه الحروف"},
-                    {number: 2, text: "ذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", tafsir: "هذا القرآن لا شك فيه، يهدي المتقين"},
-                    {number: 3, text: "ٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ", tafsir: "الذين يصدقون بالغيب، ويؤدون الصلاة، ويتصدقون"}
+                    {number: 1, text: "الٓمٓ", tafsir: "الله أعلم بمراده بهذه الحروف المقطعة.", reflection: "أسرار القرآن لا تنتهي.", application: "تأمل في عظمة القرآن."},
+                    {number: 2, text: "ذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", tafsir: "هذا القرآن لا شك فيه، يهدي المتقين الذين يتقون الشرك ويؤدون الفرائض.", reflection: "التقوى مفتاح الفهم والهداية.", application: "اتق الله حيثما كنت."},
+                    {number: 3, text: "ٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ", tafsir: "الذين يصدقون بالغيب، ويؤدون الصلاة، ويتصدقون مما رزقهم الله.", reflection: "الإيمان بالغيب يزيد اليقين.", application: "تصدق بشيء اليوم."}
+                ]
+            },
+            "3": {
+                name: "آل عمران",
+                type: "مدنية",
+                time: "بعد الهجرة",
+                place: "المدينة المنورة",
+                order: 89,
+                reason: "الرد على النصارى",
+                ayahs: [
+                    {number: 1, text: "الٓمٓ", tafsir: "الله أعلم بمراده بهذه الحروف.", reflection: "كل حرف في القرآن له حكمة.", application: "تفكر في كتاب الله."},
+                    {number: 2, text: "ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ", tafsir: "الله لا معبود بحق إلا هو، الحي الذي لا يموت، القيوم القائم على كل شيء.", reflection: "التوحيد أساس الإيمان.", application: "أكثر من لا إله إلا الله."}
                 ]
             }
         };
         
-        // التبويبات
-        function showTab(tabName) {
-            // إخفاء جميع المحتويات
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
+        // حالة التطبيق
+        let currentState = {
+            currentSurah: 1,
+            currentAyah: 1,
+            currentPage: 'daily',
+            bookmarks: [],
+            progress: 0,
+            lastRead: null,
+            settings: {
+                reminderTime: '05:00',
+                notifications: false,
+                darkMode: false,
+                fontSize: 22
+            }
+        };
+        
+        // تهيئة التطبيق
+        function initApp() {
+            loadState();
+            setupUI();
+            setupNotifications();
+            loadDailyAyah();
+            populateSurahSelect();
+            updateProgress();
             
-            // إلغاء تفعيل جميع الأزرار
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
+            // طلب إذن الإشعارات بعد 3 ثواني
+            setTimeout(() => {
+                if (!currentState.settings.notifications) {
+                    requestNotificationPermission();
+                }
+            }, 3000);
+        }
+        
+        // تحميل الحالة المحفوظة
+        function loadState() {
+            const saved = localStorage.getItem('quranAppState');
+            if (saved) {
+                currentState = JSON.parse(saved);
+            }
             
-            // إظهار المحتوى المحدد
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-            
-            // تفعيل الزر المحدد
-            event.target.classList.add('active');
-            
-            // إذا كان تبويب المصحف، قم بتحميل السورة
-            if (tabName === 'mushaf') {
-                loadSurah();
+            // تطبيق الإعدادات
+            if (currentState.settings.darkMode) {
+                document.documentElement.setAttribute('data-theme', 'dark');
             }
         }
         
-        // تحميل السورة
-        function loadSurah() {
+        // حفظ الحالة
+        function saveState() {
+            localStorage.setItem('quranAppState', JSON.stringify(currentState));
+        }
+        
+        // إعداد الواجهة
+        function setupUI() {
+            // تحديث التاريخ
+            const today = new Date().toLocaleDateString('ar-SA', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('today-date').textContent = today;
+            
+            // تحديث وقت التذكير
+            document.getElementById('reminder-time').value = currentState.settings.reminderTime;
+        }
+        
+        // إعداد الإشعارات
+        function setupNotifications() {
+            const permissionElement = document.getElementById('notification-permission');
+            
+            if ('Notification' in window) {
+                if (Notification.permission === 'granted') {
+                    currentState.settings.notifications = true;
+                    permissionElement.classList.add('hidden');
+                    scheduleReminders();
+                } else if (Notification.permission === 'denied') {
+                    permissionElement.classList.remove('hidden');
+                }
+            } else {
+                permissionElement.innerHTML = '<p>المتصفح لا يدعم الإشعارات</p>';
+            }
+        }
+        
+        // طلب إذن الإشعارات
+        function requestNotificationPermission() {
+            if (!('Notification' in window)) {
+                alert('المتصفح لا يدعم الإشعارات');
+                return;
+            }
+            
+            if (Notification.permission === 'granted') {
+                currentState.settings.notifications = true;
+                saveState();
+                document.getElementById('notification-permission').classList.add('hidden');
+                scheduleReminders();
+                alert('✅ تم تفعيل الإشعارات!');
+                return;
+            }
+            
+            if (Notification.permission === 'denied') {
+                alert('❌ تم رفض الإشعارات. يرجى تفعيلها يدوياً من إعدادات المتصفح.');
+                return;
+            }
+            
+            // طلب الإذن
+            Notification.requestPermission().then(permission => {
+                if (permission === 'granted') {
+                    currentState.settings.notifications = true;
+                    saveState();
+                    document.getElementById('notification-permission').classList.add('hidden');
+                    scheduleReminders();
+                    alert('✅ تم تفعيل الإشعارات بنجاح!');
+                } else {
+                    alert('❌ لم يتم تفعيل الإشعارات. يمكنك تفعيلها لاحقاً.');
+                }
+            });
+        }
+        
+        // جدولة التذكيرات
+        function scheduleReminders() {
+            if (!currentState.settings.notifications) return;
+            
+            const [hours, minutes] = currentState.settings.reminderTime.split(':').map(Number);
+            const now = new Date();
+            const reminderTime = new Date();
+            
+            reminderTime.setHours(hours, minutes, 0, 0);
+            
+            if (reminderTime <= now) {
+                reminderTime.setDate(reminderTime.getDate() + 1);
+            }
+            
+            const timeUntilReminder = reminderTime.getTime() - now.getTime();
+            
+            setTimeout(() => {
+                if (Notification.permission === 'granted') {
+                    showNotification('🕌 وقت قراءة القرآن', 'حان وقت قراءة وردك اليومي من القرآن الكريم');
+                }
+                // إعادة الجدولة للغد
+                scheduleReminders();
+            }, timeUntilReminder);
+            
+            console.log(`تم جدولة التذكير بعد ${Math.round(timeUntilReminder/1000/60)} دقيقة`);
+        }
+        
+        // عرض إشعار
+        function showNotification(title, body) {
+            if (Notification.permission === 'granted') {
+                new Notification(title, {
+                    body: body,
+                    icon: 'https://img.icons8.com/color/96/000000/quran.png',
+                    badge: 'https://img.icons8.com/color/96/000000/quran.png'
+                });
+            }
+        }
+        
+        // تجربة الإشعار
+        function testNotification() {
+            if (Notification.permission === 'granted') {
+                showNotification('🔔 تجربة التذكير', 'هذا تذكير تجريبي من تطبيق مصحف التدبر');
+                alert('✅ تم إرسال إشعار تجريبي!');
+            } else {
+                requestNotificationPermission();
+            }
+        }
+        
+        // حفظ التذكير
+        function saveReminder() {
+            const time = document.getElementById('reminder-time').value;
+            currentState.settings.reminderTime = time;
+            saveState();
+            scheduleReminders();
+            alert(`✅ تم حفظ وقت التذكير: ${time}`);
+        }
+        
+        // تحميل آية اليوم
+        function loadDailyAyah() {
+            const today = new Date().getDate();
+            const surahIndex = (today % Object.keys(quranData).length) + 1;
+            const surah = quranData[surahIndex];
+            
+            if (!surah) return;
+            
+            const ayahIndex = (today % surah.ayahs.length);
+            const ayah = surah.ayahs[ayahIndex];
+            
+            document.getElementById('daily-ayah').textContent = ayah.text;
+            document.getElementById('daily-tafsir').textContent = ayah.tafsir;
+            document.getElementById('info-type').textContent = surah.type;
+            document.getElementById('info-time').textContent = surah.time;
+            document.getElementById('info-place').textContent = surah.place;
+            document.getElementById('info-order').textContent = surah.order;
+            document.getElementById('reflection-text').textContent = ayah.reflection;
+            document.getElementById('application-text').textContent = ayah.application;
+            
+            currentState.currentSurah = surahIndex;
+            currentState.currentAyah = ayah.number;
+        }
+        
+        // ملء قائمة السور
+        function populateSurahSelect() {
             const select = document.getElementById('surah-select');
-            const surahNum = select.value;
+            select.innerHTML = '';
+            
+            Object.keys(quranData).forEach(key => {
+                const surah = quranData[key];
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = `${surah.name} (${surah.type})`;
+                select.appendChild(option);
+            });
+            
+            select.value = currentState.currentSurah;
+        }
+        
+        // تحميل سورة
+        function loadSurah() {
+            const surahNum = document.getElementById('surah-select').value;
             const surah = quranData[surahNum];
             
             if (!surah) return;
+            
+            currentState.currentSurah = parseInt(surahNum);
+            saveState();
+            
+            document.getElementById('surah-info').textContent = `سورة ${surah.name}`;
             
             const ayahList = document.getElementById('ayah-list');
             ayahList.innerHTML = '';
             
             surah.ayahs.forEach(ayah => {
-                const ayahDiv = document.createElement('div');
-                ayahDiv.className = 'ayah-item';
-                ayahDiv.innerHTML = `
+                const ayahItem = document.createElement('div');
+                ayahItem.className = 'ayah-item';
+                ayahItem.onclick = () => selectAyah(surahNum, ayah.number);
+                ayahItem.innerHTML = `
                     <div class="quran-text">${ayah.text}</div>
-                    <div style="text-align:left; color:#666; margin-top:10px;">
-                        <small>سورة ${surah.name} - الآية ${ayah.number}</small>
+                    <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                        <span class="ayah-number">الآية ${ayah.number}</span>
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); bookmarkAyah(${surahNum}, ${ayah.number})" style="width: auto; padding: 8px 15px;">
+                            <i class="far fa-bookmark"></i>
+                        </button>
                     </div>
                 `;
-                ayahDiv.onclick = () => showTafsir(surahNum, ayah.number);
-                ayahList.appendChild(ayahDiv);
+                ayahList.appendChild(ayahItem);
             });
         }
         
-        // عرض التفسير
-        function showTafsir(surahNum, ayahNum) {
+        // اختيار آية لعرض تفسيرها
+        function selectAyah(surahNum, ayahNum) {
             const surah = quranData[surahNum];
             const ayah = surah.ayahs.find(a => a.number === ayahNum);
             
             if (!ayah) return;
             
-            document.getElementById('tafsir-details').innerHTML = `
-                <div class="quran-text">${ayah.text}</div>
-                <div style="text-align:left; color:#666; margin:10px 0;">
-                    <small>سورة ${surah.name} - الآية ${ayah.number}</small>
-                </div>
-            `;
+            // تحديث قسم التفسير
+            document.getElementById('selected-ayah-text').textContent = ayah.text;
+            document.getElementById('selected-tafsir-text').textContent = ayah.tafsir;
+            document.getElementById('selected-ayah-info').textContent = `سورة ${surah.name} - الآية ${ayah.number}`;
             
-            document.getElementById('selected-tafsir').innerHTML = `
-                <h3>📖 التفسير:</h3>
-                <p>${ayah.tafsir}</p>
-                <div class="info-grid">
-                    <div class="info-item">
-                        <h4>📍 النوع</h4>
-                        <p>${surah.type}</p>
-                    </div>
-                    <div class="info-item">
-                        <h4>⏳ الزمن</h4>
-                        <p>${surah.time}</p>
-                    </div>
-                    <div class="info-item">
-                        <h4>📜 المكان</h4>
-                        <p>${surah.place}</p>
-                    </div>
+            // تحديث معلومات الآية
+            const infoGrid = document.getElementById('selected-ayah-info-grid');
+            infoGrid.innerHTML = `
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-mosque"></i></div>
+                    <h4>النوع</h4>
+                    <p>${surah.type}</p>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-clock"></i></div>
+                    <h4>الزمن</h4>
+                    <p>${surah.time}</p>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h4>المكان</h4>
+                    <p>${surah.place}</p>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fas fa-info-circle"></i></div>
+                    <h4>سبب النزول</h4>
+                    <p>${surah.reason}</p>
                 </div>
             `;
             
             // الانتقال لتبويب التفسير
-            showTab('tafsir');
+            showSection('tafsir');
+            
+            // تحديث التقدم
+            updateProgress();
+        }
+        
+        // حفظ الآية
+        function bookmarkAyah(surahNum, ayahNum) {
+            const surah = quranData[surahNum];
+            const ayah = surah.ayahs.find(a => a.number === ayahNum);
+            
+            if (!ayah) return;
+            
+            const bookmark = {
+                surah: surahNum,
+                ayah: ayahNum,
+                text: ayah.text,
+                date: new Date().toISOString()
+            };
+            
+            currentState.bookmarks.push(bookmark);
+            saveState();
+            alert('✅ تم حفظ الآية في المحفوظات');
+        }
+        
+        // التنقل بين الأقسام
+        function showSection(sectionId) {
+            // إخفاء جميع الأقسام
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // إلغاء تفعيل جميع الأزرار
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // إظهار القسم المحدد
+            document.getElementById(`${sectionId}-section`).classList.add('active');
+            
+            // تفعيل الزر المحدد
+            event.target.classList.add('active');
+            
+            currentState.currentPage = sectionId;
+            saveState();
+            
+            // إذا كان قسم المصحف، تحميل السورة
+            if (sectionId === 'mushaf') {
+                loadSurah();
+            }
+        }
+        
+        // الآية التالية
+        function nextAyah() {
+            const surah = quranData[currentState.currentSurah];
+            if (!surah) return;
+            
+            if (currentState.currentAyah < surah.ayahs.length) {
+                currentState.currentAyah++;
+            } else {
+                // الانتقال للسورة التالية
+                const nextSurah = parseInt(currentState.currentSurah) + 1;
+                if (quranData[nextSurah]) {
+                    currentState.currentSurah = nextSurah;
+                    currentState.currentAyah = 1;
+                    document.getElementById('surah-select').value = currentState.currentSurah;
+                    loadSurah();
+                }
+            }
+            
+            selectAyah(currentState.currentSurah, currentState.currentAyah);
+            updateProgress();
+        }
+        
+        // الآية السابقة
+        function previousAyah() {
+            if (currentState.currentAyah > 1) {
+                currentState.currentAyah--;
+            } else {
+                // الانتقال للسورة السابقة
+                const prevSurah = parseInt(currentState.currentSurah) - 1;
+                if (quranData[prevSurah]) {
+                    currentState.currentSurah = prevSurah;
+                    const surah = quranData[prevSurah];
+                    currentState.currentAyah = surah.ayahs.length;
+                    document.getElementById('surah-select').value = currentState.currentSurah;
+                    loadSurah();
+                }
+            }
+            
+            selectAyah(currentState.currentSurah, currentState.currentAyah);
+            updateProgress();
         }
         
         // السورة التالية
         function nextSurah() {
-            const select = document.getElementById('surah-select');
-            const current = parseInt(select.value);
+            const current = parseInt(currentState.currentSurah);
             const next = current + 1;
             
             if (quranData[next]) {
-                select.value = next;
+                document.getElementById('surah-select').value = next;
                 loadSurah();
             }
         }
         
         // السورة السابقة
         function prevSurah() {
-            const select = document.getElementById('surah-select');
-            const current = parseInt(select.value);
+            const current = parseInt(currentState.currentSurah);
             const prev = current - 1;
             
             if (quranData[prev]) {
-                select.value = prev;
+                document.getElementById('surah-select').value = prev;
                 loadSurah();
             }
         }
         
-        // التذكيرات
-        function setReminder() {
-            const time = document.getElementById('reminder-time').value;
-            localStorage.setItem('quran_reminder', time);
-            alert(`✅ تم ضبط التذكير للساعة ${time}`);
-        }
-        
-        function testReminder() {
-            if ('Notification' in window && Notification.permission === 'granted') {
-                new Notification('🕌 وقت قراءة القرآن', {
-                    body: 'حان وقت قراءة وردك اليومي من القرآن الكريم',
-                    icon: 'https://img.icons8.com/color/96/000000/quran.png'
-                });
-            } else {
-                alert('يرجى السماح بالإشعارات أولاً');
-            }
-        }
-        
-        // تفعيل الإشعارات
-        function enableNotifications() {
-            if ('Notification' in window) {
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        alert('تم تفعيل التذكيرات!');
-                        setReminder();
-                    }
-                });
-            }
-        }
-        
-        // تثبيت التطبيق
-        function installApp() {
-            if (navigator.standalone) {
-                alert('التطبيق مثبت بالفعل على شاشتك الرئيسية!');
-                return;
-            }
+        // تحديث شريط التقدم
+        function updateProgress() {
+            let totalAyahs = 0;
+            let readAyahs = 0;
             
-            alert('للتثبيت:\n1. اضغط زر المشاركة (📤)\n2. اختر "أضف إلى الشاشة الرئيسية"\n3. اضغط "إضافة"');
+            Object.keys(quranData).forEach(key => {
+                const surah = quranData[key];
+                totalAyahs += surah.ayahs.length;
+                // هنا يمكن إضافة منطق لحساب الآيات المقروءة
+            });
+            
+            // حساب تقدم مبسط
+            const progress = Math.min(100, (currentState.currentAyah / 10) * 100);
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+            document.getElementById('current-progress').textContent = `${Math.round(progress)}%`;
+            
+            // تحديث الإحصائيات
+            const stats = {
+                streak: Math.floor(Math.random() * 30) + 1,
+                ayahs: Math.floor(Math.random() * 500) + 100,
+                time: Math.floor(Math.random() * 50) + 10,
+                completion: Math.floor(progress)
+            };
+            
+            document.getElementById('streak-days').textContent = `${stats.streak} يوم`;
+            document.getElementById('total-ayahs').textContent = `${stats.ayahs} آية`;
+            document.getElementById('total-time').textContent = `${stats.time} ساعة`;
+            document.getElementById('completion').textContent = `${stats.completion}%`;
+            document.getElementById('reading-stats').textContent = `📖 ${stats.ayahs} آية | ⏱️ ${stats.time} ساعة`;
+        }
+        
+        // تم الإكمال
+        function markAsDone() {
+            currentState.progress += 10;
+            saveState();
+            updateProgress();
+            alert('✅ أحسنت! تم تسجيل إنجازك اليومي');
         }
         
         // تغيير السمة
         function toggleTheme() {
             const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
             document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            currentState.settings.darkMode = !isDark;
+            saveState();
         }
         
-        // التهيئة عند التحميل
-        window.onload = function() {
-            // تحميل السمة
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            
-            // تحميل السورة الأولى
-            loadSurah();
-            
-            // طلب الإشعارات
-            if ('Notification' in window && Notification.permission === 'default') {
-                setTimeout(() => {
-                    enableNotifications();
-                }, 2000);
+        // تثبيت التطبيق
+        function installApp() {
+            if (navigator.standalone) {
+                alert('✅ التطبيق مثبت بالفعل على شاشتك الرئيسية!');
+                return;
             }
             
-            // تلقائيًا: تحميل آية عشوائية
-            const randomSurah = Math.random() > 0.5 ? "1" : "2";
-            const surah = quranData[randomSurah];
-            const randomAyah = Math.floor(Math.random() * surah.ayahs.length);
-            const ayah = surah.ayahs[randomAyah];
-            
-            document.getElementById('today-ayah').textContent = ayah.text;
-            document.getElementById('today-tafsir').textContent = ayah.tafsir;
-            document.getElementById('today-type').textContent = surah.type;
-            document.getElementById('today-time').textContent = surah.time;
-            document.getElementById('today-place').textContent = surah.place;
-            document.getElementById('today-order').textContent = surah.order;
-        };
+            alert('لتثبيت التطبيق على iPhone:\n\n1. اضغط زر المشاركة (📤) في أسفل الشاشة\n2. مرر للأسفل\n3. اختر "أضف إلى الشاشة الرئيسية"\n4. اضغط "إضافة" في الأعلى');
+        }
         
-        // تسجيل Service Worker للتشغيل بدون إنترنت
+        // تسجيل Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('Service Worker مسجل');
-                    });
+                    .then(() => console.log('Service Worker مسجل'))
+                    .catch(err => console.log('فشل التسجيل:', err));
             });
         }
+        
+        // تهيئة التطبيق عند التحميل
+        window.addEventListener('DOMContentLoaded', initApp);
+        
+        // حفظ التقدم عند الخروج
+        window.addEventListener('beforeunload', saveState);
     </script>
 </body>
 </html>
