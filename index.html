@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصحف القرآن الكريم - النسخة الكاملة</title>
+    <title>مصحف القرآن الكريم - النسخة الكاملة 114 سورة</title>
     
     <!-- PWA Meta -->
     <meta name="theme-color" content="#1a472a">
@@ -264,73 +264,20 @@
             border-radius: 5px;
         }
         
-        /* Page Navigation */
-        .page-nav {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            margin: 30px 0;
+        /* Loading Spinner */
+        .loader {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
         }
         
-        .page-btn {
-            flex: 1;
-            padding: 18px;
-            background: var(--card);
-            border: 2px solid var(--primary);
-            border-radius: 15px;
-            font-size: 17px;
-            color: var(--primary);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .page-btn:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-        
-        /* Ayah List */
-        .ayah-list {
-            max-height: 600px;
-            overflow-y: auto;
-            padding: 15px;
-            background: var(--card);
-            border-radius: 15px;
-            margin: 20px 0;
-        }
-        
-        .ayah-item {
-            padding: 20px;
-            margin: 15px 0;
-            background: rgba(60, 179, 113, 0.05);
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-right: 3px solid transparent;
-        }
-        
-        .ayah-item:hover {
-            background: rgba(60, 179, 113, 0.1);
-            border-right-color: var(--primary);
-            transform: translateX(-5px);
-        }
-        
-        .ayah-item.active {
-            background: rgba(60, 179, 113, 0.15);
-            border-right-color: var(--primary);
-        }
-        
-        /* Settings */
-        .setting-item {
-            padding: 20px;
-            margin: 15px 0;
-            background: rgba(60, 179, 113, 0.05);
-            border-radius: 15px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         /* Responsive */
@@ -339,8 +286,14 @@
             .nav-btn { min-width: 100%; }
             .quran-text { font-size: 24px; }
             .info-grid { grid-template-columns: 1fr 1fr; }
-            .page-nav { flex-direction: column; }
         }
+        
+        /* Utilities */
+        .hidden { display: none !important; }
+        .text-center { text-align: center; }
+        .text-muted { opacity: 0.7; }
+        .mt-20 { margin-top: 20px; }
+        .mb-20 { margin-bottom: 20px; }
     </style>
 </head>
 <body>
@@ -348,14 +301,14 @@
         <!-- Header -->
         <header class="app-header">
             <h1 class="app-title"><i class="fas fa-quran"></i> مصحف القرآن الكريم</h1>
-            <p class="app-subtitle">النسخة الكاملة - 604 صفحة مع التفسير والتذكيرات</p>
+            <p class="app-subtitle">114 سورة كاملة - 6236 آية - مع التفسير</p>
             <div class="progress-container">
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
                 <div style="display: flex; justify-content: space-between; margin-top: 10px;">
                     <span id="current-progress">0%</span>
-                    <span id="reading-stats">📖 0 آية | ⏱️ 0 دقيقة</span>
+                    <span id="loading-status">⏳ جاري تحميل المصحف...</span>
                 </div>
             </div>
         </header>
@@ -368,17 +321,11 @@
             <button class="nav-btn" onclick="showSection('mushaf')">
                 <i class="fas fa-book-quran"></i> المصحف
             </button>
-            <button class="nav-btn" onclick="showSection('pages')">
-                <i class="fas fa-file-alt"></i> الصفحات
+            <button class="nav-btn" onclick="showSection('search')">
+                <i class="fas fa-search"></i> بحث
             </button>
-            <button class="nav-btn" onclick="showSection('tafsir')">
-                <i class="fas fa-book-open"></i> التفسير
-            </button>
-            <button class="nav-btn" onclick="showSection('reminders')">
-                <i class="fas fa-bell"></i> التذكيرات
-            </button>
-            <button class="nav-btn" onclick="showSection('progress')">
-                <i class="fas fa-chart-line"></i> التقدم
+            <button class="nav-btn" onclick="showSection('bookmarks')">
+                <i class="fas fa-bookmark"></i> المحفوظات
             </button>
             <button class="nav-btn" onclick="showSection('settings')">
                 <i class="fas fa-cog"></i> الإعدادات
@@ -393,58 +340,9 @@
                     <span id="today-date">اليوم</span>
                 </div>
                 
-                <div class="quran-text" id="daily-ayah">
-                    ﴿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ﴾
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-graduation-cap"></i> تفسير الآية</h3>
-                    <p id="daily-tafsir">أبدأ كل عمل مستعينًا بالله الرحمن الرحيم، متذكرًا رحمته الواسعة.</p>
-                </div>
-                
-                <div class="info-grid">
-                    <div class="info-item">
-                        <i class="fas fa-mosque"></i>
-                        <h4>النوع</h4>
-                        <p id="info-type">مكية</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-clock"></i>
-                        <h4>زمن النزول</h4>
-                        <p id="info-time">قبل الهجرة</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <h4>مكان النزول</h4>
-                        <p id="info-place">مكة المكرمة</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-list-ol"></i>
-                        <h4>سبب النزول</h4>
-                        <p id="info-reason">افتتاح القرآن الكريم</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> وقفة إيمانية</h3>
-                    <p id="reflection-text">ابدأ يومك بالله… تتغير نيتك قبل عملك، ويبارك الله في وقتك وأعمالك.</p>
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-check-circle"></i> تطبيق اليوم</h3>
-                    <p id="application-text">سمِّ الله قبل أي عمل تقوم به اليوم: قبل الأكل، قبل الخروج، قبل العمل.</p>
-                    <button class="btn btn-secondary" onclick="markAsDone()">
-                        <i class="fas fa-check"></i> تم الإكمال
-                    </button>
-                </div>
-                
-                <div class="page-nav">
-                    <button class="page-btn" onclick="previousAyah()">
-                        <i class="fas fa-chevron-right"></i> السابقة
-                    </button>
-                    <button class="page-btn" onclick="nextAyah()">
-                        التالية <i class="fas fa-chevron-left"></i>
-                    </button>
+                <div id="daily-content">
+                    <div class="loader"></div>
+                    <p class="text-center">جاري تحميل آية اليوم...</p>
                 </div>
             </div>
         </section>
@@ -454,144 +352,57 @@
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><i class="fas fa-book-quran"></i> المصحف الشريف</h2>
-                    <span id="surah-info">سورة الفاتحة</span>
+                    <span id="surah-count">114 سورة</span>
                 </div>
                 
                 <div style="margin: 20px 0;">
-                    <select class="surah-select" id="surah-select" onchange="loadSurah()" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); background: var(--card); color: var(--dark);">
+                    <select id="surah-select" onchange="loadSurah(this.value)" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); background: var(--card); color: var(--dark); font-size: 16px;">
+                        <option value="">اختر سورة...</option>
                         <!-- سيتم ملؤه بالجافاسكريبت -->
                     </select>
                 </div>
                 
-                <div class="ayah-list" id="ayah-list">
-                    <!-- سيتم ملؤه بالجافاسكريبت -->
+                <div id="mushaf-content">
+                    <div class="loader"></div>
+                    <p class="text-center">جاري تحميل المصحف...</p>
                 </div>
                 
-                <div class="page-nav">
-                    <button class="page-btn" onclick="prevSurah()">
-                        <i class="fas fa-chevron-right"></i> سورة سابقة
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn btn-secondary" onclick="prevPage()" id="prev-btn" disabled>
+                        <i class="fas fa-chevron-right"></i> السابق
                     </button>
-                    <button class="page-btn" onclick="nextSurah()">
-                        سورة تالية <i class="fas fa-chevron-left"></i>
-                    </button>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Pages Section -->
-        <section id="pages-section" class="content-section">
-            <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title"><i class="fas fa-file-alt"></i> تصفح المصحف صفحة صفحة</h2>
-                    <span id="page-info">الصفحة 1 من 604</span>
-                </div>
-                
-                <div style="margin: 20px 0; text-align: center;">
-                    <input type="range" id="page-slider" min="1" max="604" value="1" style="width: 100%;" oninput="changePage(this.value)">
-                    <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                        <span>1</span>
-                        <span id="current-page-display">الصفحة 1</span>
-                        <span>604</span>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-book"></i> محتوى الصفحة</h3>
-                    <p id="page-content">جاري تحميل محتوى الصفحة...</p>
-                </div>
-                
-                <div class="page-nav">
-                    <button class="page-btn" onclick="prevPage()">
-                        <i class="fas fa-chevron-right"></i> صفحة سابقة
-                    </button>
-                    <button class="page-btn" onclick="nextPage()">
-                        صفحة تالية <i class="fas fa-chevron-left"></i>
+                    <button class="btn btn-secondary" onclick="nextPage()" id="next-btn" disabled>
+                        التالي <i class="fas fa-chevron-left"></i>
                     </button>
                 </div>
             </div>
         </section>
         
-        <!-- Tafsir Section -->
-        <section id="tafsir-section" class="content-section">
+        <!-- Search Section -->
+        <section id="search-section" class="content-section">
             <div class="card">
-                <div class="card-header">
-                    <h2 class="card-title"><i class="fas fa-book-open"></i> تفسير الآية</h2>
-                    <span id="selected-ayah-info">اختر آية</span>
+                <h2 class="card-title"><i class="fas fa-search"></i> البحث في القرآن</h2>
+                
+                <div style="margin: 20px 0;">
+                    <input type="text" id="search-input" placeholder="اكتب كلمة للبحث..." style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); background: var(--card); color: var(--dark); font-size: 16px;">
+                    <button class="btn btn-primary mt-20" onclick="searchQuran()">
+                        <i class="fas fa-search"></i> بحث
+                    </button>
                 </div>
                 
-                <div class="quran-text" id="selected-ayah-text">
-                    اختر آية من المصحف لرؤية تفسيرها
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-graduation-cap"></i> التفسير الميسر</h3>
-                    <p id="selected-tafsir-text">سيظهر تفسير الآية هنا عند اختيارها</p>
-                </div>
-                
-                <div class="info-grid" id="selected-ayah-info-grid">
-                    <!-- سيتم ملؤه بالجافاسكريبت -->
+                <div id="search-results">
+                    <p class="text-center text-muted">اكتب كلمة للبحث في القرآن الكريم</p>
                 </div>
             </div>
         </section>
         
-        <!-- Reminders Section -->
-        <section id="reminders-section" class="content-section">
+        <!-- Bookmarks Section -->
+        <section id="bookmarks-section" class="content-section">
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-bell"></i> التذكيرات اليومية</h2>
-                <p style="margin: 15px 0;">اضبط وقت التذكير لقراءة القرآن يومياً:</p>
+                <h2 class="card-title"><i class="fas fa-bookmark"></i> الآيات المحفوظة</h2>
                 
-                <div style="display: flex; gap: 10px; margin: 20px 0;">
-                    <input type="time" id="reminder-time" value="05:00" style="flex: 1; padding: 15px; border-radius: 10px; border: 2px solid var(--primary);">
-                    <button class="btn btn-primary" onclick="saveReminder()">
-                        <i class="fas fa-save"></i> حفظ
-                    </button>
-                </div>
-                
-                <div class="card" id="notification-permission" style="display: none;">
-                    <h3 class="card-title"><i class="fas fa-bell-slash"></i> صلاحية الإشعارات</h3>
-                    <p>لتلقي التذكيرات، يرجى تفعيل الإشعارات</p>
-                    <button class="btn btn-primary" onclick="requestNotificationPermission()">
-                        تفعيل الإشعارات الآن
-                    </button>
-                </div>
-                
-                <button class="btn btn-secondary" onclick="testNotification()">
-                    <i class="fas fa-bell"></i> تجربة التذكير الآن
-                </button>
-            </div>
-        </section>
-        
-        <!-- Progress Section -->
-        <section id="progress-section" class="content-section">
-            <div class="card">
-                <h2 class="card-title"><i class="fas fa-chart-line"></i> تقدمك في القراءة</h2>
-                
-                <div class="info-grid">
-                    <div class="info-item">
-                        <i class="fas fa-fire"></i>
-                        <h4>الأيام المتتالية</h4>
-                        <p id="streak-days">7 أيام</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-book"></i>
-                        <h4>الآيات المقروءة</h4>
-                        <p id="total-ayahs">150 آية</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-clock"></i>
-                        <h4>وقت القراءة</h4>
-                        <p id="total-time">15 ساعة</p>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-trophy"></i>
-                        <h4>الإنجاز</h4>
-                        <p id="completion">25%</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <h3 class="card-title"><i class="fas fa-calendar-alt"></i> إحصائيات هذا الشهر</h3>
-                    <div id="month-stats">جاري تحميل الإحصائيات...</div>
+                <div id="bookmarks-list">
+                    <p class="text-center text-muted">لا توجد آيات محفوظة بعد</p>
                 </div>
             </div>
         </section>
@@ -601,63 +412,67 @@
             <div class="card">
                 <h2 class="card-title"><i class="fas fa-cog"></i> الإعدادات</h2>
                 
-                <div class="setting-item">
-                    <h3><i class="fas fa-bell"></i> إعدادات التذكيرات</h3>
-                    <p>وقت التذكير اليومي:</p>
-                    <input type="time" id="settings-reminder-time" value="05:00" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid var(--primary);">
-                    <button class="btn btn-secondary" onclick="saveReminderSettings()">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <i class="fas fa-database"></i>
+                        <h4>بيانات المصحف</h4>
+                        <p id="data-status">جاري التحميل...</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-book"></i>
+                        <h4>عدد الآيات</h4>
+                        <p id="ayah-count">0 آية</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-hdd"></i>
+                        <h4>مساحة التخزين</h4>
+                        <p id="storage-size">0 MB</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-sync"></i>
+                        <h4>آخر تحديث</h4>
+                        <p id="last-update">الآن</p>
+                    </div>
+                </div>
+                
+                <div class="card mt-20">
+                    <h3 class="card-title"><i class="fas fa-bell"></i> التذكيرات</h3>
+                    <div style="margin: 15px 0;">
+                        <label>وقت التذكير اليومي:</label>
+                        <input type="time" id="reminder-time" value="05:00" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid var(--primary);">
+                    </div>
+                    <button class="btn btn-secondary" onclick="saveReminder()">
                         <i class="fas fa-save"></i> حفظ التذكير
                     </button>
                 </div>
                 
-                <div class="setting-item">
-                    <h3><i class="fas fa-paint-brush"></i> إعدادات المظهر</h3>
-                    <label style="display: flex; align-items: center; gap: 10px; margin: 10px 0;">
-                        <input type="checkbox" id="dark-mode-toggle" onchange="toggleThemeSetting()">
-                        <span>الوضع الليلي</span>
-                    </label>
-                    <div style="margin: 15px 0;">
-                        <p>حجم خط القرآن:</p>
-                        <input type="range" id="font-size" min="20" max="36" value="28" oninput="changeFontSize(this.value)">
-                        <span id="font-size-display">28px</span>
-                    </div>
+                <div class="card mt-20">
+                    <h3 class="card-title"><i class="fas fa-redo"></i> إعادة التعيين</h3>
+                    <p class="text-muted mb-20">يمكنك إعادة تعيين التقدم أو حذف جميع البيانات</p>
+                    
+                    <button class="btn btn-secondary" onclick="resetProgress()">
+                        <i class="fas fa-trash"></i> تصفير التقدم
+                    </button>
+                    
+                    <button class="btn btn-danger mt-20" onclick="clearAllData()">
+                        <i class="fas fa-bomb"></i> حذف جميع البيانات
+                    </button>
+                    
+                    <p class="text-muted mt-20" style="font-size: 14px;">
+                        ⚠️ تحذير: حذف البيانات لا يمكن التراجع عنه
+                    </p>
                 </div>
                 
-                <div class="setting-item">
-                    <h3><i class="fas fa-database"></i> إدارة البيانات</h3>
-                    <button class="btn btn-secondary" onclick="exportData()" style="margin: 5px 0;">
-                        <i class="fas fa-download"></i> تصدير بيانات التقدم
+                <div class="card mt-20">
+                    <h3 class="card-title"><i class="fas fa-download"></i> تحديث البيانات</h3>
+                    <p class="text-muted mb-20">تحديث بيانات المصحف من الإنترنت</p>
+                    
+                    <button class="btn btn-primary" onclick="loadQuranData()">
+                        <i class="fas fa-sync"></i> تحديث الآن
                     </button>
-                    <button class="btn btn-secondary" onclick="importData()" style="margin: 5px 0;">
-                        <i class="fas fa-upload"></i> استيراد بيانات
-                    </button>
-                    <button class="btn btn-secondary" onclick="backupData()" style="margin: 5px 0;">
-                        <i class="fas fa-copy"></i> نسخ احتياطي
-                    </button>
-                </div>
-                
-                <div class="setting-item">
-                    <h3><i class="fas fa-redo"></i> إعادة التعيين والتصفير</h3>
-                    <p style="color: #dc3545; margin: 10px 0;">⚠️ تحذير: هذه العملية لا يمكن التراجع عنها</p>
-                    <button class="btn btn-danger" onclick="resetProgress()">
-                        <i class="fas fa-trash"></i> تصفير وإعادة تعيين التقدم كاملاً
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetBookmarks()" style="margin-top: 10px;">
-                        <i class="far fa-bookmark"></i> تصفير المحفوظات فقط
-                    </button>
-                    <button class="btn btn-secondary" onclick="resetSettings()" style="margin-top: 10px;">
-                        <i class="fas fa-sliders-h"></i> إعادة ضبط الإعدادات
-                    </button>
-                </div>
-                
-                <div class="setting-item">
-                    <h3><i class="fas fa-info-circle"></i> حول التطبيق</h3>
-                    <p>📱 مصحف القرآن الكريم - النسخة الكاملة</p>
-                    <p>📚 يحتوي على 604 صفحة كاملة</p>
-                    <p>🔄 الإصدار: 3.0.0 (كامل)</p>
-                    <p>⚡ يعمل بدون إنترنت (PWA)</p>
-                    <button class="btn btn-primary" onclick="installApp()" style="margin-top: 15px;">
-                        <i class="fas fa-download"></i> تثبيت التطبيق على الشاشة الرئيسية
+                    
+                    <button class="btn btn-secondary mt-20" onclick="installApp()">
+                        <i class="fas fa-mobile-alt"></i> تثبيت التطبيق
                     </button>
                 </div>
             </div>
@@ -666,430 +481,494 @@
 
     <!-- JavaScript -->
     <script>
-        // بيانات المصحف الكاملة (مبسطة لأغراض العرض)
-        // في النسخة الحقيقية، سيكون لدينا 604 صفحة كاملة
-        const quranData = {
-            "1": {
-                name: "الفاتحة",
-                type: "مكية",
-                time: "قبل الهجرة",
-                place: "مكة المكرمة",
-                order: 1,
-                reason: "افتتاح القرآن الكريم",
-                ayahs: [
-                    {number: 1, text: "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "أبدأ كل عمل مستعينًا بالله الرحمن الرحيم، متذكرًا رحمته الواسعة التي وسعت كل شيء.", reflection: "البسملة تذكرك أن تبدأ أعمالك بالله، فتتنزل البركة.", application: "سم الله قبل كل عمل اليوم."},
-                    {number: 2, text: "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ", tafsir: "الثناء على الله بصفات الكمال والربوبية لجميع الخلق.", reflection: "الحمد يملأ القلب امتنانًا ويوسع الرزق.", application: "احمد الله 10 مرات اليوم."},
-                    {number: 3, text: "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", tafsir: "الرحمن: رحمة عامة لجميع الخلق، الرحيم: رحمة خاصة بالمؤمنين.", reflection: "رحمة الله سبقت غضبه، كن أنت أيضًا رحيمًا.", application: "تصدق أو ساعد شخصًا اليوم."},
-                    {number: 4, text: "مَٰلِكِ يَوْمِ ٱلدِّينِ", tafsir: "المالك ليوم الجزاء والحساب، وهو يوم القيامة.", reflection: "تذكر يوم القيامة يردع عن المعاصي.", application: "تصدق صدقة تذكرك بيوم القيامة."},
-                    {number: 5, text: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", tafsir: "نخصك بالعبادة ونتوكل عليك في كل الأمور.", reflection: "الإخلاص في العبادة شرط القبول.", application: "أخلص النية في صلاتك اليوم."},
-                    {number: 6, text: "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ", tafsir: "أرشدنا إلى الطريق المستقيم وهو الإسلام.", reflection: "اطلب الهداية دائمًا، فالقلب بين أصبعين من أصابع الرحمن.", application: "ادع بهذا الدعاء في سجودك."},
-                    {number: 7, text: "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ", tafsir: "طريق النبيين والصديقين والشهداء والصالحين.", reflection: "كن من المنعم عليهم باتباع السنة.", application: "اقرأ عن صحابي جليل اليوم."}
-                ]
-            },
-            "2": {
-                name: "البقرة",
-                type: "مدنية",
-                time: "بعد الهجرة",
-                place: "المدينة المنورة",
-                order: 87,
-                reason: "تأسيس المجتمع الإسلامي",
-                ayahs: [
-                    {number: 1, text: "الٓمٓ", tafsir: "الله أعلم بمراده بهذه الحروف المقطعة.", reflection: "أسرار القرآن لا تنتهي.", application: "تأمل في عظمة القرآن."},
-                    {number: 2, text: "ذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ", tafsir: "هذا القرآن لا شك فيه، يهدي المتقين الذين يتقون الشرك ويؤدون الفرائض.", reflection: "التقوى مفتاح الفهم والهداية.", application: "اتق الله حيثما كنت."},
-                    {number: 3, text: "ٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ", tafsir: "الذين يصدقون بالغيب، ويؤدون الصلاة، ويتصدقون مما رزقهم الله.", reflection: "الإيمان بالغيب يزيد اليقين.", application: "تصدق بشيء اليوم."},
-                    {number: 4, text: "وَٱلَّذِينَ يُؤْمِنُونَ بِمَآ أُنزِلَ إِلَيْكَ وَمَآ أُنزِلَ مِن قَبْلِكَ وَبِٱلْءَاخِرَةِ هُمْ يُوقِنُونَ", tafsir: "والذين يؤمنون بما أنزل إليك من القرآن وما أنزل من قبلك من الكتب، وبالبعث والجزاء هم موقنون.", reflection: "الإيمان بالكتب السماوية كلها.", application: "اقرأ عن نبي من الأنبياء."},
-                    {number: 5, text: "أُو۟لَٰٓئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ ۖ وَأُو۟لَٰٓئِكَ هُمُ ٱلْمُفْلِحُونَ", tafsir: "أولئك المهتدون بهدًى من ربهم، وأولئك هم الفائزون في الدنيا والآخرة.", reflection: "الفلاح هو الفوز الحقيقي.", application: "اطلب الفلاح في صلاتك."}
-                ]
-            },
-            // يمكن إضافة المزيد من السور هنا...
-            "3": { name: "آل عمران", type: "مدنية", time: "بعد الهجرة", place: "المدينة", order: 89 },
-            "4": { name: "النساء", type: "مدنية", time: "بعد الهجرة", place: "المدينة", order: 92 },
-            "5": { name: "المائدة", type: "مدنية", time: "بعد الهجرة", place: "المدينة", order: 112 },
-            "6": { name: "الأنعام", type: "مكية", time: "قبل الهجرة", place: "مكة", order: 55 },
-            "7": { name: "الأعراف", type: "مكية", time: "قبل الهجرة", place: "مكة", order: 39 },
-            "8": { name: "الأنفال", type: "مدنية", time: "بعد الهجرة", place: "المدينة", order: 88 },
-            "9": { name: "التوبة", type: "مدنية", time: "بعد الهجرة", place: "المدينة", order: 113 },
-            "10": { name: "يونس", type: "مكية", time: "قبل الهجرة", place: "مكة", order: 51 }
-            // ... وهكذا حتى 114 سورة
-        };
-
-        // بيانات الصفحات (604 صفحة مبسطة)
-        const pagesData = {
-            1: { start: "الفاتحة 1", end: "البقرة 1", content: "الصفحة الأولى من المصحف تحتوي على بداية سورة الفاتحة..." },
-            2: { start: "البقرة 2", end: "البقرة 5", content: "الصفحة الثانية من المصحف..." },
-            3: { start: "البقرة 6", end: "البقرة 10", content: "الصفحة الثالثة من المصحف..." },
-            // ... وهكذا حتى 604
-            604: { start: "الناس 1", end: "الناس 6", content: "الصفحة الأخيرة من المصحف تحتوي على سورة الناس..." }
-        };
-
-        // حالة التطبيق
+        // متغيرات التطبيق
+        let quranData = null;
+        let tafsirData = null;
+        let surahInfo = null;
         let currentState = {
             currentSurah: 1,
-            currentAyah: 1,
             currentPage: 1,
-            currentSection: 'daily',
             bookmarks: [],
-            progress: {
-                readAyahs: 0,
-                readPages: 0,
-                totalTime: 0, // بالدقائق
-                streak: 0,
-                lastRead: null
-            },
+            progress: {},
             settings: {
                 reminderTime: '05:00',
-                notifications: false,
                 darkMode: false,
-                fontSize: 28,
-                autoSave: true
+                fontSize: 28
             }
         };
 
+        // روابط البيانات
+        const DATA_URLS = {
+            quran: 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmani.json',
+            tafsir: 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-muyassartafseer.json',
+            surahInfo: 'https://api.alquran.cloud/v1/meta'
+        };
+
         // تهيئة التطبيق
-        function initApp() {
-            loadState();
-            setupUI();
-            setupNotifications();
-            loadDailyAyah();
-            populateSurahSelect();
-            updateProgress();
-            updatePageDisplay();
+        async function initApp() {
+            console.log('🚀 بدء تحميل المصحف الكامل...');
             
-            // طلب إذن الإشعارات بعد 3 ثواني
-            setTimeout(() => {
-                if (!currentState.settings.notifications) {
-                    requestNotificationPermission();
+            // تحميل الحالة المحفوظة
+            loadSavedState();
+            
+            // تحديث الواجهة
+            updateUI();
+            
+            // تحميل بيانات القرآن
+            await loadQuranData();
+            
+            // تحميل التفسير
+            await loadTafsirData();
+            
+            // تحميل معلومات السور
+            await loadSurahInfo();
+            
+            console.log('✅ تم تحميل المصحف بنجاح!');
+            updateLoadingStatus('✅ تم تحميل المصحف الكامل');
+        }
+
+        // تحميل بيانات القرآن
+        async function loadQuranData() {
+            try {
+                updateLoadingStatus('📥 جاري تحميل نص القرآن...');
+                
+                // محاولة تحميل من localStorage أولاً
+                const cachedQuran = localStorage.getItem('quranData');
+                if (cachedQuran) {
+                    quranData = JSON.parse(cachedQuran);
+                    console.log('📖 تم تحميل القرآن من الذاكرة المحلية');
+                    updateLoadingStatus('📖 تم تحميل القرآن من الذاكرة المحلية');
+                    return;
                 }
-            }, 3000);
+                
+                // تحميل من الإنترنت
+                const response = await fetch(DATA_URLS.quran);
+                if (!response.ok) throw new Error('فشل تحميل القرآن');
+                
+                const data = await response.json();
+                quranData = data.quran || data;
+                
+                // حفظ في localStorage
+                localStorage.setItem('quranData', JSON.stringify(quranData));
+                
+                console.log('✅ تم تحميل القرآن من الإنترنت');
+                updateLoadingStatus('✅ تم تحميل القرآن بنجاح');
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحميل القرآن:', error);
+                updateLoadingStatus('❌ فشل تحميل القرآن');
+                
+                // استخدام بيانات بديلة بسيطة
+                quranData = getSampleQuranData();
+                localStorage.setItem('quranData', JSON.stringify(quranData));
+            }
+        }
+
+        // تحميل التفسير
+        async function loadTafsirData() {
+            try {
+                updateLoadingStatus('📚 جاري تحميل التفسير...');
+                
+                const cachedTafsir = localStorage.getItem('tafsirData');
+                if (cachedTafsir) {
+                    tafsirData = JSON.parse(cachedTafsir);
+                    console.log('📚 تم تحميل التفسير من الذاكرة المحلية');
+                    return;
+                }
+                
+                const response = await fetch(DATA_URLS.tafsir);
+                if (!response.ok) throw new Error('فشل تحميل التفسير');
+                
+                const data = await response.json();
+                tafsirData = data.quran || data;
+                
+                localStorage.setItem('tafsirData', JSON.stringify(tafsirData));
+                console.log('✅ تم تحميل التفسير من الإنترنت');
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحميل التفسير:', error);
+                tafsirData = null;
+            }
+        }
+
+        // تحميل معلومات السور
+        async function loadSurahInfo() {
+            try {
+                updateLoadingStatus('📊 جاري تحميل معلومات السور...');
+                
+                const cachedInfo = localStorage.getItem('surahInfo');
+                if (cachedInfo) {
+                    surahInfo = JSON.parse(cachedInfo);
+                    console.log('📊 تم تحميل معلومات السور من الذاكرة المحلية');
+                    return;
+                }
+                
+                const response = await fetch(DATA_URLS.surahInfo);
+                if (!response.ok) throw new Error('فشل تحميل معلومات السور');
+                
+                const data = await response.json();
+                surahInfo = data.data.surahs.references;
+                
+                localStorage.setItem('surahInfo', JSON.stringify(surahInfo));
+                console.log('✅ تم تحميل معلومات السور من الإنترنت');
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحميل معلومات السور:', error);
+                surahInfo = getSampleSurahInfo();
+            }
             
-            console.log('✅ التطبيق جاهز مع المصحف الكامل');
+            // بعد تحميل المعلومات، تحديث الواجهة
+            populateSurahSelect();
+            loadDailyAyah();
+            updateDataStats();
         }
 
         // تحميل الحالة المحفوظة
-        function loadState() {
-            const saved = localStorage.getItem('quranAppFullState');
+        function loadSavedState() {
+            const saved = localStorage.getItem('quranAppState');
             if (saved) {
-                try {
-                    currentState = JSON.parse(saved);
-                    console.log('تم تحميل الحالة المحفوظة');
-                } catch (e) {
-                    console.log('خطأ في تحميل الحالة، استخدام الحالة الافتراضية');
-                }
+                currentState = JSON.parse(saved);
             }
             
             // تطبيق الإعدادات
             if (currentState.settings.darkMode) {
                 document.documentElement.setAttribute('data-theme', 'dark');
-                document.getElementById('dark-mode-toggle').checked = true;
             }
             
-            document.getElementById('font-size').value = currentState.settings.fontSize;
-            document.getElementById('font-size-display').textContent = currentState.settings.fontSize + 'px';
-            document.querySelectorAll('.quran-text').forEach(el => {
-                el.style.fontSize = currentState.settings.fontSize + 'px';
-            });
+            document.getElementById('reminder-time').value = currentState.settings.reminderTime;
         }
 
         // حفظ الحالة
         function saveState() {
-            if (currentState.settings.autoSave) {
-                localStorage.setItem('quranAppFullState', JSON.stringify(currentState));
-                console.log('تم حفظ الحالة');
+            localStorage.setItem('quranAppState', JSON.stringify(currentState));
+        }
+
+        // تحديث حالة التحميل
+        function updateLoadingStatus(message) {
+            const statusElement = document.getElementById('loading-status');
+            if (statusElement) {
+                statusElement.textContent = message;
             }
         }
 
-        // إعداد الواجهة
-        function setupUI() {
-            // تحديث التاريخ
-            const today = new Date().toLocaleDateString('ar-SA', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            document.getElementById('today-date').textContent = today;
-            
-            // تحديث وقت التذكير
-            document.getElementById('reminder-time').value = currentState.settings.reminderTime;
-            document.getElementById('settings-reminder-time').value = currentState.settings.reminderTime;
-            
-            // تحديث شريط الصفحات
-            document.getElementById('page-slider').value = currentState.currentPage;
-            document.getElementById('current-page-display').textContent = `الصفحة ${currentState.currentPage}`;
-            document.getElementById('page-info').textContent = `الصفحة ${currentState.currentPage} من 604`;
-        }
-
-        // إعداد الإشعارات
-        function setupNotifications() {
-            const permissionElement = document.getElementById('notification-permission');
-            
-            if ('Notification' in window) {
-                if (Notification.permission === 'granted') {
-                    currentState.settings.notifications = true;
-                    permissionElement.style.display = 'none';
-                    scheduleReminders();
-                } else if (Notification.permission === 'denied') {
-                    permissionElement.style.display = 'block';
-                }
-            } else {
-                permissionElement.innerHTML = '<p>المتصفح لا يدعم الإشعارات</p>';
+        // تحديث إحصائيات البيانات
+        function updateDataStats() {
+            if (quranData && surahInfo) {
+                const totalAyahs = Object.values(quranData).reduce((sum, surah) => sum + (surah.ayahs?.length || 0), 0);
+                
+                document.getElementById('ayah-count').textContent = `${totalAyahs} آية`;
+                document.getElementById('data-status').textContent = '✅ محملة';
+                document.getElementById('storage-size').textContent = `${Math.round(JSON.stringify(quranData).length / 1024 / 1024 * 100) / 100} MB`;
+                document.getElementById('surah-count').textContent = `${surahInfo.length} سورة`;
             }
-        }
-
-        // طلب إذن الإشعارات
-        function requestNotificationPermission() {
-            if (!('Notification' in window)) {
-                alert('المتصفح لا يدعم الإشعارات');
-                return;
-            }
-            
-            if (Notification.permission === 'granted') {
-                currentState.settings.notifications = true;
-                saveState();
-                document.getElementById('notification-permission').style.display = 'none';
-                scheduleReminders();
-                alert('✅ تم تفعيل الإشعارات!');
-                return;
-            }
-            
-            if (Notification.permission === 'denied') {
-                alert('❌ تم رفض الإشعارات. يرجى تفعيلها يدوياً من إعدادات المتصفح.');
-                return;
-            }
-            
-            Notification.requestPermission().then(permission => {
-                if (permission === 'granted') {
-                    currentState.settings.notifications = true;
-                    saveState();
-                    document.getElementById('notification-permission').style.display = 'none';
-                    scheduleReminders();
-                    alert('✅ تم تفعيل الإشعارات بنجاح!');
-                } else {
-                    alert('❌ لم يتم تفعيل الإشعارات. يمكنك تفعيلها لاحقاً.');
-                }
-            });
-        }
-
-        // جدولة التذكيرات
-        function scheduleReminders() {
-            if (!currentState.settings.notifications) return;
-            
-            const [hours, minutes] = currentState.settings.reminderTime.split(':').map(Number);
-            const now = new Date();
-            const reminderTime = new Date();
-            
-            reminderTime.setHours(hours, minutes, 0, 0);
-            
-            if (reminderTime <= now) {
-                reminderTime.setDate(reminderTime.getDate() + 1);
-            }
-            
-            const timeUntilReminder = reminderTime.getTime() - now.getTime();
-            
-            setTimeout(() => {
-                if (Notification.permission === 'granted') {
-                    showNotification('🕌 وقت قراءة القرآن', 'حان وقت قراءة وردك اليومي من القرآن الكريم');
-                }
-                scheduleReminders();
-            }, timeUntilReminder);
-        }
-
-        // عرض إشعار
-        function showNotification(title, body) {
-            if (Notification.permission === 'granted') {
-                new Notification(title, {
-                    body: body,
-                    icon: 'https://img.icons8.com/color/96/000000/quran.png',
-                    badge: 'https://img.icons8.com/color/96/000000/quran.png'
-                });
-            }
-        }
-
-        // تجربة الإشعار
-        function testNotification() {
-            if (Notification.permission === 'granted') {
-                showNotification('🔔 تجربة التذكير', 'هذا تذكير تجريبي من تطبيق مصحف القرآن الكريم');
-                alert('✅ تم إرسال إشعار تجريبي!');
-            } else {
-                requestNotificationPermission();
-            }
-        }
-
-        // حفظ التذكير
-        function saveReminder() {
-            const time = document.getElementById('reminder-time').value;
-            currentState.settings.reminderTime = time;
-            saveState();
-            scheduleReminders();
-            alert(`✅ تم حفظ وقت التذكير: ${time}`);
-        }
-
-        // حفظ إعدادات التذكير من الإعدادات
-        function saveReminderSettings() {
-            const time = document.getElementById('settings-reminder-time').value;
-            currentState.settings.reminderTime = time;
-            saveState();
-            scheduleReminders();
-            alert(`✅ تم حفظ وقت التذكير: ${time}`);
-        }
-
-        // تحميل آية اليوم
-        function loadDailyAyah() {
-            const today = new Date().getDate();
-            const surahKeys = Object.keys(quranData);
-            const surahIndex = (today % surahKeys.length);
-            const surahNum = surahKeys[surahIndex];
-            const surah = quranData[surahNum];
-            
-            if (!surah || !surah.ayahs) return;
-            
-            const ayahIndex = (today % (surah.ayahs?.length || 1));
-            const ayah = surah.ayahs[ayahIndex];
-            
-            if (!ayah) return;
-            
-            document.getElementById('daily-ayah').textContent = ayah.text;
-            document.getElementById('daily-tafsir').textContent = ayah.tafsir;
-            document.getElementById('info-type').textContent = surah.type;
-            document.getElementById('info-time').textContent = surah.time;
-            document.getElementById('info-place').textContent = surah.place;
-            document.getElementById('info-reason').textContent = surah.reason;
-            document.getElementById('reflection-text').textContent = ayah.reflection;
-            document.getElementById('application-text').textContent = ayah.application;
-            
-            currentState.currentSurah = parseInt(surahNum);
-            currentState.currentAyah = ayah.number;
-            currentState.progress.readAyahs++;
-            saveState();
         }
 
         // ملء قائمة السور
         function populateSurahSelect() {
             const select = document.getElementById('surah-select');
-            select.innerHTML = '';
+            select.innerHTML = '<option value="">اختر سورة...</option>';
             
-            Object.keys(quranData).forEach(key => {
-                const surah = quranData[key];
-                const option = document.createElement('option');
-                option.value = key;
-                option.textContent = `${surah.name} (${surah.type})`;
-                select.appendChild(option);
-            });
-            
-            select.value = currentState.currentSurah;
+            if (surahInfo) {
+                surahInfo.forEach(surah => {
+                    const option = document.createElement('option');
+                    option.value = surah.number;
+                    option.textContent = `${surah.number}. ${surah.name} (${surah.englishName}) - ${surah.ayahs} آية`;
+                    select.appendChild(option);
+                });
+            }
         }
 
         // تحميل سورة
-        function loadSurah() {
-            const surahNum = document.getElementById('surah-select').value;
-            const surah = quranData[surahNum];
+        function loadSurah(surahNumber) {
+            if (!quranData || !surahNumber) return;
             
+            const surah = quranData[surahNumber];
             if (!surah) return;
             
-            currentState.currentSurah = parseInt(surahNum);
-            saveState();
+            const contentDiv = document.getElementById('mushaf-content');
+            contentDiv.innerHTML = '';
             
-            document.getElementById('surah-info').textContent = `سورة ${surah.name}`;
+            // إضافة معلومات السورة
+            const surahHeader = document.createElement('div');
+            surahHeader.className = 'card';
+            surahHeader.innerHTML = `
+                <h3 class="card-title">سورة ${surah.name}</h3>
+                <p class="text-muted">${surah.englishName} - ${surah.ayahs?.length || 0} آية</p>
+                <p class="quran-text">﴿ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ﴾</p>
+            `;
+            contentDiv.appendChild(surahHeader);
             
-            const ayahList = document.getElementById('ayah-list');
-            ayahList.innerHTML = '';
-            
+            // إضافة الآيات
             if (surah.ayahs && surah.ayahs.length > 0) {
                 surah.ayahs.forEach(ayah => {
-                    const ayahItem = document.createElement('div');
-                    ayahItem.className = 'ayah-item';
-                    ayahItem.onclick = () => selectAyah(surahNum, ayah.number);
-                    ayahItem.innerHTML = `
+                    const ayahDiv = document.createElement('div');
+                    ayahDiv.className = 'card mt-20';
+                    ayahDiv.innerHTML = `
                         <div class="quran-text">${ayah.text}</div>
                         <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                            <span style="color: var(--primary); font-weight: 600;">الآية ${ayah.number}</span>
-                            <button onclick="event.stopPropagation(); bookmarkAyah(${surahNum}, ${ayah.number})" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                            <span style="color: var(--primary);">الآية ${ayah.number}</span>
+                            <button onclick="bookmarkAyah(${surahNumber}, ${ayah.number})" style="background: none; border: none; color: var(--primary); cursor: pointer;">
                                 <i class="far fa-bookmark"></i>
                             </button>
                         </div>
+                        ${getTafsirForAyah(surahNumber, ayah.number)}
                     `;
-                    ayahList.appendChild(ayahItem);
+                    contentDiv.appendChild(ayahDiv);
                 });
-            } else {
-                ayahList.innerHTML = '<p style="text-align: center; padding: 20px;">جاري تحميل الآيات...</p>';
             }
+            
+            // تفعيل أزرار التنقل
+            document.getElementById('prev-btn').disabled = surahNumber <= 1;
+            document.getElementById('next-btn').disabled = surahNumber >= 114;
+            
+            currentState.currentSurah = parseInt(surahNumber);
+            saveState();
         }
 
-        // اختيار آية لعرض تفسيرها
-        function selectAyah(surahNum, ayahNum) {
-            const surah = quranData[surahNum];
+        // الحصول على تفسير الآية
+        function getTafsirForAyah(surah, ayah) {
+            if (!tafsirData) return '';
             
-            if (!surah) return;
+            const surahTafsir = tafsirData[surah];
+            if (!surahTafsir || !surahTafsir.ayahs) return '';
             
-            // تحديث قسم التفسير
-            document.getElementById('selected-ayah-info').textContent = `سورة ${surah.name} - الآية ${ayahNum}`;
+            const ayahTafsir = surahTafsir.ayahs.find(a => a.number === ayah);
+            if (!ayahTafsir || !ayahTafsir.text) return '';
             
-            // البحث عن تفسير الآية
-            let tafsirText = "التفسير غير متوفر حاليًا.";
-            if (surah.ayahs && surah.ayahs[ayahNum - 1]) {
-                const ayah = surah.ayahs[ayahNum - 1];
-                document.getElementById('selected-ayah-text').textContent = ayah.text;
-                tafsirText = ayah.tafsir || "التفسير غير متوفر حاليًا.";
-            } else {
-                document.getElementById('selected-ayah-text').textContent = `آية ${ayahNum} من سورة ${surah.name}`;
-            }
-            
-            document.getElementById('selected-tafsir-text').textContent = tafsirText;
-            
-            // تحديث معلومات الآية
-            const infoGrid = document.getElementById('selected-ayah-info-grid');
-            infoGrid.innerHTML = `
-                <div class="info-item">
-                    <i class="fas fa-mosque"></i>
-                    <h4>النوع</h4>
-                    <p>${surah.type}</p>
+            return `
+                <div style="background: rgba(60, 179, 113, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
+                    <h4 style="color: var(--primary); margin-bottom: 10px;">
+                        <i class="fas fa-graduation-cap"></i> التفسير الميسر
+                    </h4>
+                    <p>${ayahTafsir.text}</p>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-clock"></i>
-                    <h4>الزمن</h4>
-                    <p>${surah.time}</p>
+            `;
+        }
+
+        // تحميل آية اليوم
+        function loadDailyAyah() {
+            if (!quranData || !surahInfo) return;
+            
+            const today = new Date();
+            const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+            
+            // اختيار سورة عشوائية بناءً على اليوم
+            const surahIndex = (dayOfYear % surahInfo.length);
+            const surahNumber = surahInfo[surahIndex].number;
+            const surah = quranData[surahNumber];
+            
+            if (!surah || !surah.ayahs) return;
+            
+            // اختيار آية عشوائية
+            const ayahIndex = dayOfYear % (surah.ayahs.length || 7);
+            const ayah = surah.ayahs[ayahIndex] || surah.ayahs[0];
+            
+            if (!ayah) return;
+            
+            const contentDiv = document.getElementById('daily-content');
+            contentDiv.innerHTML = `
+                <div class="quran-text">${ayah.text}</div>
+                
+                <div class="card mt-20">
+                    <h3 class="card-title"><i class="fas fa-graduation-cap"></i> تفسير الآية</h3>
+                    <p>${getTafsirForAyah(surahNumber, ayah.number) || 'التفسير غير متوفر حالياً'}</p>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <h4>المكان</h4>
-                    <p>${surah.place}</p>
+                
+                <div class="info-grid mt-20">
+                    <div class="info-item">
+                        <i class="fas fa-mosque"></i>
+                        <h4>السورة</h4>
+                        <p>${surah.name}</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-hashtag"></i>
+                        <h4>رقم الآية</h4>
+                        <p>${ayah.number}</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-book"></i>
+                        <h4>عدد آيات السورة</h4>
+                        <p>${surah.ayahs?.length || 0}</p>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-star"></i>
+                        <h4>التصنيف</h4>
+                        <p>${surahInfo[surahIndex].revelationType === 'Meccan' ? 'مكية' : 'مدنية'}</p>
+                    </div>
                 </div>
-                <div class="info-item">
-                    <i class="fas fa-info-circle"></i>
-                    <h4>سبب النزول</h4>
-                    <p>${surah.reason || "غير معروف"}</p>
+                
+                <div class="card mt-20">
+                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> تطبيق عملي</h3>
+                    <p>حاول أن تردد هذه الآية ${ayah.number} مرة اليوم، وتفكر في معناها.</p>
+                    <button class="btn btn-secondary" onclick="bookmarkAyah(${surahNumber}, ${ayah.number})">
+                        <i class="far fa-bookmark"></i> حفظ هذه الآية
+                    </button>
                 </div>
             `;
             
-            // الانتقال لتبويب التفسير
-            showSection('tafsir');
-            
-            // تحديث التقدم
-            currentState.progress.readAyahs++;
-            updateProgress();
+            // تحديث التاريخ
+            document.getElementById('today-date').textContent = today.toLocaleDateString('ar-SA', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
         }
 
         // حفظ الآية
-        function bookmarkAyah(surahNum, ayahNum) {
-            const surah = quranData[surahNum];
+        function bookmarkAyah(surah, ayah) {
+            if (!quranData || !quranData[surah]) return;
             
-            if (!surah) return;
+            const surahData = quranData[surah];
+            const ayahData = surahData.ayahs?.find(a => a.number === ayah);
             
-            const ayahText = surah.ayahs && surah.ayahs[ayahNum - 1] 
-                ? surah.ayahs[ayahNum - 1].text 
-                : `آية ${ayahNum} من سورة ${surah.name}`;
+            if (!ayahData) return;
             
             const bookmark = {
-                surah: surahNum,
-                ayah: ayahNum,
-                text: ayahText,
+                surah: surah,
+                ayah: ayah,
+                text: ayahData.text,
+                surahName: surahData.name,
                 date: new Date().toISOString(),
-                surahName: surah.name
+                timestamp: Date.now()
             };
             
             currentState.bookmarks.push(bookmark);
             saveState();
+            
             alert('✅ تم حفظ الآية في المحفوظات');
+            updateBookmarksList();
+        }
+
+        // تحديث قائمة المحفوظات
+        function updateBookmarksList() {
+            const listDiv = document.getElementById('bookmarks-list');
+            
+            if (!currentState.bookmarks || currentState.bookmarks.length === 0) {
+                listDiv.innerHTML = '<p class="text-center text-muted">لا توجد آيات محفوظة بعد</p>';
+                return;
+            }
+            
+            let html = '';
+            currentState.bookmarks.forEach((bookmark, index) => {
+                html += `
+                    <div class="card mb-20">
+                        <div class="quran-text">${bookmark.text}</div>
+                        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                            <span style="color: var(--primary);">
+                                ${bookmark.surahName} - الآية ${bookmark.ayah}
+                            </span>
+                            <div>
+                                <button onclick="loadSurah(${bookmark.surah})" style="background: none; border: none; color: var(--primary); margin-left: 10px; cursor: pointer;">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button onclick="removeBookmark(${index})" style="background: none; border: none; color: #dc3545; cursor: pointer;">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-muted" style="font-size: 14px; margin-top: 10px;">
+                            <i class="far fa-clock"></i> ${new Date(bookmark.date).toLocaleDateString('ar-SA')}
+                        </p>
+                    </div>
+                `;
+            });
+            
+            listDiv.innerHTML = html;
+        }
+
+        // إزالة محفوظة
+        function removeBookmark(index) {
+            if (confirm('هل تريد إزالة هذه الآية من المحفوظات؟')) {
+                currentState.bookmarks.splice(index, 1);
+                saveState();
+                updateBookmarksList();
+                alert('✅ تم إزالة الآية من المحفوظات');
+            }
+        }
+
+        // البحث في القرآن
+        function searchQuran() {
+            const query = document.getElementById('search-input').value.trim();
+            if (!query || !quranData) return;
+            
+            const resultsDiv = document.getElementById('search-results');
+            resultsDiv.innerHTML = '<div class="loader"></div><p class="text-center">جاري البحث...</p>';
+            
+            setTimeout(() => {
+                let results = [];
+                const queryLower = query.toLowerCase();
+                
+                // البحث في جميع السور والآيات
+                Object.keys(quranData).forEach(surahNum => {
+                    const surah = quranData[surahNum];
+                    if (surah.ayahs) {
+                        surah.ayahs.forEach(ayah => {
+                            if (ayah.text && ayah.text.includes(query)) {
+                                results.push({
+                                    surah: surahNum,
+                                    ayah: ayah.number,
+                                    text: ayah.text,
+                                    surahName: surah.name
+                                });
+                            }
+                        });
+                    }
+                });
+                
+                // عرض النتائج
+                if (results.length === 0) {
+                    resultsDiv.innerHTML = `
+                        <div class="card">
+                            <p class="text-center text-muted">❌ لم يتم العثور على نتائج للبحث: "${query}"</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                let html = `
+                    <div class="card">
+                        <h3 class="card-title">
+                            <i class="fas fa-search"></i> نتائج البحث: "${query}"
+                        </h3>
+                        <p class="text-muted">تم العثور على ${results.length} نتيجة</p>
+                    </div>
+                `;
+                
+                results.slice(0, 20).forEach(result => {
+                    html += `
+                        <div class="card mt-20">
+                            <div class="quran-text">${highlightText(result.text, query)}</div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 15px;">
+                                <span style="color: var(--primary);">
+                                    ${result.surahName} - الآية ${result.ayah}
+                                </span>
+                                <button onclick="loadSurah(${result.surah})" style="background: none; border: none; color: var(--primary); cursor: pointer;">
+                                    <i class="fas fa-external-link-alt"></i> انتقل للسورة
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                if (results.length > 20) {
+                    html += `
+                        <div class="card mt-20 text-center">
+                            <p class="text-muted">و ${results.length - 20} نتيجة أخرى...</p>
+                        </div>
+                    `;
+                }
+                
+                resultsDiv.innerHTML = html;
+            }, 500);
+        }
+
+        // تمييز النص في نتائج البحث
+        function highlightText(text, query) {
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<mark style="background-color: #ffeb3b; padding: 2px 0;">$1</mark>');
         }
 
         // التنقل بين الأقسام
@@ -1110,308 +989,103 @@
             // تفعيل الزر المحدد
             event.target.classList.add('active');
             
-            currentState.currentSection = sectionId;
-            saveState();
-            
-            // إذا كان قسم المصحف، تحميل السورة
-            if (sectionId === 'mushaf') {
-                loadSurah();
-            }
-        }
-
-        // الآية التالية
-        function nextAyah() {
-            const surah = quranData[currentState.currentSurah];
-            if (!surah || !surah.ayahs) return;
-            
-            if (currentState.currentAyah < surah.ayahs.length) {
-                currentState.currentAyah++;
-            } else {
-                // الانتقال للسورة التالية
-                const nextSurah = parseInt(currentState.currentSurah) + 1;
-                if (quranData[nextSurah]) {
-                    currentState.currentSurah = nextSurah;
-                    currentState.currentAyah = 1;
-                    document.getElementById('surah-select').value = currentState.currentSurah;
-                    loadSurah();
-                }
+            // إذا كان قسم المحفوظات، تحديث القائمة
+            if (sectionId === 'bookmarks') {
+                updateBookmarksList();
             }
             
-            selectAyah(currentState.currentSurah, currentState.currentAyah);
-        }
-
-        // الآية السابقة
-        function previousAyah() {
-            if (currentState.currentAyah > 1) {
-                currentState.currentAyah--;
-            } else {
-                // الانتقال للسورة السابقة
-                const prevSurah = parseInt(currentState.currentSurah) - 1;
-                if (quranData[prevSurah]) {
-                    currentState.currentSurah = prevSurah;
-                    const surah = quranData[prevSurah];
-                    currentState.currentAyah = surah.ayahs ? surah.ayahs.length : 1;
-                    document.getElementById('surah-select').value = currentState.currentSurah;
-                    loadSurah();
-                }
+            // إذا كان قسم البحث، مسح الحقل
+            if (sectionId === 'search') {
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-results').innerHTML = `
+                    <p class="text-center text-muted">اكتب كلمة للبحث في القرآن الكريم</p>
+                `;
             }
-            
-            selectAyah(currentState.currentSurah, currentState.currentAyah);
-        }
-
-        // السورة التالية
-        function nextSurah() {
-            const current = parseInt(currentState.currentSurah);
-            const next = current + 1;
-            
-            if (quranData[next]) {
-                document.getElementById('surah-select').value = next;
-                loadSurah();
-            }
-        }
-
-        // السورة السابقة
-        function prevSurah() {
-            const current = parseInt(currentState.currentSurah);
-            const prev = current - 1;
-            
-            if (quranData[prev]) {
-                document.getElementById('surah-select').value = prev;
-                loadSurah();
-            }
-        }
-
-        // تغيير الصفحة
-        function changePage(pageNum) {
-            currentState.currentPage = parseInt(pageNum);
-            updatePageDisplay();
-            saveState();
-        }
-
-        // تحديث عرض الصفحة
-        function updatePageDisplay() {
-            document.getElementById('current-page-display').textContent = `الصفحة ${currentState.currentPage}`;
-            document.getElementById('page-info').textContent = `الصفحة ${currentState.currentPage} من 604`;
-            
-            // محاكاة محتوى الصفحة
-            const pageContent = pagesData[currentState.currentPage] || { content: "محتوى الصفحة..." };
-            document.getElementById('page-content').textContent = `هذه هي الصفحة رقم ${currentState.currentPage} من المصحف. تحتوي على آيات من سور مختلفة.`;
-            
-            currentState.progress.readPages++;
-            updateProgress();
         }
 
         // صفحة سابقة
         function prevPage() {
-            if (currentState.currentPage > 1) {
-                currentState.currentPage--;
-                document.getElementById('page-slider').value = currentState.currentPage;
-                updatePageDisplay();
+            if (currentState.currentSurah > 1) {
+                const prevSurah = currentState.currentSurah - 1;
+                document.getElementById('surah-select').value = prevSurah;
+                loadSurah(prevSurah);
             }
         }
 
         // صفحة تالية
         function nextPage() {
-            if (currentState.currentPage < 604) {
-                currentState.currentPage++;
-                document.getElementById('page-slider').value = currentState.currentPage;
-                updatePageDisplay();
+            if (currentState.currentSurah < 114) {
+                const nextSurah = currentState.currentSurah + 1;
+                document.getElementById('surah-select').value = nextSurah;
+                loadSurah(nextSurah);
             }
         }
 
-        // تحديث شريط التقدم
-        function updateProgress() {
-            // حساب النسبة المئوية للتقدم
-            const totalPages = 604;
-            const progressPercent = Math.min(100, (currentState.currentPage / totalPages) * 100);
+        // حفظ التذكير
+        function saveReminder() {
+            const time = document.getElementById('reminder-time').value;
+            currentState.settings.reminderTime = time;
+            saveState();
             
-            document.getElementById('progress-fill').style.width = `${progressPercent}%`;
-            document.getElementById('current-progress').textContent = `${Math.round(progressPercent)}%`;
+            alert(`✅ تم حفظ وقت التذكير: ${time}`);
             
-            // تحديث الإحصائيات
-            const today = new Date();
-            const lastRead = currentState.progress.lastRead ? new Date(currentState.progress.lastRead) : null;
-            
-            if (lastRead) {
-                const diffDays = Math.floor((today - lastRead) / (1000 * 60 * 60 * 24));
-                if (diffDays <= 1) {
-                    currentState.progress.streak++;
-                } else if (diffDays > 1) {
-                    currentState.progress.streak = 1;
-                }
-            } else {
-                currentState.progress.streak = 1;
+            // طلب إذن الإشعارات إذا لم يكن مسموحاً
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
             }
-            
-            currentState.progress.lastRead = today.toISOString();
-            currentState.progress.totalTime += 1; // إضافة دقيقة لكل قراءة
-            
-            document.getElementById('streak-days').textContent = `${currentState.progress.streak} يوم`;
-            document.getElementById('total-ayahs').textContent = `${currentState.progress.readAyahs} آية`;
-            document.getElementById('total-time').textContent = `${Math.floor(currentState.progress.totalTime / 60)} ساعة`;
-            document.getElementById('completion').textContent = `${Math.round(progressPercent)}%`;
-            document.getElementById('reading-stats').textContent = `📖 ${currentState.progress.readAyahs} آية | ⏱️ ${Math.floor(currentState.progress.totalTime / 60)} ساعة`;
-            
-            saveState();
-        }
-
-        // تم الإكمال
-        function markAsDone() {
-            currentState.progress.readAyahs += 3;
-            updateProgress();
-            alert('✅ أحسنت! تم تسجيل إنجازك اليومي');
-        }
-
-        // تغيير السمة
-        function toggleTheme() {
-            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-            document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            currentState.settings.darkMode = !isDark;
-            saveState();
-        }
-
-        // تغيير السمة من الإعدادات
-        function toggleThemeSetting() {
-            const toggle = document.getElementById('dark-mode-toggle');
-            const isDark = toggle.checked;
-            
-            document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-            currentState.settings.darkMode = isDark;
-            saveState();
-        }
-
-        // تغيير حجم الخط
-        function changeFontSize(size) {
-            document.querySelectorAll('.quran-text').forEach(el => {
-                el.style.fontSize = size + 'px';
-            });
-            document.getElementById('font-size-display').textContent = size + 'px';
-            currentState.settings.fontSize = parseInt(size);
-            saveState();
-        }
-
-        // تصدير البيانات
-        function exportData() {
-            const dataStr = JSON.stringify(currentState, null, 2);
-            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            
-            const exportFileDefaultName = `quran-progress-${new Date().toISOString().slice(0,10)}.json`;
-            
-            const linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-            
-            alert('✅ تم تصدير بيانات التقدم بنجاح');
-        }
-
-        // استيراد البيانات
-        function importData() {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.json';
-            
-            input.onchange = e => {
-                const file = e.target.files[0];
-                const reader = new FileReader();
-                
-                reader.onload = function(event) {
-                    try {
-                        const importedState = JSON.parse(event.target.result);
-                        currentState = importedState;
-                        saveState();
-                        location.reload();
-                        alert('✅ تم استيراد البيانات بنجاح');
-                    } catch (error) {
-                        alert('❌ خطأ في استيراد البيانات: الملف غير صالح');
-                    }
-                };
-                
-                reader.readAsText(file);
-            };
-            
-            input.click();
-        }
-
-        // نسخ احتياطي
-        function backupData() {
-            saveState();
-            alert('✅ تم إنشاء نسخة احتياطية تلقائية');
         }
 
         // ========== إعادة التعيين والتصفير ==========
 
-        // تصفير وإعادة تعيين التقدم كاملاً
+        // تصفير التقدم
         function resetProgress() {
-            if (confirm('⚠️  هل أنت متأكد من تصفير وإعادة تعيين التقدم كاملاً؟\n\n❌ هذه العملية ستحذف:\n• جميع إحصائيات التقدم\n• المحفوظات\n• الإعدادات\n\n⚠️  لا يمكن التراجع عن هذه العملية!')) {
-                // حذف جميع البيانات
-                localStorage.removeItem('quranAppFullState');
+            if (confirm('هل تريد تصفير جميع إحصائيات التقدم؟\n\nسيتم حذف:\n• عدد الآيات المقروءة\n• المحفوظات\n• التقدم\n\n⚠️ لا يمكن التراجع عن هذه العملية!')) {
+                currentState.progress = {};
+                currentState.bookmarks = [];
+                saveState();
+                
+                updateBookmarksList();
+                alert('✅ تم تصفير التقدم بنجاح!');
+            }
+        }
+
+        // حذف جميع البيانات
+        function clearAllData() {
+            if (confirm('⚠️  تحذير شديد!\n\nهل تريد حذف جميع البيانات بما في ذلك:\n• القرآن الكامل المحمل\n• التفسير\n• جميع الإعدادات\n• المحفوظات\n• التقدم\n\n❌ هذه العملية لا يمكن التراجع عنها وسيحتاج التطبيق لإعادة تحميل المصحف!')) {
+                // حذف جميع البيانات من localStorage
+                localStorage.clear();
                 
                 // إعادة تعيين المتغيرات
+                quranData = null;
+                tafsirData = null;
+                surahInfo = null;
                 currentState = {
                     currentSurah: 1,
-                    currentAyah: 1,
                     currentPage: 1,
-                    currentSection: 'daily',
                     bookmarks: [],
-                    progress: {
-                        readAyahs: 0,
-                        readPages: 0,
-                        totalTime: 0,
-                        streak: 0,
-                        lastRead: null
-                    },
+                    progress: {},
                     settings: {
                         reminderTime: '05:00',
-                        notifications: false,
                         darkMode: false,
-                        fontSize: 28,
-                        autoSave: true
+                        fontSize: 28
                     }
                 };
                 
-                // تحديث الواجهة
-                loadDailyAyah();
-                updateProgress();
-                updatePageDisplay();
-                setupUI();
-                
-                alert('✅ تم تصفير وإعادة تعيين التقدم كاملاً بنجاح!');
+                // إعادة تحميل التطبيق
+                location.reload();
             }
         }
 
-        // تصفير المحفوظات فقط
-        function resetBookmarks() {
-            if (confirm('هل تريد حذف جميع الآيات المحفوظة؟')) {
-                currentState.bookmarks = [];
-                saveState();
-                alert('✅ تم حذف جميع المحفوظات');
-            }
-        }
-
-        // إعادة ضبط الإعدادات
-        function resetSettings() {
-            if (confirm('هل تريد إعادة ضبط جميع الإعدادات إلى الافتراضية؟')) {
-                currentState.settings = {
-                    reminderTime: '05:00',
-                    notifications: false,
-                    darkMode: false,
-                    fontSize: 28,
-                    autoSave: true
-                };
-                
-                // تطبيق الإعدادات
-                document.documentElement.setAttribute('data-theme', 'light');
-                document.getElementById('dark-mode-toggle').checked = false;
-                document.getElementById('font-size').value = 28;
-                document.getElementById('font-size-display').textContent = '28px';
-                document.querySelectorAll('.quran-text').forEach(el => {
-                    el.style.fontSize = '28px';
-                });
-                
-                saveState();
-                alert('✅ تم إعادة ضبط الإعدادات');
-            }
+        // تحديث الواجهة
+        function updateUI() {
+            // تحديث التاريخ
+            const today = new Date().toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            document.getElementById('last-update').textContent = today;
         }
 
         // تثبيت التطبيق
@@ -1421,10 +1095,44 @@
                 return;
             }
             
-            alert('لتثبيت التطبيق على iPhone:\n\n1. اضغط زر المشاركة (📤) في أسفل الشاشة\n2. مرر للأسفل\n3. اختر "أضف إلى الشاشة الرئيسية"\n4. اضغط "إضافة" في الأعلى\n\n✅ سيظهر التطبيق كتطبيق حقيقي على شاشتك!');
+            alert('لتثبيت التطبيق على هاتفك:\n\n1. افتح الموقع في Safari\n2. اضغط زر المشاركة (📤)\n3. اختر "أضف إلى الشاشة الرئيسية"\n4. اضغط "إضافة"\n\n✅ سيظهر التطبيق كتطبيق حقيقي!');
         }
 
-        // تسجيل Service Worker للتشغيل بدون إنترنت
+        // ========== بيانات عينة (للطوارئ) ==========
+
+        function getSampleQuranData() {
+            return {
+                "1": {
+                    "name": "الفاتحة",
+                    "ayahs": [
+                        {"number": 1, "text": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"},
+                        {"number": 2, "text": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ"},
+                        {"number": 3, "text": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"},
+                        {"number": 4, "text": "مَٰلِكِ يَوْمِ ٱلدِّينِ"},
+                        {"number": 5, "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ"},
+                        {"number": 6, "text": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ"},
+                        {"number": 7, "text": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ"}
+                    ]
+                },
+                "2": {
+                    "name": "البقرة",
+                    "ayahs": [
+                        {"number": 1, "text": "الٓمٓ"},
+                        {"number": 2, "text": "ذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ"},
+                        {"number": 3, "text": "ٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ"}
+                    ]
+                }
+            };
+        }
+
+        function getSampleSurahInfo() {
+            return [
+                {"number": 1, "name": "الفاتحة", "englishName": "Al-Fatiha", "ayahs": 7, "revelationType": "Meccan"},
+                {"number": 2, "name": "البقرة", "englishName": "Al-Baqarah", "ayahs": 286, "revelationType": "Medinan"}
+            ];
+        }
+
+        // تسجيل Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
@@ -1433,11 +1141,8 @@
             });
         }
 
-        // تهيئة التطبيق عند التحميل
+        // بدء التطبيق
         window.addEventListener('DOMContentLoaded', initApp);
-
-        // حفظ التقدم عند الخروج
-        window.addEventListener('beforeunload', saveState);
     </script>
 </body>
 </html>
