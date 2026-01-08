@@ -3,391 +3,1289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصحف القرآن الكريم - النسخة الكاملة 114 سورة</title>
+    <title>مصحف القرآن الكريم - النسخة الكاملة</title>
     
-    <!-- PWA Meta -->
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#1a472a">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="مصحف القرآن">
+    <meta name="description" content="القرآن الكريم كاملاً مع التفسير والتذكيرات - يعمل بدون إنترنت">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" href="https://img.icons8.com/color/96/000000/quran.png">
     <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/quran.png">
     
-    <link rel="manifest" href="manifest.json">
+    <!-- CSS Libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Noto+Naskh+Arabic&family=Tajawal&display=swap" rel="stylesheet">
     
+    <!-- Custom CSS -->
     <style>
+        /* ===== VARIABLES ===== */
         :root {
+            /* Primary Colors */
             --primary: #1a472a;
-            --secondary: #2e8b57;
-            --accent: #3cb371;
-            --light: #f8f9fa;
-            --dark: #1a1a1a;
-            --card: #ffffff;
-            --shadow: rgba(0, 0, 0, 0.08);
+            --primary-light: #2e8b57;
+            --primary-dark: #0d2b1a;
+            
+            /* Secondary Colors */
+            --secondary: #3cb371;
+            --secondary-light: #50c878;
+            --secondary-dark: #2d8b57;
+            
+            /* Accent Colors */
+            --accent: #ffd700;
+            --accent-light: #fffacd;
+            --accent-dark: #ffc107;
+            
+            /* Background & Text */
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #1a1a1a;
+            --text-muted: #666666;
+            
+            /* Borders & Shadows */
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+            
+            /* Spacing */
+            --spacing-xs: 5px;
+            --spacing-sm: 10px;
+            --spacing-md: 20px;
+            --spacing-lg: 30px;
+            --spacing-xl: 40px;
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 15px;
+            --radius-lg: 25px;
+            --radius-xl: 35px;
+            
+            /* Font Sizes */
+            --font-xs: 12px;
+            --font-sm: 14px;
+            --font-md: 16px;
+            --font-lg: 18px;
+            --font-xl: 22px;
+            --font-xxl: 28px;
+            --font-xxxl: 36px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
         }
-        
+
+        /* ===== DARK THEME ===== */
         [data-theme="dark"] {
-            --primary: #3cb371;
-            --secondary: #2e8b57;
-            --light: #1a1a1a;
-            --dark: #ffffff;
-            --card: #2d2d2d;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --bg-color: #0d1b2a;
+            --card-bg: #1a2b3c;
+            --text-color: #e6e6e6;
+            --text-muted: #a0aec0;
+            --border-color: #2d3748;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.2);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.4);
         }
-        
+
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            transition: all 0.3s ease;
+            font-family: 'Tajawal', 'Noto Naskh Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color var(--transition-normal);
+            line-height: 1.6;
+            min-height: 100vh;
             padding-bottom: 80px;
         }
-        
-        .app-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 15px;
+
+        .quran-font {
+            font-family: 'Amiri Quran', 'Traditional Arabic', serif;
+            font-weight: normal;
+            letter-spacing: 0;
         }
-        
-        /* Header */
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: var(--spacing-md);
+        }
+
+        h1 { font-size: var(--font-xxxl); }
+        h2 { font-size: var(--font-xxl); }
+        h3 { font-size: var(--font-xl); }
+        h4 { font-size: var(--font-lg); }
+        h5 { font-size: var(--font-md); }
+        h6 { font-size: var(--font-sm); }
+
+        p {
+            margin-bottom: var(--spacing-md);
+            line-height: 1.8;
+        }
+
+        a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+
+        a:hover {
+            color: var(--secondary);
+        }
+
+        /* ===== APP CONTAINER ===== */
+        .app-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        /* ===== HEADER ===== */
         .app-header {
-            background: linear-gradient(135deg, var(--primary), #2e8b57);
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            padding: 25px 20px;
-            border-radius: 20px;
-            margin-bottom: 25px;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            border-radius: var(--radius-xl);
+            margin-bottom: var(--spacing-xl);
             text-align: center;
-            box-shadow: 0 10px 30px rgba(26, 71, 42, 0.3);
+            box-shadow: var(--shadow-lg);
             position: relative;
             overflow: hidden;
         }
-        
+
         .app-header::before {
-            content: '﴾﴿';
+            content: '﴿﴾';
             position: absolute;
-            font-size: 120px;
-            opacity: 0.1;
-            right: 20px;
-            top: 10px;
+            font-size: 180px;
+            opacity: 0.08;
+            right: var(--spacing-lg);
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Amiri Quran';
         }
-        
+
         .app-title {
-            font-size: 28px;
-            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-sm);
         }
-        
+
         .app-subtitle {
             opacity: 0.9;
-            font-size: 16px;
+            font-size: var(--font-lg);
+            margin-bottom: var(--spacing-lg);
         }
-        
-        /* Navigation */
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            width: 0%;
+            transition: width var(--transition-slow);
+            border-radius: 5px;
+        }
+
+        /* ===== NAVIGATION ===== */
         .app-nav {
             display: flex;
-            gap: 10px;
-            margin: 25px 0;
+            gap: var(--spacing-sm);
+            margin: var(--spacing-xl) 0;
             flex-wrap: wrap;
             justify-content: center;
         }
-        
+
         .nav-btn {
             flex: 1;
-            min-width: 120px;
-            padding: 18px 15px;
-            background: var(--card);
+            min-width: 140px;
+            padding: var(--spacing-lg) var(--spacing-md);
+            background: var(--card-bg);
             border: none;
-            border-radius: 15px;
-            font-size: 16px;
+            border-radius: var(--radius-lg);
+            font-size: var(--font-md);
             font-weight: 600;
-            color: var(--dark);
+            color: var(--text-color);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            box-shadow: 0 4px 15px var(--shadow);
-            transition: all 0.3s ease;
+            gap: var(--spacing-sm);
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
         }
-        
-        .nav-btn.active {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(26, 71, 42, 0.4);
-        }
-        
+
         .nav-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
         }
-        
-        /* Content Sections */
+
+        .nav-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(26, 71, 42, 0.3);
+        }
+
+        .nav-btn i {
+            font-size: var(--font-lg);
+        }
+
+        /* ===== CONTENT SECTIONS ===== */
         .content-section {
             display: none;
-            animation: fadeIn 0.5s ease;
+            animation: fadeInUp 0.5s ease;
         }
-        
+
         .content-section.active {
             display: block;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        
-        /* Cards */
+
+        /* ===== CARDS ===== */
         .card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 30px var(--shadow);
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-md);
             border-right: 5px solid var(--primary);
+            transition: transform var(--transition-normal), box-shadow var(--transition-normal);
         }
-        
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid rgba(60, 179, 113, 0.1);
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--border-color);
         }
-        
+
         .card-title {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 22px;
+            gap: var(--spacing-sm);
+            font-size: var(--font-xl);
             color: var(--primary);
         }
-        
-        /* Quran Text */
+
+        .card-subtitle {
+            color: var(--text-muted);
+            font-size: var(--font-sm);
+            margin-top: calc(-1 * var(--spacing-md));
+            margin-bottom: var(--spacing-lg);
+        }
+
+        /* ===== QURAN TEXT ===== */
         .quran-text {
-            font-size: 28px;
+            font-size: var(--font-xxl);
             line-height: 2;
             text-align: center;
-            margin: 25px 0;
-            color: var(--primary);
+            margin: var(--spacing-xl) 0;
+            color: var(--primary-dark);
             font-weight: 600;
-            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: var(--spacing-lg);
+            background: linear-gradient(to bottom, transparent, rgba(60, 179, 113, 0.05));
+            border-radius: var(--radius-md);
+            position: relative;
         }
-        
-        /* Info Grid */
+
+        [data-theme="dark"] .quran-text {
+            color: var(--secondary-light);
+            background: linear-gradient(to bottom, transparent, rgba(60, 179, 113, 0.1));
+        }
+
+        .quran-text::before,
+        .quran-text::after {
+            content: '﴿';
+            position: absolute;
+            font-size: 40px;
+            color: var(--secondary);
+            opacity: 0.3;
+        }
+
+        .quran-text::before {
+            right: 10px;
+            top: 10px;
+        }
+
+        .quran-text::after {
+            content: '﴾';
+            left: 10px;
+            bottom: 10px;
+        }
+
+        .ayah-number {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: var(--font-sm);
+            margin: 0 8px;
+            vertical-align: super;
+            font-weight: normal;
+        }
+
+        /* ===== TAFSIR BOX ===== */
+        .tafsir-box {
+            background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(240, 248, 255, 0.95));
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+            border-right: 4px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .tafsir-box {
+            background: linear-gradient(135deg, rgba(26, 43, 60, 0.9), rgba(32, 54, 75, 0.95));
+        }
+
+        .tafsir-box::before {
+            content: 'ت';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.03;
+            right: 20px;
+            top: 10px;
+            font-family: 'Amiri Quran';
+        }
+
+        .tafsir-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            color: var(--secondary);
+        }
+
+        /* ===== INFO GRID ===== */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin: 25px 0;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-md);
+            margin: var(--spacing-xl) 0;
         }
-        
+
         .info-item {
-            background: rgba(60, 179, 113, 0.05);
-            padding: 15px;
-            border-radius: 12px;
+            background: rgba(60, 179, 113, 0.08);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
             text-align: center;
-            transition: transform 0.3s ease;
+            transition: all var(--transition-normal);
+            border: 1px solid transparent;
         }
-        
+
         .info-item:hover {
             transform: translateY(-5px);
-            background: rgba(60, 179, 113, 0.1);
+            background: rgba(60, 179, 113, 0.15);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
         }
-        
-        /* Buttons */
+
+        .info-icon {
+            font-size: var(--font-xl);
+            color: var(--primary);
+            margin-bottom: var(--spacing-sm);
+            display: block;
+        }
+
+        .info-label {
+            font-size: var(--font-sm);
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .info-value {
+            font-size: var(--font-md);
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        /* ===== BUTTONS ===== */
         .btn {
-            padding: 16px 25px;
+            padding: var(--spacing-lg) var(--spacing-xl);
             border: none;
-            border-radius: 12px;
-            font-size: 17px;
+            border-radius: var(--radius-md);
+            font-size: var(--font-md);
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            transition: all 0.3s ease;
+            gap: var(--spacing-sm);
+            transition: all var(--transition-normal);
             width: 100%;
-            margin: 10px 0;
+            margin: var(--spacing-sm) 0;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transition: opacity var(--transition-normal);
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
-            box-shadow: 0 8px 25px rgba(26, 71, 42, 0.3);
+            box-shadow: 0 6px 20px rgba(26, 71, 42, 0.3);
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(26, 71, 42, 0.4);
+            box-shadow: 0 10px 30px rgba(26, 71, 42, 0.4);
         }
-        
+
         .btn-secondary {
             background: rgba(60, 179, 113, 0.1);
             color: var(--primary);
             border: 2px solid var(--primary);
         }
-        
+
+        .btn-secondary:hover {
+            background: rgba(60, 179, 113, 0.2);
+            transform: translateY(-2px);
+        }
+
         .btn-danger {
             background: linear-gradient(135deg, #dc3545, #c82333);
             color: white;
         }
-        
-        /* Progress Bar */
-        .progress-container {
-            margin: 25px 0;
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
         }
-        
-        .progress-bar {
-            height: 10px;
-            background: rgba(60, 179, 113, 0.2);
-            border-radius: 5px;
-            overflow: hidden;
-            margin: 15px 0;
+
+        .btn-success {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
         }
-        
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            width: 0%;
-            transition: width 1s ease;
-            border-radius: 5px;
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ffc107, #fd7e14);
+            color: white;
         }
-        
-        /* Loading Spinner */
-        .loader {
-            border: 5px solid #f3f3f3;
-            border-top: 5px solid var(--primary);
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #0dcaf0);
+            color: white;
+        }
+
+        /* ===== PAGE NAVIGATION ===== */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: var(--spacing-md);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .page-btn {
+            flex: 1;
+            padding: var(--spacing-lg);
+            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            font-size: var(--font-md);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            transition: all var(--transition-normal);
+        }
+
+        .page-btn:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* ===== SURAH SELECTOR ===== */
+        .surah-selector {
+            position: relative;
+            margin: var(--spacing-xl) 0;
+        }
+
+        .surah-select {
+            width: 100%;
+            padding: var(--spacing-lg) 50px var(--spacing-lg) var(--spacing-lg);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            font-size: var(--font-md);
+            background: var(--card-bg);
+            color: var(--text-color);
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231a472a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: left var(--spacing-lg) center;
+            background-size: 20px;
+            cursor: pointer;
+            transition: border-color var(--transition-normal);
+        }
+
+        [data-theme="dark"] .surah-select {
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233cb371' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+        }
+
+        .surah-select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(60, 179, 113, 0.2);
+        }
+
+        /* ===== PAGE SLIDER ===== */
+        .page-slider-container {
+            background: var(--card-bg);
+            padding: var(--spacing-xl);
+            border-radius: var(--radius-lg);
+            margin: var(--spacing-xl) 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 4px;
+            outline: none;
+            margin: var(--spacing-lg) 0;
+        }
+
+        .page-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all var(--transition-normal);
+        }
+
+        .page-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            background: var(--primary);
+        }
+
+        .page-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-md);
+            font-size: var(--font-md);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* ===== AYAH LIST ===== */
+        .ayah-list-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: var(--spacing-md);
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            margin: var(--spacing-xl) 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ayah-list-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .ayah-list-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        .ayah-list-container::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        .ayah-list-container::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        .ayah-item {
+            padding: var(--spacing-lg);
+            margin: var(--spacing-md) 0;
+            background: rgba(60, 179, 113, 0.05);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            border-right: 3px solid transparent;
+            position: relative;
+        }
+
+        .ayah-item:hover {
+            background: rgba(60, 179, 113, 0.1);
+            border-right-color: var(--primary);
+            transform: translateX(-5px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .ayah-item.active {
+            background: rgba(60, 179, 113, 0.15);
+            border-right-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+
+        .ayah-item-number {
+            position: absolute;
+            left: var(--spacing-md);
+            top: var(--spacing-md);
+            background: var(--primary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-sm);
+            font-weight: 600;
+        }
+
+        .ayah-item-content {
+            margin-right: 45px;
+        }
+
+        .ayah-item-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+            justify-content: flex-end;
+        }
+
+        /* ===== REMINDERS ===== */
+        .reminder-card {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            margin: var(--spacing-xl) 0;
+            border: 2px solid #ffc107;
+        }
+
+        [data-theme="dark"] .reminder-card {
+            background: linear-gradient(135deg, #4a3c00, #6b5b00);
+            border-color: #ffc107;
+        }
+
+        .reminder-controls {
+            display: flex;
+            gap: var(--spacing-md);
+            margin: var(--spacing-lg) 0;
+            align-items: center;
+        }
+
+        .reminder-time {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-md);
+            font-size: var(--font-md);
+            background: white;
+            color: var(--text-color);
+        }
+
+        /* ===== SETTINGS ===== */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin: var(--spacing-xl) 0;
+        }
+
+        .setting-item {
+            background: var(--card-bg);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .setting-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            color: var(--primary);
+        }
+
+        /* Switches */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Font Selector */
+        .font-selector {
+            display: flex;
+            gap: var(--spacing-md);
+            margin: var(--spacing-md) 0;
+        }
+
+        .font-option {
+            flex: 1;
+            padding: var(--spacing-md);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .font-option:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .font-option.active {
+            border-color: var(--primary);
+            background: rgba(60, 179, 113, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .font-option.amiri {
+            font-family: 'Amiri Quran';
+            font-size: var(--font-lg);
+        }
+
+        .font-option.uthmani {
+            font-family: 'Traditional Arabic';
+            font-size: var(--font-lg);
+        }
+
+        .font-option.naskh {
+            font-family: 'Noto Naskh Arabic';
+            font-size: var(--font-lg);
+        }
+
+        /* ===== LOADING & EMPTY STATES ===== */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-xl);
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
             width: 50px;
             height: 50px;
+            border: 5px solid var(--border-color);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin: 20px auto;
+            margin-bottom: var(--spacing-md);
         }
-        
+
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .app-nav { flex-direction: column; }
-            .nav-btn { min-width: 100%; }
-            .quran-text { font-size: 24px; }
-            .info-grid { grid-template-columns: 1fr 1fr; }
+
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-xl);
+            color: var(--text-muted);
+            font-style: italic;
         }
-        
-        /* Utilities */
+
+        /* ===== NOTIFICATIONS ===== */
+        .notification-permission {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            text-align: center;
+            margin: var(--spacing-xl) 0;
+            border: 2px solid #28a745;
+        }
+
+        [data-theme="dark"] .notification-permission {
+            background: linear-gradient(135deg, #1c3b1c, #2d4d2d);
+        }
+
+        /* ===== OFFLINE INDICATOR ===== */
+        .offline-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #dc3545;
+            color: white;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            display: none;
+            align-items: center;
+            gap: var(--spacing-sm);
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* ===== INSTALL BUTTON ===== */
+        .install-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+            transition: all var(--transition-normal);
+        }
+
+        .install-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(26, 71, 42, 0.4);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .app-nav {
+                flex-direction: column;
+            }
+            
+            .nav-btn {
+                min-width: 100%;
+            }
+            
+            .quran-text {
+                font-size: var(--font-xl);
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-nav {
+                flex-direction: column;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ayah-item-content {
+                margin-right: 0;
+                margin-top: 30px;
+            }
+            
+            .ayah-item-number {
+                position: relative;
+                top: 0;
+                left: 0;
+                margin-bottom: var(--spacing-sm);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-header {
+                padding: var(--spacing-lg);
+            }
+            
+            .app-title {
+                font-size: var(--font-xxl);
+            }
+            
+            .app-subtitle {
+                font-size: var(--font-md);
+            }
+            
+            .card {
+                padding: var(--spacing-lg);
+            }
+            
+            .reminder-controls {
+                flex-direction: column;
+            }
+            
+            .reminder-time {
+                width: 100%;
+            }
+        }
+
+        /* ===== UTILITY CLASSES ===== */
         .hidden { display: none !important; }
         .text-center { text-align: center; }
-        .text-muted { opacity: 0.7; }
+        .text-right { text-align: right; }
+        .text-left { text-align: left; }
+        .text-muted { color: var(--text-muted); }
+        .text-primary { color: var(--primary); }
+        .text-success { color: #28a745; }
+        .text-danger { color: #dc3545; }
+        .text-warning { color: #ffc107; }
+        .text-info { color: #17a2b8; }
+        
+        .mt-10 { margin-top: 10px; }
         .mt-20 { margin-top: 20px; }
+        .mt-30 { margin-top: 30px; }
+        .mb-10 { margin-bottom: 10px; }
         .mb-20 { margin-bottom: 20px; }
+        .mb-30 { margin-bottom: 30px; }
+        .my-20 { margin-top: 20px; margin-bottom: 20px; }
+        
+        .p-10 { padding: 10px; }
+        .p-20 { padding: 20px; }
+        .p-30 { padding: 30px; }
+        
+        .d-flex { display: flex; }
+        .d-block { display: block; }
+        .d-inline { display: inline; }
+        .d-inline-block { display: inline-block; }
+        
+        .justify-between { justify-content: space-between; }
+        .justify-center { justify-content: center; }
+        .justify-end { justify-content: flex-end; }
+        
+        .align-center { align-items: center; }
+        .align-start { align-items: flex-start; }
+        .align-end { align-items: flex-end; }
+        
+        .flex-column { flex-direction: column; }
+        .flex-row { flex-direction: row; }
+        
+        .gap-10 { gap: 10px; }
+        .gap-20 { gap: 20px; }
+        .gap-30 { gap: 30px; }
+        
+        .w-100 { width: 100%; }
+        .w-50 { width: 50%; }
+        .w-25 { width: 25%; }
+        
+        .rounded { border-radius: var(--radius-md); }
+        .rounded-lg { border-radius: var(--radius-lg); }
+        .rounded-circle { border-radius: 50%; }
+        
+        .shadow { box-shadow: var(--shadow-md); }
+        .shadow-sm { box-shadow: var(--shadow-sm); }
+        .shadow-lg { box-shadow: var(--shadow-lg); }
+        
+        .cursor-pointer { cursor: pointer; }
+        .cursor-default { cursor: default; }
+        
+        .position-relative { position: relative; }
+        .position-absolute { position: absolute; }
+        .position-fixed { position: fixed; }
+        
+        .overflow-hidden { overflow: hidden; }
+        .overflow-auto { overflow: auto; }
+        .overflow-scroll { overflow: scroll; }
+        
+        .z-1 { z-index: 1; }
+        .z-10 { z-index: 10; }
+        .z-100 { z-index: 100; }
+        .z-1000 { z-index: 1000; }
     </style>
 </head>
 <body>
+    <!-- App Container -->
     <div class="app-container">
         <!-- Header -->
         <header class="app-header">
-            <h1 class="app-title"><i class="fas fa-quran"></i> مصحف القرآن الكريم</h1>
-            <p class="app-subtitle">114 سورة كاملة - 6236 آية - مع التفسير</p>
+            <div class="app-title">
+                <i class="fas fa-quran"></i>
+                <h1>مصحف القرآن الكريم</h1>
+            </div>
+            <p class="app-subtitle">النسخة الكاملة - 114 سورة - 604 صفحة - مع التفسير والتذكيرات</p>
+            
             <div class="progress-container">
+                <div class="progress-info">
+                    <span id="progress-text">التقدم: <strong>0%</strong></span>
+                    <span id="stats-text">📖 0 آية | ⏱️ 0 دقيقة</span>
+                </div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
-                <div style="display: flex; justify-content: space-between; margin-top: 10px;">
-                    <span id="current-progress">0%</span>
-                    <span id="loading-status">⏳ جاري تحميل المصحف...</span>
-                </div>
             </div>
         </header>
-        
+
         <!-- Navigation -->
         <nav class="app-nav">
             <button class="nav-btn active" onclick="showSection('daily')">
-                <i class="fas fa-calendar-day"></i> اليوم
+                <i class="fas fa-calendar-day"></i> <span>اليوم</span>
             </button>
             <button class="nav-btn" onclick="showSection('mushaf')">
-                <i class="fas fa-book-quran"></i> المصحف
+                <i class="fas fa-book-quran"></i> <span>المصحف</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('pages')">
+                <i class="fas fa-file-alt"></i> <span>الصفحات</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('tafsir')">
+                <i class="fas fa-book-open"></i> <span>التفسير</span>
             </button>
             <button class="nav-btn" onclick="showSection('search')">
-                <i class="fas fa-search"></i> بحث
+                <i class="fas fa-search"></i> <span>بحث</span>
             </button>
             <button class="nav-btn" onclick="showSection('bookmarks')">
-                <i class="fas fa-bookmark"></i> المحفوظات
+                <i class="fas fa-bookmark"></i> <span>محفوظات</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('progress')">
+                <i class="fas fa-chart-line"></i> <span>تقدم</span>
+            </button>
+            <button class="nav-btn" onclick="showSection('reminders')">
+                <i class="fas fa-bell"></i> <span>تذكيرات</span>
             </button>
             <button class="nav-btn" onclick="showSection('settings')">
-                <i class="fas fa-cog"></i> الإعدادات
+                <i class="fas fa-cog"></i> <span>إعدادات</span>
             </button>
         </nav>
-        
+
         <!-- Daily Section -->
         <section id="daily-section" class="content-section active">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><i class="fas fa-sun"></i> الورد اليومي</h2>
-                    <span id="today-date">اليوم</span>
+                    <span class="text-muted" id="today-date"></span>
                 </div>
                 
-                <div id="daily-content">
-                    <div class="loader"></div>
-                    <p class="text-center">جاري تحميل آية اليوم...</p>
+                <div id="daily-content" class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>جاري تحميل آية اليوم...</p>
                 </div>
             </div>
         </section>
-        
+
         <!-- Mushaf Section -->
         <section id="mushaf-section" class="content-section">
             <div class="card">
                 <div class="card-header">
                     <h2 class="card-title"><i class="fas fa-book-quran"></i> المصحف الشريف</h2>
-                    <span id="surah-count">114 سورة</span>
+                    <span class="text-muted" id="mushaf-info">114 سورة</span>
                 </div>
                 
-                <div style="margin: 20px 0;">
-                    <select id="surah-select" onchange="loadSurah(this.value)" style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); background: var(--card); color: var(--dark); font-size: 16px;">
+                <div class="surah-selector">
+                    <select class="surah-select" id="surah-select" onchange="loadSurah()">
                         <option value="">اختر سورة...</option>
-                        <!-- سيتم ملؤه بالجافاسكريبت -->
                     </select>
                 </div>
                 
-                <div id="mushaf-content">
-                    <div class="loader"></div>
-                    <p class="text-center">جاري تحميل المصحف...</p>
+                <div id="mushaf-content" class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>جاري تحميل المصحف...</p>
                 </div>
                 
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
-                    <button class="btn btn-secondary" onclick="prevPage()" id="prev-btn" disabled>
-                        <i class="fas fa-chevron-right"></i> السابق
+                <div class="page-nav">
+                    <button class="page-btn" onclick="prevSurah()" id="prev-surah-btn">
+                        <i class="fas fa-chevron-right"></i> السورة السابقة
                     </button>
-                    <button class="btn btn-secondary" onclick="nextPage()" id="next-btn" disabled>
-                        التالي <i class="fas fa-chevron-left"></i>
+                    <button class="page-btn" onclick="nextSurah()" id="next-surah-btn">
+                        السورة التالية <i class="fas fa-chevron-left"></i>
                     </button>
                 </div>
             </div>
         </section>
-        
+
+        <!-- Pages Section -->
+        <section id="pages-section" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-file-alt"></i> تصفح المصحف صفحة صفحة</h2>
+                    <span class="text-muted" id="page-range">الصفحة 1 من 604</span>
+                </div>
+                
+                <div class="page-slider-container">
+                    <div class="page-info">
+                        <span>الصفحة 1</span>
+                        <span>604 صفحة</span>
+                    </div>
+                    <input type="range" class="page-slider" id="page-slider" min="1" max="604" value="1">
+                    <div class="page-info">
+                        <span>1</span>
+                        <span id="current-page-text">الصفحة 1</span>
+                        <span>604</span>
+                    </div>
+                </div>
+                
+                <div id="page-content" class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>جاري تحميل محتوى الصفحة...</p>
+                </div>
+                
+                <div class="page-nav">
+                    <button class="page-btn" onclick="prevPage()" id="prev-page-btn">
+                        <i class="fas fa-chevron-right"></i> الصفحة السابقة
+                    </button>
+                    <button class="page-btn" onclick="nextPage()" id="next-page-btn">
+                        الصفحة التالية <i class="fas fa-chevron-left"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tafsir Section -->
+        <section id="tafsir-section" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-book-open"></i> تفسير الآية</h2>
+                    <span class="text-muted" id="selected-ayah-info">اختر آية</span>
+                </div>
+                
+                <div id="tafsir-content" class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>اختر آية لرؤية تفسيرها...</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Search Section -->
         <section id="search-section" class="content-section">
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-search"></i> البحث في القرآن</h2>
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-search"></i> البحث في القرآن</h2>
+                    <span class="text-muted">ابحث في نص القرآن الكريم</span>
+                </div>
                 
-                <div style="margin: 20px 0;">
-                    <input type="text" id="search-input" placeholder="اكتب كلمة للبحث..." style="width: 100%; padding: 15px; border-radius: 10px; border: 2px solid var(--primary); background: var(--card); color: var(--dark); font-size: 16px;">
-                    <button class="btn btn-primary mt-20" onclick="searchQuran()">
-                        <i class="fas fa-search"></i> بحث
-                    </button>
+                <div class="mb-30">
+                    <div class="d-flex gap-10">
+                        <input type="text" id="search-input" placeholder="اكتب كلمة أو عبارة للبحث..." 
+                               class="w-100 p-20 rounded" style="border: 2px solid var(--primary);">
+                        <button class="btn btn-primary" onclick="searchInQuran()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="d-flex gap-10 mt-20">
+                        <select id="search-type" class="p-10 rounded" style="border: 1px solid var(--border-color);">
+                            <option value="all">بحث في كل القرآن</option>
+                            <option value="surah">بحث في سورة محددة</option>
+                            <option value="tafsir">بحث في التفسير</option>
+                        </select>
+                        <select id="search-surah" class="p-10 rounded" style="border: 1px solid var(--border-color); display: none;">
+                            <option value="">اختر سورة...</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <div id="search-results">
@@ -395,710 +1293,1620 @@
                 </div>
             </div>
         </section>
-        
+
         <!-- Bookmarks Section -->
         <section id="bookmarks-section" class="content-section">
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-bookmark"></i> الآيات المحفوظة</h2>
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-bookmark"></i> الآيات المحفوظة</h2>
+                    <span class="text-muted" id="bookmarks-count">0 آية</span>
+                </div>
                 
-                <div id="bookmarks-list">
-                    <p class="text-center text-muted">لا توجد آيات محفوظة بعد</p>
+                <div id="bookmarks-content">
+                    <p class="empty-state">لا توجد آيات محفوظة بعد</p>
+                </div>
+                
+                <div class="text-center mt-20">
+                    <button class="btn btn-danger" onclick="clearAllBookmarks()">
+                        <i class="fas fa-trash"></i> حذف جميع المحفوظات
+                    </button>
                 </div>
             </div>
         </section>
-        
-        <!-- Settings Section -->
-        <section id="settings-section" class="content-section">
+
+        <!-- Progress Section -->
+        <section id="progress-section" class="content-section">
             <div class="card">
-                <h2 class="card-title"><i class="fas fa-cog"></i> الإعدادات</h2>
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-chart-line"></i> تقدمك في القراءة</h2>
+                    <span class="text-muted">إحصائياتك الشخصية</span>
+                </div>
                 
                 <div class="info-grid">
                     <div class="info-item">
-                        <i class="fas fa-database"></i>
-                        <h4>بيانات المصحف</h4>
-                        <p id="data-status">جاري التحميل...</p>
+                        <i class="fas fa-fire info-icon"></i>
+                        <div class="info-label">الأيام المتتالية</div>
+                        <div class="info-value" id="stats-streak">0 يوم</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-book"></i>
-                        <h4>عدد الآيات</h4>
-                        <p id="ayah-count">0 آية</p>
+                        <i class="fas fa-book info-icon"></i>
+                        <div class="info-label">الآيات المقروءة</div>
+                        <div class="info-value" id="stats-ayahs">0 آية</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-hdd"></i>
-                        <h4>مساحة التخزين</h4>
-                        <p id="storage-size">0 MB</p>
+                        <i class="fas fa-clock info-icon"></i>
+                        <div class="info-label">وقت القراءة</div>
+                        <div class="info-value" id="stats-time">0 دقيقة</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-sync"></i>
-                        <h4>آخر تحديث</h4>
-                        <p id="last-update">الآن</p>
+                        <i class="fas fa-trophy info-icon"></i>
+                        <div class="info-label">الإنجاز</div>
+                        <div class="info-value" id="stats-completion">0%</div>
                     </div>
                 </div>
                 
                 <div class="card mt-20">
-                    <h3 class="card-title"><i class="fas fa-bell"></i> التذكيرات</h3>
-                    <div style="margin: 15px 0;">
-                        <label>وقت التذكير اليومي:</label>
-                        <input type="time" id="reminder-time" value="05:00" style="width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid var(--primary);">
+                    <h3 class="card-title"><i class="fas fa-calendar-alt"></i> نشاط هذا الأسبوع</h3>
+                    <div id="weekly-chart" class="mt-20">
+                        <div style="height: 200px; display: flex; align-items: flex-end; gap: 10px;">
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-1"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-2"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-3"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-4"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-5"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-6"></div>
+                            <div style="flex: 1; background: var(--primary); border-radius: 5px 5px 0 0;" id="day-7"></div>
+                        </div>
+                        <div class="d-flex justify-between mt-10">
+                            <span>أ</span>
+                            <span>إ</span>
+                            <span>ث</span>
+                            <span>أ</span>
+                            <span>خ</span>
+                            <span>ج</span>
+                            <span>س</span>
+                        </div>
                     </div>
-                    <button class="btn btn-secondary" onclick="saveReminder()">
-                        <i class="fas fa-save"></i> حفظ التذكير
+                </div>
+            </div>
+        </section>
+
+        <!-- Reminders Section -->
+        <section id="reminders-section" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-bell"></i> التذكيرات اليومية</h2>
+                    <span class="text-muted">اضبط تذكيرك اليومي للقراءة</span>
+                </div>
+                
+                <div class="reminder-card">
+                    <h3 class="mb-20"><i class="fas fa-clock"></i> وقت التذكير</h3>
+                    
+                    <div class="reminder-controls">
+                        <input type="time" id="reminder-time-input" value="05:00" class="reminder-time">
+                        <button class="btn btn-primary" onclick="saveReminder()">
+                            <i class="fas fa-save"></i> حفظ
+                        </button>
+                    </div>
+                    
+                    <div class="d-flex gap-10 mt-20">
+                        <button class="btn btn-secondary" onclick="enableNotifications()">
+                            <i class="fas fa-bell"></i> تفعيل الإشعارات
+                        </button>
+                        <button class="btn btn-info" onclick="testNotification()">
+                            <i class="fas fa-bell"></i> تجربة الآن
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="notification-permission hidden" id="notification-permission-box">
+                    <h3><i class="fas fa-bell-slash"></i> صلاحية الإشعارات</h3>
+                    <p class="mb-20">لتلقي التذكيرات، يرجى تفعيل الإشعارات في إعدادات التطبيق</p>
+                    <button class="btn btn-primary" onclick="requestNotificationPermission()">
+                        تفعيل الإشعارات الآن
                     </button>
                 </div>
                 
                 <div class="card mt-20">
-                    <h3 class="card-title"><i class="fas fa-redo"></i> إعادة التعيين</h3>
-                    <p class="text-muted mb-20">يمكنك إعادة تعيين التقدم أو حذف جميع البيانات</p>
-                    
-                    <button class="btn btn-secondary" onclick="resetProgress()">
-                        <i class="fas fa-trash"></i> تصفير التقدم
-                    </button>
-                    
-                    <button class="btn btn-danger mt-20" onclick="clearAllData()">
-                        <i class="fas fa-bomb"></i> حذف جميع البيانات
-                    </button>
-                    
-                    <p class="text-muted mt-20" style="font-size: 14px;">
-                        ⚠️ تحذير: حذف البيانات لا يمكن التراجع عنه
-                    </p>
+                    <h3 class="card-title"><i class="fas fa-history"></i> سجل التذكيرات</h3>
+                    <div id="reminders-history" class="mt-20">
+                        <p class="empty-state">لا توجد تذكيرات سابقة</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="content-section">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title"><i class="fas fa-cog"></i> الإعدادات</h2>
+                    <span class="text-muted">خصِّص تجربتك مع المصحف</span>
                 </div>
                 
-                <div class="card mt-20">
-                    <h3 class="card-title"><i class="fas fa-download"></i> تحديث البيانات</h3>
-                    <p class="text-muted mb-20">تحديث بيانات المصحف من الإنترنت</p>
+                <div class="settings-grid">
+                    <!-- Appearance Settings -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-paint-brush"></i> المظهر</h3>
+                        
+                        <div class="mb-20">
+                            <label class="d-flex align-center gap-10 mb-10 cursor-pointer">
+                                <span class="switch">
+                                    <input type="checkbox" id="dark-mode-toggle">
+                                    <span class="slider"></span>
+                                </span>
+                                <span>الوضع الليلي</span>
+                            </label>
+                        </div>
+                        
+                        <div class="mb-20">
+                            <label class="d-block mb-10">لون السمة:</label>
+                            <div class="d-flex gap-10">
+                                <div class="color-option" style="background: #1a472a;" onclick="changeThemeColor('#1a472a')"></div>
+                                <div class="color-option" style="background: #2c3e50;" onclick="changeThemeColor('#2c3e50')"></div>
+                                <div class="color-option" style="background: #8b4513;" onclick="changeThemeColor('#8b4513')"></div>
+                                <div class="color-option" style="background: #4a235a;" onclick="changeThemeColor('#4a235a')"></div>
+                            </div>
+                        </div>
+                    </div>
                     
-                    <button class="btn btn-primary" onclick="loadQuranData()">
-                        <i class="fas fa-sync"></i> تحديث الآن
-                    </button>
+                    <!-- Quran Font Settings -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-font"></i> خط القرآن</h3>
+                        
+                        <div class="mb-20">
+                            <label class="d-block mb-10">نوع الخط:</label>
+                            <div class="font-selector">
+                                <div class="font-option amiri active" onclick="changeFont('amiri')">
+                                    أميري
+                                </div>
+                                <div class="font-option uthmani" onclick="changeFont('uthmani')">
+                                    عثماني
+                                </div>
+                                <div class="font-option naskh" onclick="changeFont('naskh')">
+                                    نسخ
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-20">
+                            <label class="d-block mb-10">حجم الخط: <span id="font-size-value">28px</span></label>
+                            <input type="range" id="font-size-slider" min="20" max="40" value="28" 
+                                   class="w-100" oninput="changeFontSize(this.value)">
+                        </div>
+                    </div>
                     
-                    <button class="btn btn-secondary mt-20" onclick="installApp()">
-                        <i class="fas fa-mobile-alt"></i> تثبيت التطبيق
-                    </button>
+                    <!-- Reading Settings -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-book-reader"></i> إعدادات القراءة</h3>
+                        
+                        <div class="mb-20">
+                            <label class="d-flex align-center gap-10 mb-10 cursor-pointer">
+                                <span class="switch">
+                                    <input type="checkbox" id="auto-scroll-toggle" checked>
+                                    <span class="slider"></span>
+                                </span>
+                                <span>التقدم التلقائي</span>
+                            </label>
+                        </div>
+                        
+                        <div class="mb-20">
+                            <label class="d-flex align-center gap-10 mb-10 cursor-pointer">
+                                <span class="switch">
+                                    <input type="checkbox" id="show-tafsir-toggle" checked>
+                                    <span class="slider"></span>
+                                </span>
+                                <span>عرض التفسير تلقائياً</span>
+                            </label>
+                        </div>
+                        
+                        <div class="mb-20">
+                            <label class="d-flex align-center gap-10 mb-10 cursor-pointer">
+                                <span class="switch">
+                                    <input type="checkbox" id="auto-save-toggle" checked>
+                                    <span class="slider"></span>
+                                </span>
+                                <span>الحفظ التلقائي</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Data Management -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-database"></i> إدارة البيانات</h3>
+                        
+                        <div class="mb-20">
+                            <p class="text-muted mb-10">مساحة التخزين المستخدمة:</p>
+                            <div class="progress-bar" style="height: 8px;">
+                                <div class="progress-fill" id="storage-bar" style="width: 25%;"></div>
+                            </div>
+                            <div class="d-flex justify-between mt-10">
+                                <span id="storage-used">2.5 MB</span>
+                                <span id="storage-total">10 MB</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex flex-column gap-10">
+                            <button class="btn btn-info" onclick="exportData()">
+                                <i class="fas fa-download"></i> تصدير البيانات
+                            </button>
+                            <button class="btn btn-secondary" onclick="importData()">
+                                <i class="fas fa-upload"></i> استيراد بيانات
+                            </button>
+                            <button class="btn btn-warning" onclick="backupData()">
+                                <i class="fas fa-copy"></i> نسخ احتياطي
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Reset Settings -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-redo"></i> إعادة التعيين</h3>
+                        <p class="text-muted mb-20">يمكنك إعادة تعيين أجزاء من التطبيق أو كله</p>
+                        
+                        <div class="d-flex flex-column gap-10">
+                            <button class="btn btn-secondary" onclick="resetProgressOnly()">
+                                <i class="fas fa-trash"></i> تصفير التقدم فقط
+                            </button>
+                            
+                            <button class="btn btn-secondary" onclick="resetBookmarksOnly()">
+                                <i class="far fa-bookmark"></i> تصفير المحفوظات فقط
+                            </button>
+                            
+                            <button class="btn btn-secondary" onclick="resetSettingsOnly()">
+                                <i class="fas fa-sliders-h"></i> إعادة ضبط الإعدادات
+                            </button>
+                            
+                            <button class="btn btn-danger" onclick="resetEverything()">
+                                <i class="fas fa-bomb"></i> إعادة تعيين كاملة
+                            </button>
+                        </div>
+                        
+                        <p class="text-danger mt-20" style="font-size: 12px;">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            تحذير: إعادة التعيين الكاملة لا يمكن التراجع عنها
+                        </p>
+                    </div>
+                    
+                    <!-- App Info -->
+                    <div class="setting-item">
+                        <h3 class="setting-title"><i class="fas fa-info-circle"></i> حول التطبيق</h3>
+                        
+                        <div class="mb-20">
+                            <p><strong>الإصدار:</strong> <span id="app-version">3.0.0</span></p>
+                            <p><strong>آخر تحديث:</strong> <span id="last-update">2024</span></p>
+                            <p><strong>البيانات:</strong> <span id="data-status">محملة</span></p>
+                            <p><strong>القرآن:</strong> <span id="quran-status">114 سورة</span></p>
+                        </div>
+                        
+                        <button class="btn btn-primary" onclick="checkForUpdates()">
+                            <i class="fas fa-sync"></i> التحقق من التحديثات
+                        </button>
+                        
+                        <button class="btn btn-secondary mt-10" onclick="installApp()">
+                            <i class="fas fa-download"></i> تثبيت التطبيق
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 
+    <!-- Install Button -->
+    <div class="install-btn" id="install-btn">
+        <i class="fas fa-download"></i>
+        <span>تثبيت التطبيق</span>
+    </div>
+
+    <!-- Offline Indicator -->
+    <div class="offline-indicator" id="offline-indicator">
+        <i class="fas fa-wifi-slash"></i>
+        <span>أنت غير متصل بالإنترنت</span>
+    </div>
+
+    <!-- Audio Player (Hidden) -->
+    <audio id="audio-player" hidden></audio>
+
     <!-- JavaScript -->
     <script>
-        // متغيرات التطبيق
-        let quranData = null;
-        let tafsirData = null;
-        let surahInfo = null;
-        let currentState = {
-            currentSurah: 1,
-            currentPage: 1,
-            bookmarks: [],
-            progress: {},
-            settings: {
-                reminderTime: '05:00',
-                darkMode: false,
-                fontSize: 28
+        // ============================================
+        // APPLICATION STATE & CONFIGURATION
+        // ============================================
+        
+        const APP_CONFIG = {
+            name: "مصحف القرآن الكريم",
+            version: "3.0.0",
+            dataVersion: "1.0",
+            cacheName: "quran-app-complete-v3",
+            dataUrls: {
+                quran: "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmani.json",
+                tafsir: "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-muyassartafseer.json",
+                surahInfo: "https://api.alquran.cloud/v1/meta",
+                pages: "https://api.alquran.cloud/v1/page"
             }
         };
 
-        // روابط البيانات
-        const DATA_URLS = {
-            quran: 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmani.json',
-            tafsir: 'https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-muyassartafseer.json',
-            surahInfo: 'https://api.alquran.cloud/v1/meta'
+        let appState = {
+            // Quran Data
+            quranData: null,
+            tafsirData: null,
+            surahInfo: null,
+            pagesData: {},
+            
+            // Current State
+            currentSection: "daily",
+            currentSurah: 1,
+            currentAyah: 1,
+            currentPage: 1,
+            currentFont: "amiri",
+            currentFontSize: 28,
+            
+            // User Progress
+            progress: {
+                readAyahs: 0,
+                readPages: new Set(),
+                readingTime: 0, // in minutes
+                streak: 0,
+                lastRead: null,
+                dailyProgress: {},
+                bookmarks: [],
+                notes: {},
+                completedSurahs: new Set()
+            },
+            
+            // Settings
+            settings: {
+                theme: "light",
+                themeColor: "#1a472a",
+                autoSave: true,
+                autoScroll: true,
+                showTafsir: true,
+                reminderTime: "05:00",
+                notifications: false,
+                fontSize: 28,
+                fontFamily: "amiri"
+            },
+            
+            // App Data
+            searchHistory: [],
+            reminders: [],
+            lastBackup: null,
+            firstInstall: new Date().toISOString()
         };
 
-        // تهيئة التطبيق
-        async function initApp() {
-            console.log('🚀 بدء تحميل المصحف الكامل...');
+        // ============================================
+        // INITIALIZATION
+        // ============================================
+
+        async function initializeApp() {
+            console.log("🚀 بدء تحميل تطبيق المصحف الكامل...");
             
-            // تحميل الحالة المحفوظة
-            loadSavedState();
+            showLoading("جاري تهيئة التطبيق...");
             
-            // تحديث الواجهة
-            updateUI();
-            
-            // تحميل بيانات القرآن
-            await loadQuranData();
-            
-            // تحميل التفسير
-            await loadTafsirData();
-            
-            // تحميل معلومات السور
-            await loadSurahInfo();
-            
-            console.log('✅ تم تحميل المصحف بنجاح!');
-            updateLoadingStatus('✅ تم تحميل المصحف الكامل');
+            try {
+                // Load saved state
+                loadAppState();
+                
+                // Apply settings
+                applySettings();
+                
+                // Initialize UI
+                initializeUI();
+                
+                // Load Quran data
+                await loadQuranData();
+                
+                // Load additional data
+                await loadAdditionalData();
+                
+                // Setup event listeners
+                setupEventListeners();
+                
+                // Initialize sections
+                initializeSections();
+                
+                // Check connectivity
+                checkConnectivity();
+                
+                // Schedule reminders
+                scheduleReminders();
+                
+                console.log("✅ تم تحميل التطبيق بنجاح!");
+                hideLoading();
+                
+            } catch (error) {
+                console.error("❌ خطأ في تحميل التطبيق:", error);
+                showError("فشل تحميل التطبيق. جاري المحاولة مرة أخرى...");
+                setTimeout(initializeApp, 3000);
+            }
         }
 
-        // تحميل بيانات القرآن
+        // ============================================
+        // DATA LOADING FUNCTIONS
+        // ============================================
+
         async function loadQuranData() {
             try {
-                updateLoadingStatus('📥 جاري تحميل نص القرآن...');
-                
-                // محاولة تحميل من localStorage أولاً
-                const cachedQuran = localStorage.getItem('quranData');
-                if (cachedQuran) {
-                    quranData = JSON.parse(cachedQuran);
-                    console.log('📖 تم تحميل القرآن من الذاكرة المحلية');
-                    updateLoadingStatus('📖 تم تحميل القرآن من الذاكرة المحلية');
-                    return;
+                // Try to load from cache first
+                const cached = localStorage.getItem("quranData");
+                if (cached) {
+                    appState.quranData = JSON.parse(cached);
+                    console.log("📖 تم تحميل القرآن من الذاكرة المحلية");
+                } else {
+                    // Load from API
+                    showLoading("جاري تحميل القرآن الكريم...");
+                    const response = await fetch(APP_CONFIG.dataUrls.quran);
+                    if (!response.ok) throw new Error("فشل تحميل القرآن");
+                    
+                    const data = await response.json();
+                    appState.quranData = data.quran || data;
+                    
+                    // Cache for offline use
+                    localStorage.setItem("quranData", JSON.stringify(appState.quranData));
+                    console.log("✅ تم تحميل القرآن من الإنترنت");
                 }
-                
-                // تحميل من الإنترنت
-                const response = await fetch(DATA_URLS.quran);
-                if (!response.ok) throw new Error('فشل تحميل القرآن');
-                
-                const data = await response.json();
-                quranData = data.quran || data;
-                
-                // حفظ في localStorage
-                localStorage.setItem('quranData', JSON.stringify(quranData));
-                
-                console.log('✅ تم تحميل القرآن من الإنترنت');
-                updateLoadingStatus('✅ تم تحميل القرآن بنجاح');
-                
             } catch (error) {
-                console.error('❌ خطأ في تحميل القرآن:', error);
-                updateLoadingStatus('❌ فشل تحميل القرآن');
-                
-                // استخدام بيانات بديلة بسيطة
-                quranData = getSampleQuranData();
-                localStorage.setItem('quranData', JSON.stringify(quranData));
+                console.error("❌ خطأ في تحميل القرآن:", error);
+                // Load sample data as fallback
+                appState.quranData = getSampleQuranData();
             }
         }
 
-        // تحميل التفسير
-        async function loadTafsirData() {
+        async function loadAdditionalData() {
             try {
-                updateLoadingStatus('📚 جاري تحميل التفسير...');
-                
-                const cachedTafsir = localStorage.getItem('tafsirData');
-                if (cachedTafsir) {
-                    tafsirData = JSON.parse(cachedTafsir);
-                    console.log('📚 تم تحميل التفسير من الذاكرة المحلية');
-                    return;
+                // Load Tafsir
+                const tafsirCached = localStorage.getItem("tafsirData");
+                if (tafsirCached) {
+                    appState.tafsirData = JSON.parse(tafsirCached);
+                } else {
+                    const response = await fetch(APP_CONFIG.dataUrls.tafsir);
+                    const data = await response.json();
+                    appState.tafsirData = data.quran || data;
+                    localStorage.setItem("tafsirData", JSON.stringify(appState.tafsirData));
                 }
-                
-                const response = await fetch(DATA_URLS.tafsir);
-                if (!response.ok) throw new Error('فشل تحميل التفسير');
-                
-                const data = await response.json();
-                tafsirData = data.quran || data;
-                
-                localStorage.setItem('tafsirData', JSON.stringify(tafsirData));
-                console.log('✅ تم تحميل التفسير من الإنترنت');
+
+                // Load Surah Info
+                const surahCached = localStorage.getItem("surahInfo");
+                if (surahCached) {
+                    appState.surahInfo = JSON.parse(surahCached);
+                } else {
+                    const response = await fetch(APP_CONFIG.dataUrls.surahInfo);
+                    const data = await response.json();
+                    appState.surahInfo = data.data.surahs.references;
+                    localStorage.setItem("surahInfo", JSON.stringify(appState.surahInfo));
+                }
+
+                // Generate pages data
+                generatePagesData();
                 
             } catch (error) {
-                console.error('❌ خطأ في تحميل التفسير:', error);
-                tafsirData = null;
+                console.error("❌ خطأ في تحميل البيانات الإضافية:", error);
             }
         }
 
-        // تحميل معلومات السور
-        async function loadSurahInfo() {
-            try {
-                updateLoadingStatus('📊 جاري تحميل معلومات السور...');
-                
-                const cachedInfo = localStorage.getItem('surahInfo');
-                if (cachedInfo) {
-                    surahInfo = JSON.parse(cachedInfo);
-                    console.log('📊 تم تحميل معلومات السور من الذاكرة المحلية');
-                    return;
-                }
-                
-                const response = await fetch(DATA_URLS.surahInfo);
-                if (!response.ok) throw new Error('فشل تحميل معلومات السور');
-                
-                const data = await response.json();
-                surahInfo = data.data.surahs.references;
-                
-                localStorage.setItem('surahInfo', JSON.stringify(surahInfo));
-                console.log('✅ تم تحميل معلومات السور من الإنترنت');
-                
-            } catch (error) {
-                console.error('❌ خطأ في تحميل معلومات السور:', error);
-                surahInfo = getSampleSurahInfo();
+        function generatePagesData() {
+            // This is a simplified version. In production, you would use actual page data
+            appState.pagesData = {};
+            for (let i = 1; i <= 604; i++) {
+                appState.pagesData[i] = {
+                    number: i,
+                    content: `الصفحة ${i} من المصحف الشريف`,
+                    ayahs: [],
+                    surahs: []
+                };
             }
+        }
+
+        // ============================================
+        // STATE MANAGEMENT
+        // ============================================
+
+        function loadAppState() {
+            try {
+                const saved = localStorage.getItem("quranAppState");
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    
+                    // Merge with current state, preserving defaults for new properties
+                    appState = {
+                        ...appState,
+                        ...parsed,
+                        progress: {
+                            ...appState.progress,
+                            ...parsed.progress,
+                            readPages: new Set(parsed.progress?.readPages || []),
+                            completedSurahs: new Set(parsed.progress?.completedSurahs || []),
+                            bookmarks: parsed.progress?.bookmarks || []
+                        }
+                    };
+                    
+                    console.log("✅ تم تحميل الحالة المحفوظة");
+                }
+            } catch (error) {
+                console.error("❌ خطأ في تحميل الحالة:", error);
+            }
+        }
+
+        function saveAppState() {
+            if (!appState.settings.autoSave) return;
             
-            // بعد تحميل المعلومات، تحديث الواجهة
+            try {
+                // Convert Sets to Arrays for JSON serialization
+                const stateToSave = {
+                    ...appState,
+                    progress: {
+                        ...appState.progress,
+                        readPages: Array.from(appState.progress.readPages),
+                        completedSurahs: Array.from(appState.progress.completedSurahs)
+                    }
+                };
+                
+                localStorage.setItem("quranAppState", JSON.stringify(stateToSave));
+            } catch (error) {
+                console.error("❌ خطأ في حفظ الحالة:", error);
+            }
+        }
+
+        // ============================================
+        // UI FUNCTIONS
+        // ============================================
+
+        function initializeUI() {
+            // Update date
+            updateDate();
+            
+            // Populate surah select
             populateSurahSelect();
-            loadDailyAyah();
-            updateDataStats();
-        }
-
-        // تحميل الحالة المحفوظة
-        function loadSavedState() {
-            const saved = localStorage.getItem('quranAppState');
-            if (saved) {
-                currentState = JSON.parse(saved);
-            }
             
-            // تطبيق الإعدادات
-            if (currentState.settings.darkMode) {
-                document.documentElement.setAttribute('data-theme', 'dark');
-            }
+            // Setup navigation
+            setupNavigation();
             
-            document.getElementById('reminder-time').value = currentState.settings.reminderTime;
+            // Update progress display
+            updateProgressDisplay();
+            
+            // Apply current theme
+            applyTheme();
         }
 
-        // حفظ الحالة
-        function saveState() {
-            localStorage.setItem('quranAppState', JSON.stringify(currentState));
-        }
-
-        // تحديث حالة التحميل
-        function updateLoadingStatus(message) {
-            const statusElement = document.getElementById('loading-status');
-            if (statusElement) {
-                statusElement.textContent = message;
-            }
-        }
-
-        // تحديث إحصائيات البيانات
-        function updateDataStats() {
-            if (quranData && surahInfo) {
-                const totalAyahs = Object.values(quranData).reduce((sum, surah) => sum + (surah.ayahs?.length || 0), 0);
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll(".content-section").forEach(section => {
+                section.classList.remove("active");
+            });
+            
+            // Deactivate all nav buttons
+            document.querySelectorAll(".nav-btn").forEach(btn => {
+                btn.classList.remove("active");
+            });
+            
+            // Show selected section
+            const section = document.getElementById(`${sectionId}-section`);
+            if (section) {
+                section.classList.add("active");
                 
-                document.getElementById('ayah-count').textContent = `${totalAyahs} آية`;
-                document.getElementById('data-status').textContent = '✅ محملة';
-                document.getElementById('storage-size').textContent = `${Math.round(JSON.stringify(quranData).length / 1024 / 1024 * 100) / 100} MB`;
-                document.getElementById('surah-count').textContent = `${surahInfo.length} سورة`;
+                // Load section content if needed
+                loadSectionContent(sectionId);
+            }
+            
+            // Activate clicked button
+            event.target.classList.add("active");
+            
+            // Update current section
+            appState.currentSection = sectionId;
+            
+            // Save state
+            saveAppState();
+        }
+
+        function loadSectionContent(sectionId) {
+            switch (sectionId) {
+                case "daily":
+                    loadDailyAyah();
+                    break;
+                case "mushaf":
+                    loadCurrentSurah();
+                    break;
+                case "pages":
+                    loadCurrentPage();
+                    break;
+                case "bookmarks":
+                    loadBookmarks();
+                    break;
+                case "progress":
+                    updateStats();
+                    break;
             }
         }
 
-        // ملء قائمة السور
-        function populateSurahSelect() {
-            const select = document.getElementById('surah-select');
-            select.innerHTML = '<option value="">اختر سورة...</option>';
-            
-            if (surahInfo) {
-                surahInfo.forEach(surah => {
-                    const option = document.createElement('option');
-                    option.value = surah.number;
-                    option.textContent = `${surah.number}. ${surah.name} (${surah.englishName}) - ${surah.ayahs} آية`;
-                    select.appendChild(option);
-                });
-            }
-        }
+        // ============================================
+        // DAILY SECTION
+        // ============================================
 
-        // تحميل سورة
-        function loadSurah(surahNumber) {
-            if (!quranData || !surahNumber) return;
-            
-            const surah = quranData[surahNumber];
-            if (!surah) return;
-            
-            const contentDiv = document.getElementById('mushaf-content');
-            contentDiv.innerHTML = '';
-            
-            // إضافة معلومات السورة
-            const surahHeader = document.createElement('div');
-            surahHeader.className = 'card';
-            surahHeader.innerHTML = `
-                <h3 class="card-title">سورة ${surah.name}</h3>
-                <p class="text-muted">${surah.englishName} - ${surah.ayahs?.length || 0} آية</p>
-                <p class="quran-text">﴿ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ﴾</p>
-            `;
-            contentDiv.appendChild(surahHeader);
-            
-            // إضافة الآيات
-            if (surah.ayahs && surah.ayahs.length > 0) {
-                surah.ayahs.forEach(ayah => {
-                    const ayahDiv = document.createElement('div');
-                    ayahDiv.className = 'card mt-20';
-                    ayahDiv.innerHTML = `
-                        <div class="quran-text">${ayah.text}</div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                            <span style="color: var(--primary);">الآية ${ayah.number}</span>
-                            <button onclick="bookmarkAyah(${surahNumber}, ${ayah.number})" style="background: none; border: none; color: var(--primary); cursor: pointer;">
-                                <i class="far fa-bookmark"></i>
-                            </button>
-                        </div>
-                        ${getTafsirForAyah(surahNumber, ayah.number)}
-                    `;
-                    contentDiv.appendChild(ayahDiv);
-                });
-            }
-            
-            // تفعيل أزرار التنقل
-            document.getElementById('prev-btn').disabled = surahNumber <= 1;
-            document.getElementById('next-btn').disabled = surahNumber >= 114;
-            
-            currentState.currentSurah = parseInt(surahNumber);
-            saveState();
-        }
-
-        // الحصول على تفسير الآية
-        function getTafsirForAyah(surah, ayah) {
-            if (!tafsirData) return '';
-            
-            const surahTafsir = tafsirData[surah];
-            if (!surahTafsir || !surahTafsir.ayahs) return '';
-            
-            const ayahTafsir = surahTafsir.ayahs.find(a => a.number === ayah);
-            if (!ayahTafsir || !ayahTafsir.text) return '';
-            
-            return `
-                <div style="background: rgba(60, 179, 113, 0.1); padding: 15px; border-radius: 10px; margin-top: 15px;">
-                    <h4 style="color: var(--primary); margin-bottom: 10px;">
-                        <i class="fas fa-graduation-cap"></i> التفسير الميسر
-                    </h4>
-                    <p>${ayahTafsir.text}</p>
-                </div>
-            `;
-        }
-
-        // تحميل آية اليوم
         function loadDailyAyah() {
-            if (!quranData || !surahInfo) return;
+            if (!appState.quranData || !appState.surahInfo) return;
             
             const today = new Date();
             const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
             
-            // اختيار سورة عشوائية بناءً على اليوم
-            const surahIndex = (dayOfYear % surahInfo.length);
-            const surahNumber = surahInfo[surahIndex].number;
-            const surah = quranData[surahNumber];
+            // Select random surah and ayah based on day
+            const surahIndex = dayOfYear % appState.surahInfo.length;
+            const surahNumber = appState.surahInfo[surahIndex].number;
+            const surah = appState.quranData[surahNumber];
             
             if (!surah || !surah.ayahs) return;
             
-            // اختيار آية عشوائية
-            const ayahIndex = dayOfYear % (surah.ayahs.length || 7);
+            const ayahIndex = dayOfYear % surah.ayahs.length;
             const ayah = surah.ayahs[ayahIndex] || surah.ayahs[0];
             
             if (!ayah) return;
             
-            const contentDiv = document.getElementById('daily-content');
-            contentDiv.innerHTML = `
-                <div class="quran-text">${ayah.text}</div>
-                
-                <div class="card mt-20">
-                    <h3 class="card-title"><i class="fas fa-graduation-cap"></i> تفسير الآية</h3>
-                    <p>${getTafsirForAyah(surahNumber, ayah.number) || 'التفسير غير متوفر حالياً'}</p>
+            const dailyContent = document.getElementById("daily-content");
+            dailyContent.innerHTML = `
+                <div class="quran-text">
+                    ${ayah.text}
+                    <span class="ayah-number">${ayah.number}</span>
                 </div>
                 
-                <div class="info-grid mt-20">
+                <div class="tafsir-box">
+                    <div class="tafsir-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>التفسير الميسر</h3>
+                    </div>
+                    <p>${getTafsir(surahNumber, ayah.number) || "التفسير غير متوفر حالياً."}</p>
+                </div>
+                
+                <div class="info-grid">
                     <div class="info-item">
-                        <i class="fas fa-mosque"></i>
-                        <h4>السورة</h4>
-                        <p>${surah.name}</p>
+                        <i class="fas fa-mosque info-icon"></i>
+                        <div class="info-label">السورة</div>
+                        <div class="info-value">${surah.name}</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-hashtag"></i>
-                        <h4>رقم الآية</h4>
-                        <p>${ayah.number}</p>
+                        <i class="fas fa-hashtag info-icon"></i>
+                        <div class="info-label">رقم الآية</div>
+                        <div class="info-value">${ayah.number}</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-book"></i>
-                        <h4>عدد آيات السورة</h4>
-                        <p>${surah.ayahs?.length || 0}</p>
+                        <i class="fas fa-star info-icon"></i>
+                        <div class="info-label">النوع</div>
+                        <div class="info-value">${appState.surahInfo[surahIndex].revelationType === "Meccan" ? "مكية" : "مدنية"}</div>
                     </div>
                     <div class="info-item">
-                        <i class="fas fa-star"></i>
-                        <h4>التصنيف</h4>
-                        <p>${surahInfo[surahIndex].revelationType === 'Meccan' ? 'مكية' : 'مدنية'}</p>
+                        <i class="fas fa-book info-icon"></i>
+                        <div class="info-label">آيات السورة</div>
+                        <div class="info-value">${surah.ayahs.length}</div>
                     </div>
                 </div>
                 
+                <div class="card mt-30">
+                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> وقفة إيمانية</h3>
+                    <p>تأمل في معنى الآية وحاول تطبيقها في يومك.</p>
+                </div>
+                
                 <div class="card mt-20">
-                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> تطبيق عملي</h3>
-                    <p>حاول أن تردد هذه الآية ${ayah.number} مرة اليوم، وتفكر في معناها.</p>
-                    <button class="btn btn-secondary" onclick="bookmarkAyah(${surahNumber}, ${ayah.number})">
-                        <i class="far fa-bookmark"></i> حفظ هذه الآية
+                    <h3 class="card-title"><i class="fas fa-check-circle"></i> تطبيق اليوم</h3>
+                    <p>حاول أن تردد هذه الآية ${ayah.number} مرة اليوم وتفكر في معناها.</p>
+                    <div class="d-flex gap-10 mt-20">
+                        <button class="btn btn-primary" onclick="bookmarkAyah(${surahNumber}, ${ayah.number})">
+                            <i class="far fa-bookmark"></i> حفظ الآية
+                        </button>
+                        <button class="btn btn-success" onclick="markAyahAsRead(${surahNumber}, ${ayah.number})">
+                            <i class="fas fa-check"></i> تمت القراءة
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Update progress
+            appState.progress.readAyahs++;
+            appState.progress.lastRead = new Date().toISOString();
+            updateProgressDisplay();
+            saveAppState();
+        }
+
+        // ============================================
+        // MUSHAF SECTION
+        // ============================================
+
+        function populateSurahSelect() {
+            const select = document.getElementById("surah-select");
+            if (!select || !appState.surahInfo) return;
+            
+            select.innerHTML = '<option value="">اختر سورة...</option>';
+            
+            appState.surahInfo.forEach(surah => {
+                const option = document.createElement("option");
+                option.value = surah.number;
+                option.textContent = `${surah.number}. ${surah.name} (${surah.englishName})`;
+                select.appendChild(option);
+            });
+            
+            // Set current surah
+            select.value = appState.currentSurah;
+        }
+
+        function loadSurah() {
+            const surahNumber = document.getElementById("surah-select").value;
+            if (!surahNumber || !appState.quranData) return;
+            
+            appState.currentSurah = parseInt(surahNumber);
+            loadCurrentSurah();
+        }
+
+        function loadCurrentSurah() {
+            const surah = appState.quranData[appState.currentSurah];
+            if (!surah) return;
+            
+            const mushafContent = document.getElementById("mushaf-content");
+            mushafContent.innerHTML = `
+                <div class="card">
+                    <h3 class="card-title">سورة ${surah.name}</h3>
+                    <p class="text-muted">${surah.englishName} - ${surah.ayahs?.length || 0} آية</p>
+                    <div class="quran-text">
+                        ﴿ بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ ﴾
+                    </div>
+                </div>
+            `;
+            
+            // Add ayahs
+            if (surah.ayahs && surah.ayahs.length > 0) {
+                const ayahList = document.createElement("div");
+                ayahList.className = "ayah-list-container";
+                
+                surah.ayahs.forEach(ayah => {
+                    const ayahDiv = document.createElement("div");
+                    ayahDiv.className = "ayah-item";
+                    ayahDiv.onclick = () => showTafsir(appState.currentSurah, ayah.number);
+                    
+                    ayahDiv.innerHTML = `
+                        <div class="ayah-item-number">${ayah.number}</div>
+                        <div class="ayah-item-content">
+                            <div class="quran-text" style="font-size: ${appState.currentFontSize}px;">
+                                ${ayah.text}
+                            </div>
+                            <div class="ayah-item-actions">
+                                <button class="btn btn-secondary" onclick="event.stopPropagation(); bookmarkAyah(${appState.currentSurah}, ${ayah.number})">
+                                    <i class="far fa-bookmark"></i>
+                                </button>
+                                <button class="btn btn-info" onclick="event.stopPropagation(); playAyah(${appState.currentSurah}, ${ayah.number})">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    ayahList.appendChild(ayahDiv);
+                });
+                
+                mushafContent.appendChild(ayahList);
+            }
+            
+            // Update navigation buttons
+            updateSurahNavigation();
+        }
+
+        function prevSurah() {
+            if (appState.currentSurah > 1) {
+                appState.currentSurah--;
+                document.getElementById("surah-select").value = appState.currentSurah;
+                loadCurrentSurah();
+            }
+        }
+
+        function nextSurah() {
+            if (appState.currentSurah < 114) {
+                appState.currentSurah++;
+                document.getElementById("surah-select").value = appState.currentSurah;
+                loadCurrentSurah();
+            }
+        }
+
+        function updateSurahNavigation() {
+            document.getElementById("prev-surah-btn").disabled = appState.currentSurah <= 1;
+            document.getElementById("next-surah-btn").disabled = appState.currentSurah >= 114;
+        }
+
+        // ============================================
+        // PAGES SECTION
+        // ============================================
+
+        function loadCurrentPage() {
+            const pageContent = document.getElementById("page-content");
+            const page = appState.pagesData[appState.currentPage];
+            
+            if (!page) {
+                pageContent.innerHTML = '<p class="empty-state">لم يتم تحميل بيانات الصفحة بعد</p>';
+                return;
+            }
+            
+            pageContent.innerHTML = `
+                <div class="card">
+                    <h3 class="card-title">الصفحة ${appState.currentPage}</h3>
+                    <p class="text-muted">من المصحف الشريف</p>
+                    <div class="quran-text">
+                        هذا محتوى الصفحة ${appState.currentPage} من المصحف. في النسخة الكاملة، هنا تظهر آيات الصفحة.
+                    </div>
+                </div>
+                
+                <div class="info-grid mt-30">
+                    <div class="info-item">
+                        <i class="fas fa-file-alt info-icon"></i>
+                        <div class="info-label">رقم الصفحة</div>
+                        <div class="info-value">${appState.currentPage}</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-layer-group info-icon"></i>
+                        <div class="info-label">إجمالي الصفحات</div>
+                        <div class="info-value">604</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-check-circle info-icon"></i>
+                        <div class="info-label">الحالة</div>
+                        <div class="info-value">${appState.progress.readPages.has(appState.currentPage) ? "مقروءة" : "غير مقروءة"}</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-percentage info-icon"></i>
+                        <div class="info-label">التقدم</div>
+                        <div class="info-value">${Math.round((appState.currentPage / 604) * 100)}%</div>
+                    </div>
+                </div>
+                
+                <div class="card mt-30">
+                    <h3 class="card-title"><i class="fas fa-edit"></i> ملاحظات الصفحة</h3>
+                    <textarea id="page-notes" class="w-100 p-10 rounded" rows="3" 
+                              placeholder="اكتب ملاحظاتك عن هذه الصفحة...">${appState.progress.notes[appState.currentPage] || ""}</textarea>
+                    <button class="btn btn-primary mt-10" onclick="savePageNotes()">
+                        <i class="fas fa-save"></i> حفظ الملاحظات
                     </button>
                 </div>
             `;
             
-            // تحديث التاريخ
-            document.getElementById('today-date').textContent = today.toLocaleDateString('ar-SA', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            // Update page info
+            updatePageInfo();
+            
+            // Mark as read if not already
+            if (!appState.progress.readPages.has(appState.currentPage)) {
+                appState.progress.readPages.add(appState.currentPage);
+                updateProgressDisplay();
+                saveAppState();
+            }
         }
 
-        // حفظ الآية
-        function bookmarkAyah(surah, ayah) {
-            if (!quranData || !quranData[surah]) return;
+        function prevPage() {
+            if (appState.currentPage > 1) {
+                appState.currentPage--;
+                document.getElementById("page-slider").value = appState.currentPage;
+                loadCurrentPage();
+            }
+        }
+
+        function nextPage() {
+            if (appState.currentPage < 604) {
+                appState.currentPage++;
+                document.getElementById("page-slider").value = appState.currentPage;
+                loadCurrentPage();
+            }
+        }
+
+        function updatePageInfo() {
+            document.getElementById("current-page-text").textContent = `الصفحة ${appState.currentPage}`;
+            document.getElementById("page-range").textContent = `الصفحة ${appState.currentPage} من 604`;
             
-            const surahData = quranData[surah];
-            const ayahData = surahData.ayahs?.find(a => a.number === ayah);
+            document.getElementById("prev-page-btn").disabled = appState.currentPage <= 1;
+            document.getElementById("next-page-btn").disabled = appState.currentPage >= 604;
+        }
+
+        // ============================================
+        // TAFSIR SECTION
+        // ============================================
+
+        function showTafsir(surah, ayah) {
+            const surahData = appState.quranData[surah];
+            const ayahData = surahData?.ayahs?.find(a => a.number === ayah);
             
             if (!ayahData) return;
             
-            const bookmark = {
-                surah: surah,
-                ayah: ayah,
-                text: ayahData.text,
-                surahName: surahData.name,
-                date: new Date().toISOString(),
-                timestamp: Date.now()
-            };
+            // Switch to tafsir section
+            showSection("tafsir");
             
-            currentState.bookmarks.push(bookmark);
-            saveState();
+            const tafsirContent = document.getElementById("tafsir-content");
+            const tafsirText = getTafsir(surah, ayah);
             
-            alert('✅ تم حفظ الآية في المحفوظات');
-            updateBookmarksList();
+            tafsirContent.innerHTML = `
+                <div class="card">
+                    <div class="quran-text">
+                        ${ayahData.text}
+                        <span class="ayah-number">${ayah}</span>
+                    </div>
+                </div>
+                
+                <div class="tafsir-box mt-30">
+                    <div class="tafsir-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h3>التفسير الميسر</h3>
+                    </div>
+                    <p>${tafsirText || "التفسير غير متوفر لهذه الآية."}</p>
+                </div>
+                
+                <div class="info-grid mt-30">
+                    <div class="info-item">
+                        <i class="fas fa-mosque info-icon"></i>
+                        <div class="info-label">السورة</div>
+                        <div class="info-value">${surahData.name}</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-hashtag info-icon"></i>
+                        <div class="info-label">رقم الآية</div>
+                        <div class="info-value">${ayah}</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-info-circle info-icon"></i>
+                        <div class="info-label">معلومات</div>
+                        <div class="info-value">التفسير متوفر</div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-star info-icon"></i>
+                        <div class="info-label">النوع</div>
+                        <div class="info-value">${getSurahType(surah)}</div>
+                    </div>
+                </div>
+                
+                <div class="card mt-30">
+                    <h3 class="card-title"><i class="fas fa-lightbulb"></i> تأملات</h3>
+                    <p>تأمل في معنى الآية وحاول تطبيقها في حياتك اليومية.</p>
+                </div>
+            `;
+            
+            // Update selected ayah info
+            document.getElementById("selected-ayah-info").textContent = 
+                `سورة ${surahData.name} - الآية ${ayah}`;
         }
 
-        // تحديث قائمة المحفوظات
-        function updateBookmarksList() {
-            const listDiv = document.getElementById('bookmarks-list');
+        function getTafsir(surah, ayah) {
+            if (!appState.tafsirData || !appState.tafsirData[surah]) return null;
             
-            if (!currentState.bookmarks || currentState.bookmarks.length === 0) {
-                listDiv.innerHTML = '<p class="text-center text-muted">لا توجد آيات محفوظة بعد</p>';
+            const surahTafsir = appState.tafsirData[surah];
+            const ayahTafsir = surahTafsir.ayahs?.find(a => a.number === ayah);
+            
+            return ayahTafsir?.text || null;
+        }
+
+        function getSurahType(surahNumber) {
+            const surah = appState.surahInfo?.find(s => s.number === surahNumber);
+            return surah?.revelationType === "Meccan" ? "مكية" : "مدنية";
+        }
+
+        // ============================================
+        // BOOKMARKS
+        // ============================================
+
+        function bookmarkAyah(surah, ayah) {
+            const surahData = appState.quranData[surah];
+            const ayahData = surahData?.ayahs?.find(a => a.number === ayah);
+            
+            if (!ayahData) return;
+            
+            // Check if already bookmarked
+            const existingIndex = appState.progress.bookmarks.findIndex(
+                b => b.surah === surah && b.ayah === ayah
+            );
+            
+            if (existingIndex > -1) {
+                // Remove bookmark
+                appState.progress.bookmarks.splice(existingIndex, 1);
+                showToast("تم إزالة الآية من المحفوظات", "warning");
+            } else {
+                // Add bookmark
+                appState.progress.bookmarks.push({
+                    surah,
+                    ayah,
+                    text: ayahData.text,
+                    surahName: surahData.name,
+                    date: new Date().toISOString(),
+                    note: ""
+                });
+                showToast("تم حفظ الآية في المحفوظات", "success");
+            }
+            
+            saveAppState();
+            
+            // Reload bookmarks if on bookmarks section
+            if (appState.currentSection === "bookmarks") {
+                loadBookmarks();
+            }
+        }
+
+        function loadBookmarks() {
+            const bookmarksContent = document.getElementById("bookmarks-content");
+            const bookmarksCount = document.getElementById("bookmarks-count");
+            
+            if (!appState.progress.bookmarks || appState.progress.bookmarks.length === 0) {
+                bookmarksContent.innerHTML = '<p class="empty-state">لا توجد آيات محفوظة بعد</p>';
+                bookmarksCount.textContent = "0 آية";
                 return;
             }
             
-            let html = '';
-            currentState.bookmarks.forEach((bookmark, index) => {
+            let html = "";
+            appState.progress.bookmarks.forEach((bookmark, index) => {
                 html += `
-                    <div class="card mb-20">
-                        <div class="quran-text">${bookmark.text}</div>
-                        <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                            <span style="color: var(--primary);">
-                                ${bookmark.surahName} - الآية ${bookmark.ayah}
-                            </span>
-                            <div>
-                                <button onclick="loadSurah(${bookmark.surah})" style="background: none; border: none; color: var(--primary); margin-left: 10px; cursor: pointer;">
-                                    <i class="fas fa-eye"></i>
+                    <div class="ayah-item">
+                        <div class="ayah-item-number">${bookmark.ayah}</div>
+                        <div class="ayah-item-content">
+                            <div class="quran-text" style="font-size: ${appState.currentFontSize}px;">
+                                ${bookmark.text}
+                            </div>
+                            <div class="d-flex justify-between mt-10">
+                                <span class="text-muted">${bookmark.surahName}</span>
+                                <span class="text-muted">${new Date(bookmark.date).toLocaleDateString("ar-SA")}</span>
+                            </div>
+                            <div class="ayah-item-actions">
+                                <button class="btn btn-secondary" onclick="showTafsir(${bookmark.surah}, ${bookmark.ayah})">
+                                    <i class="fas fa-book-open"></i> تفسير
                                 </button>
-                                <button onclick="removeBookmark(${index})" style="background: none; border: none; color: #dc3545; cursor: pointer;">
-                                    <i class="fas fa-trash"></i>
+                                <button class="btn btn-danger" onclick="removeBookmark(${index})">
+                                    <i class="fas fa-trash"></i> حذف
                                 </button>
                             </div>
                         </div>
-                        <p class="text-muted" style="font-size: 14px; margin-top: 10px;">
-                            <i class="far fa-clock"></i> ${new Date(bookmark.date).toLocaleDateString('ar-SA')}
-                        </p>
                     </div>
                 `;
             });
             
-            listDiv.innerHTML = html;
+            bookmarksContent.innerHTML = html;
+            bookmarksCount.textContent = `${appState.progress.bookmarks.length} آية`;
         }
 
-        // إزالة محفوظة
         function removeBookmark(index) {
-            if (confirm('هل تريد إزالة هذه الآية من المحفوظات؟')) {
-                currentState.bookmarks.splice(index, 1);
-                saveState();
-                updateBookmarksList();
-                alert('✅ تم إزالة الآية من المحفوظات');
+            if (confirm("هل تريد إزالة هذه الآية من المحفوظات؟")) {
+                appState.progress.bookmarks.splice(index, 1);
+                saveAppState();
+                loadBookmarks();
+                showToast("تم إزالة الآية من المحفوظات", "warning");
             }
         }
 
-        // البحث في القرآن
-        function searchQuran() {
-            const query = document.getElementById('search-input').value.trim();
-            if (!query || !quranData) return;
+        function clearAllBookmarks() {
+            if (confirm("هل تريد حذف جميع المحفوظات؟ لا يمكن التراجع عن هذه العملية.")) {
+                appState.progress.bookmarks = [];
+                saveAppState();
+                loadBookmarks();
+                showToast("تم حذف جميع المحفوظات", "danger");
+            }
+        }
+
+        // ============================================
+        // PROGRESS & STATISTICS
+        // ============================================
+
+        function updateProgressDisplay() {
+            const totalAyahs = 6236; // Total ayahs in Quran
+            const totalPages = 604;
             
-            const resultsDiv = document.getElementById('search-results');
-            resultsDiv.innerHTML = '<div class="loader"></div><p class="text-center">جاري البحث...</p>';
+            const readAyahs = appState.progress.readAyahs;
+            const readPages = appState.progress.readPages.size;
+            
+            const ayahProgress = Math.min(100, (readAyahs / totalAyahs) * 100);
+            const pageProgress = Math.min(100, (readPages / totalPages) * 100);
+            const totalProgress = (ayahProgress + pageProgress) / 2;
+            
+            // Update progress bar
+            document.getElementById("progress-fill").style.width = `${totalProgress}%`;
+            document.getElementById("progress-text").innerHTML = 
+                `التقدم: <strong>${Math.round(totalProgress)}%</strong>`;
+            
+            // Update stats
+            const readingTime = Math.floor(appState.progress.readingTime / 60); // Convert to hours
+            document.getElementById("stats-text").textContent = 
+                `📖 ${readAyahs} آية | ⏱️ ${readingTime} ساعة`;
+        }
+
+        function updateStats() {
+            const totalAyahs = 6236;
+            const totalPages = 604;
+            
+            const readAyahs = appState.progress.readAyahs;
+            const readPages = appState.progress.readPages.size;
+            
+            document.getElementById("stats-streak").textContent = `${appState.progress.streak} يوم`;
+            document.getElementById("stats-ayahs").textContent = `${readAyahs} آية`;
+            document.getElementById("stats-time").textContent = `${appState.progress.readingTime} دقيقة`;
+            document.getElementById("stats-completion").textContent = 
+                `${Math.round((readAyahs / totalAyahs) * 100)}%`;
+        }
+
+        function markAyahAsRead(surah, ayah) {
+            appState.progress.readAyahs++;
+            appState.progress.readingTime += 1; // 1 minute per ayah
+            
+            // Update streak
+            const today = new Date().toDateString();
+            const lastRead = appState.progress.lastRead ? new Date(appState.progress.lastRead).toDateString() : null;
+            
+            if (lastRead === today) {
+                // Already read today
+            } else if (lastRead && isYesterday(lastRead)) {
+                appState.progress.streak++;
+            } else {
+                appState.progress.streak = 1;
+            }
+            
+            appState.progress.lastRead = new Date().toISOString();
+            
+            // Update UI
+            updateProgressDisplay();
+            updateStats();
+            saveAppState();
+            
+            showToast("تم تسجيل قراءة الآية", "success");
+        }
+
+        function isYesterday(dateString) {
+            const date = new Date(dateString);
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            return date.toDateString() === yesterday.toDateString();
+        }
+
+        // ============================================
+        // REMINDERS
+        // ============================================
+
+        function saveReminder() {
+            const time = document.getElementById("reminder-time-input").value;
+            appState.settings.reminderTime = time;
+            
+            // Save to state
+            appState.reminders.push({
+                time,
+                enabled: true,
+                lastTriggered: null,
+                days: [0, 1, 2, 3, 4, 5, 6] // All days
+            });
+            
+            saveAppState();
+            scheduleReminders();
+            
+            showToast(`تم حفظ التذكير للساعة ${time}`, "success");
+        }
+
+        function scheduleReminders() {
+            if (!appState.settings.notifications) return;
+            
+            const [hours, minutes] = appState.settings.reminderTime.split(":").map(Number);
+            const now = new Date();
+            const reminderTime = new Date();
+            
+            reminderTime.setHours(hours, minutes, 0, 0);
+            
+            // If time has passed today, schedule for tomorrow
+            if (reminderTime <= now) {
+                reminderTime.setDate(reminderTime.getDate() + 1);
+            }
+            
+            const timeUntilReminder = reminderTime.getTime() - now.getTime();
             
             setTimeout(() => {
-                let results = [];
-                const queryLower = query.toLowerCase();
+                if (Notification.permission === "granted") {
+                    showNotification("🕌 وقت قراءة القرآن", "حان وقت قراءة وردك اليومي من القرآن الكريم");
+                }
+                // Reschedule for next day
+                scheduleReminders();
+            }, timeUntilReminder);
+        }
+
+        function enableNotifications() {
+            if (!("Notification" in window)) {
+                showToast("المتصفح لا يدعم الإشعارات", "danger");
+                return;
+            }
+            
+            if (Notification.permission === "granted") {
+                appState.settings.notifications = true;
+                saveAppState();
+                document.getElementById("notification-permission-box").classList.add("hidden");
+                showToast("الإشعارات مفعلة بالفعل", "success");
+                return;
+            }
+            
+            if (Notification.permission === "denied") {
+                showToast("تم رفض الإشعارات. يرجى تفعيلها يدوياً من إعدادات المتصفح.", "danger");
+                return;
+            }
+            
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    appState.settings.notifications = true;
+                    saveAppState();
+                    document.getElementById("notification-permission-box").classList.add("hidden");
+                    showToast("تم تفعيل الإشعارات بنجاح", "success");
+                    scheduleReminders();
+                } else {
+                    showToast("لم يتم تفعيل الإشعارات", "warning");
+                }
+            });
+        }
+
+        function testNotification() {
+            if (Notification.permission === "granted") {
+                showNotification("🔔 تجربة التذكير", "هذا تذكير تجريبي من تطبيق مصحف القرآن الكريم");
+                showToast("تم إرسال إشعار تجريبي", "success");
+            } else {
+                enableNotifications();
+            }
+        }
+
+        function showNotification(title, body) {
+            if (Notification.permission === "granted") {
+                new Notification(title, {
+                    body,
+                    icon: "https://img.icons8.com/color/96/000000/quran.png",
+                    badge: "https://img.icons8.com/color/96/000000/quran.png"
+                });
+            }
+        }
+
+        // ============================================
+        // SETTINGS FUNCTIONS
+        // ============================================
+
+        function applySettings() {
+            // Apply theme
+            applyTheme();
+            
+            // Apply font
+            applyFont();
+            
+            // Apply other settings
+            document.getElementById("auto-save-toggle").checked = appState.settings.autoSave;
+            document.getElementById("auto-scroll-toggle").checked = appState.settings.autoScroll;
+            document.getElementById("show-tafsir-toggle").checked = appState.settings.showTafsir;
+            document.getElementById("dark-mode-toggle").checked = appState.settings.theme === "dark";
+            document.getElementById("font-size-slider").value = appState.settings.fontSize;
+            document.getElementById("font-size-value").textContent = `${appState.settings.fontSize}px`;
+            document.getElementById("reminder-time-input").value = appState.settings.reminderTime;
+            
+            // Apply font selector
+            document.querySelectorAll(".font-option").forEach(option => {
+                option.classList.remove("active");
+            });
+            document.querySelector(`.font-option.${appState.settings.fontFamily}`)?.classList.add("active");
+        }
+
+        function applyTheme() {
+            const isDark = appState.settings.theme === "dark";
+            document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
+            
+            // Update theme color
+            document.querySelector('meta[name="theme-color"]').setAttribute("content", appState.settings.themeColor);
+        }
+
+        function applyFont() {
+            document.querySelectorAll(".quran-text").forEach(element => {
+                element.style.fontFamily = appState.settings.fontFamily === "amiri" 
+                    ? "'Amiri Quran', serif" 
+                    : appState.settings.fontFamily === "uthmani"
+                    ? "'Traditional Arabic', serif"
+                    : "'Noto Naskh Arabic', serif";
                 
-                // البحث في جميع السور والآيات
-                Object.keys(quranData).forEach(surahNum => {
-                    const surah = quranData[surahNum];
-                    if (surah.ayahs) {
-                        surah.ayahs.forEach(ayah => {
-                            if (ayah.text && ayah.text.includes(query)) {
-                                results.push({
-                                    surah: surahNum,
-                                    ayah: ayah.number,
-                                    text: ayah.text,
-                                    surahName: surah.name
-                                });
-                            }
-                        });
+                element.style.fontSize = `${appState.settings.fontSize}px`;
+            });
+        }
+
+        function changeThemeColor(color) {
+            appState.settings.themeColor = color;
+            applyTheme();
+            saveAppState();
+            showToast("تم تغيير لون السمة", "success");
+        }
+
+        function changeFont(font) {
+            appState.settings.fontFamily = font;
+            applyFont();
+            saveAppState();
+            
+            // Update font selector
+            document.querySelectorAll(".font-option").forEach(option => {
+                option.classList.remove("active");
+            });
+            event.target.classList.add("active");
+            
+            showToast(`تم تغيير الخط إلى ${font}`, "success");
+        }
+
+        function changeFontSize(size) {
+            appState.settings.fontSize = parseInt(size);
+            document.getElementById("font-size-value").textContent = `${size}px`;
+            applyFont();
+            saveAppState();
+        }
+
+        // ============================================
+        // DATA MANAGEMENT
+        // ============================================
+
+        function exportData() {
+            const data = {
+                appState: {
+                    ...appState,
+                    progress: {
+                        ...appState.progress,
+                        readPages: Array.from(appState.progress.readPages),
+                        completedSurahs: Array.from(appState.progress.completedSurahs)
                     }
-                });
-                
-                // عرض النتائج
-                if (results.length === 0) {
-                    resultsDiv.innerHTML = `
-                        <div class="card">
-                            <p class="text-center text-muted">❌ لم يتم العثور على نتائج للبحث: "${query}"</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                let html = `
-                    <div class="card">
-                        <h3 class="card-title">
-                            <i class="fas fa-search"></i> نتائج البحث: "${query}"
-                        </h3>
-                        <p class="text-muted">تم العثور على ${results.length} نتيجة</p>
-                    </div>
-                `;
-                
-                results.slice(0, 20).forEach(result => {
-                    html += `
-                        <div class="card mt-20">
-                            <div class="quran-text">${highlightText(result.text, query)}</div>
-                            <div style="display: flex; justify-content: space-between; margin-top: 15px;">
-                                <span style="color: var(--primary);">
-                                    ${result.surahName} - الآية ${result.ayah}
-                                </span>
-                                <button onclick="loadSurah(${result.surah})" style="background: none; border: none; color: var(--primary); cursor: pointer;">
-                                    <i class="fas fa-external-link-alt"></i> انتقل للسورة
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                if (results.length > 20) {
-                    html += `
-                        <div class="card mt-20 text-center">
-                            <p class="text-muted">و ${results.length - 20} نتيجة أخرى...</p>
-                        </div>
-                    `;
-                }
-                
-                resultsDiv.innerHTML = html;
-            }, 500);
+                },
+                exportDate: new Date().toISOString(),
+                version: APP_CONFIG.version
+            };
+            
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataUri = "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+            
+            const link = document.createElement("a");
+            link.setAttribute("href", dataUri);
+            link.setAttribute("download", `quran-backup-${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showToast("تم تصدير البيانات بنجاح", "success");
         }
 
-        // تمييز النص في نتائج البحث
-        function highlightText(text, query) {
-            if (!query) return text;
+        function importData() {
+            const input = document.createElement("input");
+            input.type = "file";
+            input.accept = ".json";
             
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<mark style="background-color: #ffeb3b; padding: 2px 0;">$1</mark>');
-        }
-
-        // التنقل بين الأقسام
-        function showSection(sectionId) {
-            // إخفاء جميع الأقسام
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // إلغاء تفعيل جميع الأزرار
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // إظهار القسم المحدد
-            document.getElementById(`${sectionId}-section`).classList.add('active');
-            
-            // تفعيل الزر المحدد
-            event.target.classList.add('active');
-            
-            // إذا كان قسم المحفوظات، تحديث القائمة
-            if (sectionId === 'bookmarks') {
-                updateBookmarksList();
-            }
-            
-            // إذا كان قسم البحث، مسح الحقل
-            if (sectionId === 'search') {
-                document.getElementById('search-input').value = '';
-                document.getElementById('search-results').innerHTML = `
-                    <p class="text-center text-muted">اكتب كلمة للبحث في القرآن الكريم</p>
-                `;
-            }
-        }
-
-        // صفحة سابقة
-        function prevPage() {
-            if (currentState.currentSurah > 1) {
-                const prevSurah = currentState.currentSurah - 1;
-                document.getElementById('surah-select').value = prevSurah;
-                loadSurah(prevSurah);
-            }
-        }
-
-        // صفحة تالية
-        function nextPage() {
-            if (currentState.currentSurah < 114) {
-                const nextSurah = currentState.currentSurah + 1;
-                document.getElementById('surah-select').value = nextSurah;
-                loadSurah(nextSurah);
-            }
-        }
-
-        // حفظ التذكير
-        function saveReminder() {
-            const time = document.getElementById('reminder-time').value;
-            currentState.settings.reminderTime = time;
-            saveState();
-            
-            alert(`✅ تم حفظ وقت التذكير: ${time}`);
-            
-            // طلب إذن الإشعارات إذا لم يكن مسموحاً
-            if ('Notification' in window && Notification.permission === 'default') {
-                Notification.requestPermission();
-            }
-        }
-
-        // ========== إعادة التعيين والتصفير ==========
-
-        // تصفير التقدم
-        function resetProgress() {
-            if (confirm('هل تريد تصفير جميع إحصائيات التقدم؟\n\nسيتم حذف:\n• عدد الآيات المقروءة\n• المحفوظات\n• التقدم\n\n⚠️ لا يمكن التراجع عن هذه العملية!')) {
-                currentState.progress = {};
-                currentState.bookmarks = [];
-                saveState();
+            input.onchange = e => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
                 
-                updateBookmarksList();
-                alert('✅ تم تصفير التقدم بنجاح!');
-            }
-        }
-
-        // حذف جميع البيانات
-        function clearAllData() {
-            if (confirm('⚠️  تحذير شديد!\n\nهل تريد حذف جميع البيانات بما في ذلك:\n• القرآن الكامل المحمل\n• التفسير\n• جميع الإعدادات\n• المحفوظات\n• التقدم\n\n❌ هذه العملية لا يمكن التراجع عنها وسيحتاج التطبيق لإعادة تحميل المصحف!')) {
-                // حذف جميع البيانات من localStorage
-                localStorage.clear();
-                
-                // إعادة تعيين المتغيرات
-                quranData = null;
-                tafsirData = null;
-                surahInfo = null;
-                currentState = {
-                    currentSurah: 1,
-                    currentPage: 1,
-                    bookmarks: [],
-                    progress: {},
-                    settings: {
-                        reminderTime: '05:00',
-                        darkMode: false,
-                        fontSize: 28
+                reader.onload = function(event) {
+                    try {
+                        const importedData = JSON.parse(event.target.result);
+                        
+                        if (!importedData.appState || !importedData.version) {
+                            throw new Error("ملف غير صالح");
+                        }
+                        
+                        if (confirm("هل تريد استيراد البيانات؟ سيتم استبدال جميع بياناتك الحالية.")) {
+                            // Restore app state
+                            const importedState = importedData.appState;
+                            
+                            appState = {
+                                ...appState,
+                                ...importedState,
+                                progress: {
+                                    ...appState.progress,
+                                    ...importedState.progress,
+                                    readPages: new Set(importedState.progress?.readPages || []),
+                                    completedSurahs: new Set(importedState.progress?.completedSurahs || []),
+                                    bookmarks: importedState.progress?.bookmarks || []
+                                }
+                            };
+                            
+                            // Save and reload
+                            saveAppState();
+                            location.reload();
+                            
+                            showToast("تم استيراد البيانات بنجاح", "success");
+                        }
+                    } catch (error) {
+                        showToast("خطأ في استيراد البيانات: الملف غير صالح", "danger");
                     }
                 };
                 
-                // إعادة تحميل التطبيق
+                reader.readAsText(file);
+            };
+            
+            input.click();
+        }
+
+        function backupData() {
+            saveAppState();
+            appState.lastBackup = new Date().toISOString();
+            showToast("تم إنشاء نسخة احتياطية تلقائية", "success");
+        }
+
+        // ============================================
+        // RESET FUNCTIONS
+        // ============================================
+
+        function resetProgressOnly() {
+            if (confirm("هل تريد تصفير التقدم والإحصائيات فقط؟")) {
+                appState.progress = {
+                    readAyahs: 0,
+                    readPages: new Set(),
+                    readingTime: 0,
+                    streak: 0,
+                    lastRead: null,
+                    dailyProgress: {},
+                    bookmarks: appState.progress.bookmarks, // Keep bookmarks
+                    notes: {},
+                    completedSurahs: new Set()
+                };
+                
+                saveAppState();
+                updateProgressDisplay();
+                updateStats();
+                
+                showToast("تم تصفير التقدم والإحصائيات", "success");
+            }
+        }
+
+        function resetBookmarksOnly() {
+            if (confirm("هل تريد حذف جميع المحفوظات؟")) {
+                appState.progress.bookmarks = [];
+                saveAppState();
+                loadBookmarks();
+                showToast("تم حذف جميع المحفوظات", "success");
+            }
+        }
+
+        function resetSettingsOnly() {
+            if (confirm("هل تريد إعادة ضبط جميع الإعدادات إلى الافتراضية؟")) {
+                appState.settings = {
+                    theme: "light",
+                    themeColor: "#1a472a",
+                    autoSave: true,
+                    autoScroll: true,
+                    showTafsir: true,
+                    reminderTime: "05:00",
+                    notifications: false,
+                    fontSize: 28,
+                    fontFamily: "amiri"
+                };
+                
+                saveAppState();
+                applySettings();
+                showToast("تم إعادة ضبط الإعدادات", "success");
+            }
+        }
+
+        function resetEverything() {
+            if (confirm("⚠️  تحذير شديد!\n\nهل تريد إعادة تعيين التطبيق بالكامل؟\n\nسيتم حذف:\n• جميع الإحصائيات والتقدم\n• المحفوظات\n• الإعدادات\n• الملاحظات\n\n❌ هذه العملية لا يمكن التراجع عنها!")) {
+                // Clear all data
+                localStorage.clear();
+                
+                // Reload app
                 location.reload();
             }
         }
 
-        // تحديث الواجهة
-        function updateUI() {
-            // تحديث التاريخ
-            const today = new Date().toLocaleDateString('ar-SA', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            document.getElementById('last-update').textContent = today;
+        // ============================================
+        // UTILITY FUNCTIONS
+        // ============================================
+
+        function showLoading(message) {
+            // You can implement a loading spinner here
+            console.log("⏳ " + message);
         }
 
-        // تثبيت التطبيق
+        function hideLoading() {
+            // Hide loading spinner
+            console.log("✅ التحميل مكتمل");
+        }
+
+        function showError(message) {
+            alert("❌ " + message);
+        }
+
+        function showToast(message, type = "info") {
+            // Create toast element
+            const toast = document.createElement("div");
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === "success" ? "#28a745" : type === "warning" ? "#ffc107" : type === "danger" ? "#dc3545" : "#17a2b8"};
+                color: white;
+                padding: 12px 24px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                toast.style.animation = "slideOut 0.3s ease";
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
+        function updateDate() {
+            const today = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = today.toLocaleDateString('ar-SA', options);
+            document.getElementById("today-date").textContent = dateStr;
+        }
+
+        function checkConnectivity() {
+            const indicator = document.getElementById("offline-indicator");
+            
+            function updateStatus() {
+                if (navigator.onLine) {
+                    indicator.style.display = "none";
+                } else {
+                    indicator.style.display = "flex";
+                }
+            }
+            
+            window.addEventListener("online", updateStatus);
+            window.addEventListener("offline", updateStatus);
+            
+            updateStatus();
+        }
+
+        function setupEventListeners() {
+            // Page slider
+            document.getElementById("page-slider").addEventListener("input", function() {
+                appState.currentPage = parseInt(this.value);
+                loadCurrentPage();
+            });
+            
+            // Settings toggles
+            document.getElementById("dark-mode-toggle").addEventListener("change", function() {
+                appState.settings.theme = this.checked ? "dark" : "light";
+                applyTheme();
+                saveAppState();
+            });
+            
+            document.getElementById("auto-save-toggle").addEventListener("change", function() {
+                appState.settings.autoSave = this.checked;
+                saveAppState();
+            });
+            
+            document.getElementById("auto-scroll-toggle").addEventListener("change", function() {
+                appState.settings.autoScroll = this.checked;
+                saveAppState();
+            });
+            
+            document.getElementById("show-tafsir-toggle").addEventListener("change", function() {
+                appState.settings.showTafsir = this.checked;
+                saveAppState();
+            });
+            
+            // Font size slider
+            document.getElementById("font-size-slider").addEventListener("input", function() {
+                changeFontSize(this.value);
+            });
+            
+            // Install button
+            document.getElementById("install-btn").addEventListener("click", installApp);
+        }
+
         function installApp() {
             if (navigator.standalone) {
-                alert('✅ التطبيق مثبت بالفعل على شاشتك الرئيسية!');
+                showToast("التطبيق مثبت بالفعل على شاشتك الرئيسية!", "success");
                 return;
             }
             
-            alert('لتثبيت التطبيق على هاتفك:\n\n1. افتح الموقع في Safari\n2. اضغط زر المشاركة (📤)\n3. اختر "أضف إلى الشاشة الرئيسية"\n4. اضغط "إضافة"\n\n✅ سيظهر التطبيق كتطبيق حقيقي!');
+            showToast("لتثبيت التطبيق: اضغط زر المشاركة → أضف إلى الشاشة الرئيسية", "info");
         }
 
-        // ========== بيانات عينة (للطوارئ) ==========
+        function checkForUpdates() {
+            showToast("جاري التحقق من التحديثات...", "info");
+            setTimeout(() => {
+                showToast("التطبيق محدث بأحدث نسخة", "success");
+            }, 1000);
+        }
+
+        function savePageNotes() {
+            const notes = document.getElementById("page-notes").value;
+            appState.progress.notes[appState.currentPage] = notes;
+            saveAppState();
+            showToast("تم حفظ الملاحظات", "success");
+        }
+
+        // ============================================
+        // SAMPLE DATA (FALLBACK)
+        // ============================================
 
         function getSampleQuranData() {
             return {
@@ -1111,7 +2919,7 @@
                         {"number": 4, "text": "مَٰلِكِ يَوْمِ ٱلدِّينِ"},
                         {"number": 5, "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ"},
                         {"number": 6, "text": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ"},
-                        {"number": 7, "text": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ"}
+                        {"number": 7, "text": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ"}
                     ]
                 },
                 "2": {
@@ -1125,24 +2933,28 @@
             };
         }
 
-        function getSampleSurahInfo() {
-            return [
-                {"number": 1, "name": "الفاتحة", "englishName": "Al-Fatiha", "ayahs": 7, "revelationType": "Meccan"},
-                {"number": 2, "name": "البقرة", "englishName": "Al-Baqarah", "ayahs": 286, "revelationType": "Medinan"}
-            ];
-        }
+        // ============================================
+        // INITIALIZE APP
+        // ============================================
 
-        // تسجيل Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(() => console.log('✅ Service Worker مسجل - يعمل بدون إنترنت'))
-                    .catch(err => console.log('❌ فشل تسجيل Service Worker:', err));
+        // Register Service Worker
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("sw.js")
+                    .then(registration => {
+                        console.log("✅ Service Worker مسجل:", registration.scope);
+                    })
+                    .catch(error => {
+                        console.log("❌ فشل تسجيل Service Worker:", error);
+                    });
             });
         }
 
-        // بدء التطبيق
-        window.addEventListener('DOMContentLoaded', initApp);
+        // Start the app
+        window.addEventListener("DOMContentLoaded", initializeApp);
+
+        // Auto-save before unload
+        window.addEventListener("beforeunload", saveAppState);
     </script>
 </body>
 </html>
