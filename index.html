@@ -3,32 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصحف القرآن</title>
+    <title>مصحف القرآن الكريم</title>
+    
+    <!-- PWA Meta -->
+    <meta name="theme-color" content="#007AFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="مصحف القرآن">
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/000000/quran.png">
+    
     <link rel="manifest" href="manifest.json">
     <style>
-        body { font-family: -apple-system; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 15px; margin: 15px 0; }
-        .ayah { font-size: 24px; text-align: center; margin: 20px 0; }
-        button { background: #007AFF; color: white; border: none; padding: 15px; width: 100%; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .quran-icon {
+            font-size: 80px;
+            color: #007AFF;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .ayah {
+            font-size: 28px;
+            margin: 30px 0;
+            line-height: 1.8;
+            color: #1a472a;
+        }
+        button {
+            background: #007AFF;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .instructions {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: right;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>📖 مصحف القرآن</h1>
-        <div class="ayah">﴿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ﴾</div>
-        <p><strong>التفسير:</strong> أبدأ كل عمل بالله</p>
+    <div class="container">
+        <div class="quran-icon">📖</div>
+        <h1>مصحف القرآن الكريم</h1>
+        
+        <div class="ayah">
+            ﴿بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ﴾
+        </div>
+        
+        <p><strong>التفسير:</strong> أبدأ كل عمل مستعينًا بالله الرحمن الرحيم</p>
+        
+        <button onclick="showInstallInstructions()">
+            📲 إضافة إلى الشاشة الرئيسية
+        </button>
+        
+        <div class="instructions" id="instructions" style="display:none;">
+            <h3>طريقة الإضافة على iPhone:</h3>
+            <ol>
+                <li>اضغط على زر المشاركة (📤) في أسفل الشاشة</li>
+                <li>مرر للأسفل واختر "أضف إلى الشاشة الرئيسية"</li>
+                <li>اضغط "إضافة" في الزاوية اليمنى العليا</li>
+            </ol>
+        </div>
     </div>
-    <button onclick="installApp()">📲 تثبيت التطبيق</button>
-    <button onclick="enableReminders()">🔔 تفعيل التذكيرات</button>
+    
     <script>
-        function installApp() {
-            alert('للتثبيت: افتح في Safari ← شارك ← أضف للشاشة الرئيسية');
+        function showInstallInstructions() {
+            document.getElementById('instructions').style.display = 'block';
+            alert('لإضافة التطبيق:\n1. اضغط زر المشاركة (📤)\n2. اختر "أضف إلى الشاشة الرئيسية"');
         }
-        function enableReminders() {
-            if(Notification.permission !== "granted") {
-                Notification.requestPermission();
-            }
-            alert('تم تفعيل التذكيرات');
+        
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('Service Worker مسجل');
+                    })
+                    .catch(err => {
+                        console.log('فشل تسجيل Service Worker:', err);
+                    });
+            });
+        }
+        
+        // Detect if app is running in standalone mode
+        if (window.navigator.standalone) {
+            console.log('التطبيق يعمل في وضع standalone');
         }
     </script>
 </body>
